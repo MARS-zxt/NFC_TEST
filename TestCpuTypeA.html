@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>Test TypeACPU Card</title>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <h3 style="text-align: center;">APDU测试界面</h3>
+    <INPUT id=init type=button value=初始化连接 onclick="InitTypeACPU()" />
+    <INPUT id=exit type=button value=关闭连接 onclick="ExitTypeACPU()" />
+    <INPUT id=clear type=button value=清除日志 onclick="ClearLog()" />
+    <br><br>
+    密钥(16字节):<INPUT id=key value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" type=text size=70 />
+    <!-- <INPUT id=verify type=button value=外部认证 onclick="ExternalAuthenticate()" /> -->
+    <INPUT id=verify type=button value=3DES外部认证 onclick="TripleDesExternalAuthenticate()" />
+    <br><br>
+    发送报文: <INPUT id=command type=text size=70 />
+    <INPUT id=send type=button value=发送 onclick="CommandTypeACPU()" />
+    <br><br>
+    <textarea id="messageText" name="messageText" rows="20" cols="100" readonly></textarea>
+</body>
+<script type="text/javascript" src="./dcrf32_client.js"></script>
+<script type="text/javascript" src="./crypto-js.min.js"></script>
+<script type="text/javascript" src="./typeacpu_command.js"></script>
+<script type="text/javascript" src="./typeacpu_util.js"></script>
+<script type="text/javascript">
+    var handle;
+    var messageText = document.getElementById("messageText");
+    CommandTypeACPU = async function () {
+        sdata = document.getElementById("command").value;
+        var result = await sendCommand(sdata, handle);
+        messageText.value = messageText.value + result.msg;
+        return;
+    }
+    InitTypeACPU = async function () {
+        var result = await init();
+        messageText.value = messageText.value + result.msg;
+        if (result.code == 0) {
+            handle = result.data.handle;
+        }
+        return;
+    }
+    ExternalAuthenticate = async function () {
+		var result = await externalAuthenticate("00",document.getElementById("key").value);
+		messageText.value = messageText.value + result.msg;
+		return result;
+	}
+	
+    TripleDesExternalAuthenticate = async function () {
+		var result = await tripleDesExternalAuthenticate("00",document.getElementById("key").value);
+		messageText.value = messageText.value + result.msg;
+		return result;
+	}
+    ExitTypeACPU = async function () {
+        result = await dc_exit(handle);
+        messageText.value = messageText.value + "<<关闭设备成功" + "\r\n";
+        return;
+    }
+    ClearLog = async function (command) {
+        messageText.value = "";
+    }
+</script>
+
+</html>
