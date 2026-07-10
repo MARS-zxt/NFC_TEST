@@ -9,23 +9,68 @@
     <meta name="Description" content="">
     <title>Test TypeACPU Card</title>
     <style type="text/css">
+		table { width: 500px; margin: 10px auto; border-collapse: collapse; }
+		body {
+           background-image: url('image/vector-art-colorful-8140x8140-12144.jpg');
+           background-size: cover; background-attachment: fixed;
+           font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+           margin: 0; padding: 40px 20px;
+        }
+        .content-wrapper { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(2px); border-radius: 24px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+		.glass-card { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 28px; padding: 28px 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s ease; }
+		.formtd, .formth { border: 1px solid #333; }
+		h3 { text-align: center; font-size: 28px; font-weight: 600; margin: 0 0 28px 0; color: #1e293b; letter-spacing: 1px; position: relative; padding-bottom: 12px; }
+        h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 2px; }
+        .gas-table { width: 100%; border-collapse: collapse; background: transparent; }
+        .gas-table td { padding: 12px 10px; vertical-align: middle; }
+        .label-text { font-weight: 600; color: #334155; white-space: nowrap; }
+        .required { color: #ef4444; margin-right: 4px; }
+		.btn-blue { background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; width: 50%; box-shadow: 0 2px 5px rgba(70,233,242,0.746); }
+		.btn-blue:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,123,255,0.3); background: linear-gradient(135deg, #0056b3, #003d80); }
+        .btn-blue:active { transform: translateY(1px); }
+		.btn-green { background: linear-gradient(135deg, #0fe2d1, #08bee7); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; width: 50%; box-shadow: 0 2px 5px rgba(188,217,215,0.917); }
+		.btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,241,216,0.3); background: linear-gradient(135deg, #0056b3, #044777); }
+        .btn-green:active { transform: translateY(1px); }
+		@media (max-width: 900px) { .glass-card { padding: 20px; } .gas-table td { display: block; width: 100% !important; padding: 8px; } .label-text { margin-bottom: 4px; } h3 { font-size: 22px; } }
+        .input-error { border: 2px solid #ef4444 !important; background: #fef2f2; }
+        .error-hint { color: #ef4444; font-size: 12px; margin-left: 4px; display: none; }
+        .error-hint.show { display: inline; }
     </style>
 </head>
 
 <body>
-    <h3 style="text-align: center;">APDU测试界面</h3>
-    <INPUT id=init type=button value=初始化连接 onclick="InitTypeACPU()" />
-    <INPUT id=exit type=button value=关闭连接 onclick="ExitTypeACPU()" />
-    <INPUT id=clear type=button value=清除日志 onclick="ClearLog()" />
-    <br><br>
-    密钥(16字节):<INPUT id=key value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" type=text size=70 />
-    <!-- <INPUT id=verify type=button value=外部认证 onclick="ExternalAuthenticate()" /> -->
-    <INPUT id=verify type=button value=3DES外部认证 onclick="TripleDesExternalAuthenticate()" />
-    <br><br>
-    发送报文: <INPUT id=command type=text size=70 />
-    <INPUT id=send type=button value=发送 onclick="CommandTypeACPU()" />
-    <br><br>
-    <textarea id="messageText" name="messageText" rows="20" cols="100" readonly></textarea>
+    <div class="glass-card">
+    <h3>APDU测试界面</h3>
+    <table class="gas-table" border="0">
+        <tr>
+            <td style="width:10%;text-align:right"><span class="label-text">连接操作</span></td>
+            <td>
+                <INPUT class="btn-blue" id=init type=button value=初始化连接 style="width:auto; min-width:110px; padding:8px 16px;" onclick="InitTypeACPU()" />
+                <INPUT class="btn-green" id=exit type=button value=关闭连接 style="width:auto; min-width:110px; padding:8px 16px;" onclick="ExitTypeACPU()" />
+                <INPUT class="btn-blue" id=clear type=button value=清除日志 style="width:auto; min-width:110px; padding:8px 16px;" onclick="ClearLog()" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="label-text">密钥(16字节):</span></td>
+            <td>
+                <INPUT style="width:60%" id=key value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" oninput="checkKeyLen(this,'keyHint')" placeholder="57415443484441544154696D65434F53" type=text size=70 /><span class="error-hint" id="keyHint">请输入32个字符(16字节)</span>
+                <INPUT class="btn-blue" id=verify type=button value=3DES外部认证 style="width:auto; min-width:110px; padding:8px 16px;" onclick="TripleDesExternalAuthenticate()" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="label-text">发送报文:</span></td>
+            <td>
+                <INPUT style="width:60%" id=command type=text size=70 />
+                <INPUT class="btn-blue" id=send type=button value=发送 style="width:auto; min-width:110px; padding:8px 16px;" onclick="CommandTypeACPU()" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                <textarea id="messageText" name="messageText" rows="20" style="width:99%" readonly></textarea>
+            </td>
+        </tr>
+    </table>
+    </div>
 </body>
 <script type="text/javascript" src="./dcrf32_client.js"></script>
 <script type="text/javascript" src="./crypto-js.min.js"></script>
@@ -64,7 +109,18 @@
         messageText.value = messageText.value + "<<关闭设备成功" + "\r\n";
         return;
     }
-    ClearLog = async function (command) {
+
+        checkKeyLen = function(el, hintId) {
+            var hint = document.getElementById(hintId);
+            if(el.value.length !== 32) {
+                el.classList.add("input-error");
+                if(hint) hint.classList.add("show");
+            } else {
+                el.classList.remove("input-error");
+                if(hint) hint.classList.remove("show");
+            }
+        }
+ClearLog = async function (command) {
         messageText.value = "";
     }
 </script>

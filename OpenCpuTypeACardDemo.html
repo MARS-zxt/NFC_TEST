@@ -5,36 +5,64 @@
 	<meta charset="UTF-8">
 	<title>TypeACPU Card Demo</title>
 	<style type="text/css">
+		table { width: 500px; margin: 10px auto; border-collapse: collapse; }
+		body {
+           background-image: url('image/vector-art-colorful-8140x8140-12144.jpg');
+           background-size: cover; background-attachment: fixed;
+           font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+           margin: 0; padding: 40px 20px;
+        }
+        .content-wrapper { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(2px); border-radius: 24px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+		.glass-card { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 28px; padding: 28px 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s ease; }
+		.formtd, .formth { border: 1px solid #333; }
+		h3 { text-align: center; font-size: 28px; font-weight: 600; margin: 0 0 28px 0; color: #1e293b; letter-spacing: 1px; position: relative; padding-bottom: 12px; }
+        h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 2px; }
+        .gas-table { width: 100%; border-collapse: collapse; background: transparent; }
+        .gas-table td { padding: 12px 10px; vertical-align: middle; }
+        .label-text { font-weight: 600; color: #334155; white-space: nowrap; }
+        .required { color: #ef4444; margin-right: 4px; }
+		.btn-blue { background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; width: 50%; box-shadow: 0 2px 5px rgba(70,233,242,0.746); }
+		.btn-blue:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,123,255,0.3); background: linear-gradient(135deg, #0056b3, #003d80); }
+        .btn-blue:active { transform: translateY(1px); }
+		.btn-green { background: linear-gradient(135deg, #0fe2d1, #08bee7); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; width: 50%; box-shadow: 0 2px 5px rgba(188,217,215,0.917); }
+		.btn-green:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,241,216,0.3); background: linear-gradient(135deg, #0056b3, #044777); }
+        .btn-green:active { transform: translateY(1px); }
+		@media (max-width: 900px) { .glass-card { padding: 20px; } .gas-table td { display: block; width: 100% !important; padding: 8px; } .label-text { margin-bottom: 4px; } h3 { font-size: 22px; } }
+
+        .input-error { border: 2px solid #ef4444 !important; background: #fef2f2; }
+        .error-hint { color: #ef4444; font-size: 12px; margin-left: 4px; display: none; }
+        .error-hint.show { display: inline; }
 	</style>
 </head>
 
 <body>
-	<h3 style="text-align: center;">开卡界面</h3>
-	<table border="0">
+	<div class="glass-card">
+	<h3>开卡界面</h3>
+	<table class="gas-table" border="0">
 		<tr>
-			<td style="width:90px">卡序列号: </td>
-			<td style="width:300px"><INPUT style="width:250px" id=cardID readonly type=text value="" /></td>
+			<td style="width:90px"><span class="label-text">卡序列号:</span></td>
+			<td style="width:300px"><INPUT style="width:95%" id=cardID readonly type=text value="" /></td>
 			<!-- <td style="width:90px"><INPUT style="width:80px" id=send type=button value=初始化连接
 					onclick="ReadTypeACPUCard()" /></td> -->
 			<!-- <td style="width:90px">
 				<INPUT style="width:150px" id=factory type=button value=des外部认证
-					onclick="ExternalAuthenticate()" />	
+					onclick="ExternalAuthenticate()" />
 			</td> -->
 			<!-- <td><INPUT id=verify type=button value=3DES外部认证 onclick="TripleDesExternalAuthenticate()" />	</td> -->
 			<!-- <td><INPUT style="width:150px" id=factory
 					type=button value=卡片擦除(DES) onclick="OutClearTypeACPUCard()" /></td>
 			 -->
-			
-			
+
+
 
 		</tr>
 		<tr>
-			<td style="width:90px">初始密钥(16字节): </td>
-			<td style="width:300px"><INPUT style="width:300px" id=initkey type=text size=70
-					value="57415443484441544154696D65434F53" placeholder=""/></td>
-			<td style="width:90px">主控密钥(16字节): </td>
-			<td style="width:300px"><INPUT style="width:300px" id=key type=text size=70
-					value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder=""/></td>
+			<td style="width:90px"><span class="label-text">初始密钥(16字节):</span></td>
+			<td style="width:300px"><INPUT style="width:95%" id=initkey type=text size=70 oninput="checkKeyLen(this,'initkeyHint')"
+					value="57415443484441544154696D65434F53" placeholder=""/><span class="error-hint" id="initkeyHint">请输入32个字符(16字节)</span></td>
+			<td style="width:90px"><span class="label-text">主控密钥(16字节):</span></td>
+			<td style="width:300px"><INPUT style="width:95%" id=key type=text size=70 oninput="checkKeyLen(this,'keyHint')"
+					value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder=""/><span class="error-hint" id="keyHint">请输入32个字符(16字节)</span></td>
 
 
 			<!-- <td style="width:90px;text-align:right">口令(3字节): </td>
@@ -43,27 +71,32 @@
 			<td style="width:90px"></td> -->
 		</tr>
 		<tr>
-			<td style="width:90px">卡类型: </td>
-			<td style="width:300px"><INPUT style="width:250px" id=cardType type=text maxlength="14"
-					value="01" placeholder="01(用户卡)，02（维护卡）"/></td>
-			<td style="width:90px">表号: </td>
-			<td style="width:300px"><INPUT style="width:250px" id=utilityID type=text maxlength="14"
+			<td style="width:90px"><span class="label-text">卡类型:</span></td>
+			<td style="width:300px"><SELECT style="width:95%" id=cardType>
+					<option value="01" selected>用户卡</option>
+					<option value="02">维护卡</option>
+				</SELECT></td>
+			<td style="width:90px"><span class="label-text">表号:</span></td>
+			<td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="14"
 					value="20260511145959" /></td>
-			<td style="width:90px;text-align:right">用户ID: </td>
-			<td style="width:300px"><INPUT style="width:250px" id=userID type=text maxlength="12" value="000000000001" />
+			<td style="width:90px;text-align:right"><span class="label-text">用户ID:</span></td>
+			<td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="12" value="000000000001" />
 			</td>
-			<td style="width:90px"><INPUT style="width:80px" id=open type=button value=开卡
-					onclick="ReadTypeACPUCard()" /></td>
-					<td><INPUT style="width:150px" id=factory
-			type=button value=卡片擦除(3DES) onclick="ClearTypeACPUCard()" /></td>
-			<td style="width:90px"><INPUT id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
 		</tr>
 		<tr>
-			<td colspan=6>
+			<td colspan=9 style="text-align:center; padding:16px 10px;">
+				<INPUT class="btn-blue" id=open type=button value=开卡 style="width:auto; min-width:130px; padding:10px 28px;" onclick="ReadTypeACPUCard()" />
+				<INPUT class="btn-green" id=factory type=button value=卡片擦除(3DES) style="width:auto; min-width:130px; padding:10px 28px;" onclick="ClearTypeACPUCard()" />
+				<INPUT class="btn-blue" id=clear type=button value=清除日志 style="width:auto; min-width:130px; padding:10px 28px;" onclick="ClearLog()" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=9>
 				<textarea id="messageText" name="messageText" rows="25" style="width:99%" readonly></textarea>
 			</td>
 		</tr>
 	</table>
+	</div>
 </body>
 <script type="text/javascript" src="./dcrf32_client.js"></script>
 <script type="text/javascript" src="./crypto-js.min.js"></script>
@@ -582,6 +615,17 @@
 		return;
 	}
 
+
+		checkKeyLen = function(el, hintId) {
+			var hint = document.getElementById(hintId);
+			if(el.value.length !== 32) {
+				el.classList.add("input-error");
+				if(hint) hint.classList.add("show");
+			} else {
+				el.classList.remove("input-error");
+				if(hint) hint.classList.remove("show");
+			}
+		}
 	ClearLog = async function (command) {
 		messageText.value = "";
 	}
