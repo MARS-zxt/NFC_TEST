@@ -451,6 +451,26 @@ str2ascii = function(str) {
     }
     return asciistr;
 }
+/**
+ * 将输入字符串转为 "长度(1字节) + 数据区(20字节，数据+00补齐)" 的帧
+ * @param {string} str - 原始输入字符串
+ * @returns {string} 42位hex字符串（21字节帧）
+ */
+buildPaddedFrame = function(str) {
+	var dataHex = str2ascii(str);              // 转 ASCII hex
+	var dataLen = dataHex.length / 2;           // 数据字节数
+	var lenHex = dataLen.toString(16);          // 长度转 hex（1字节）
+	if (lenHex.length === 1) {
+		lenHex = "0" + lenHex;                  // 补齐 2 hex 字符
+	}
+	var dataAreaBytes = 20;                     // 数据区 20 字节
+	var paddingBytes = dataAreaBytes - dataLen; // 需填充的字节数
+	var paddingHex = "";
+	for (var i = 0; i < paddingBytes; i++) {
+		paddingHex += "00";
+	}
+	return (lenHex + dataHex + paddingHex).toUpperCase();
+};
 function bytesToHex(bytes) {
   return Array.from(bytes)
     .map(num => num.toString(16).padStart(2, '0'))

@@ -77,10 +77,10 @@
 					<option value="02">维护卡</option>
 				</SELECT></td>
 			<td style="width:90px"><span class="label-text">表号:</span></td>
-			<td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="14"
+			<td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="20
 					value="20260511145959" /></td>
 			<td style="width:90px;text-align:right"><span class="label-text">用户ID:</span></td>
-			<td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="12" value="000000000001" />
+			<td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="20 value="000000000001" />
 			</td>
 		</tr>
 		<tr>
@@ -223,6 +223,7 @@
 		// //	return;
 		// }
 		i2 = i2 + 1;
+		//创建持卡人基本数据文件
 		messageText.value = messageText.value + i1 + "-" + i2 + ".持卡人基本数据文件" + "\r\n";
 		r = await CreateCardHolderFile();
 		if(r.code!="9000"){
@@ -382,7 +383,7 @@
 		//1.创建持卡人基本数据文件(二进制文件)
 		fileId = "0016";
 		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建持卡人基本数据文件(二进制文件)" + "\r\n";
-		sdata = cmd_CreateBinaryFile(fileId, "0020");
+		sdata = cmd_CreateBinaryFile(fileId, "002B");    //< 文件大小为0x2B=43字节
 		result = await CommandTypeACPU(sdata);
 		if (result.code != "9000") {
 			return result;
@@ -391,9 +392,11 @@
 		//2.写入持卡人基本信息  
 		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入持卡人基本信息" + "\r\n";
 		
-		var utilityData = str2ascii(document.getElementById("utilityID").value);
-		var cardType = str2ascii(document.getElementById("cardType").value);
-		var userData = str2ascii(document.getElementById("userID").value);
+		
+		// var cardType = str2ascii(document.getElementById("cardType").value);
+		var cardType = document.getElementById("cardType").value;    //< 卡片类型
+		var utilityData = buildPaddedFrame(document.getElementById("utilityID").value);   //< 表号
+		var userData = buildPaddedFrame(document.getElementById("userID").value);  //< 用户ID
 		sdata=cmd_UpdateBinary("00",cardType + '' + utilityData + '' + userData,);
 		var result = await WriteFile(fileId, sdata);
 		return result;
