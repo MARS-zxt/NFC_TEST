@@ -128,6 +128,17 @@ function cmd_CreateBinaryFile(fileID, fileSize) {
     return cla + ins + p1p2 + lc + data + le;
 }
 
+function cmd_CreateLogFile(fileID, fileSize) {
+    var cla = "80";
+    var ins = "E0";
+    var p1p2 = fileID;
+    var lc = "07";
+    var fileType = "A8";
+    var data = fileType + fileSize + readStatus + writeStatus + "FF" + "FF";
+    var le = "";
+    return cla + ins + p1p2 + lc + data + le;
+}
+
 function cmd_CreateADFFile(fileID, fileSize) {
     var cla = "80";
     var ins = "E0";

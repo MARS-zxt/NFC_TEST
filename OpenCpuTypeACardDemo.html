@@ -43,6 +43,9 @@
 			<td style="width:90px"></td> -->
 		</tr>
 		<tr>
+			<td style="width:90px">卡类型: </td>
+			<td style="width:300px"><INPUT style="width:250px" id=cardType type=text maxlength="14"
+					value="01" placeholder="01(用户卡)，02（维护卡）"/></td>
 			<td style="width:90px">表号: </td>
 			<td style="width:300px"><INPUT style="width:250px" id=utilityID type=text maxlength="14"
 					value="20260511145959" /></td>
@@ -193,6 +196,22 @@
 			alert("建立持卡人基本数据文件失败:"+r.code);
 		//	return;
 		}
+		//创建燃气状态文件
+		i2 = i2 + 1;
+		messageText.value = messageText.value + i1 + "-" + i2 + ".状态文件" + "\r\n";
+		r = await CreateCardStatusFile();
+		if(r.code!="9000"){
+			alert("建立状态文件失败:"+r.code);
+		//	return;
+		}
+
+		i2 = i2 + 1;
+		messageText.value = messageText.value + i1 + "-" + i2 + ".冻结状态文件" + "\r\n";
+		r = await CreateCardFrezeLogFile();
+		if(r.code!="9000"){
+			alert("建立冻结状态文件失败:"+r.code);
+		//	return;
+		}
 	}
 
 	TripleDesExternalAuthenticate = async function () {
@@ -302,8 +321,29 @@
 	// 	var result = await WriteFile(fileId,sdata);
 	// 	return result;
 	// }
+	CreateCardFrezeLogFile = async function () {
+		i3 = 1;
+		fileId = "0009";
+		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建状态文件" + "\r\n";
+		sdata = cmd_CreateBinaryFile(fileId, "0058");
+		result = await CommandTypeACPU(sdata);
+		if (result.code != "9000") {
+			return result;
+		}
+		i3 = i3 + 1;
+	}
 
-
+	CreateCardStatusFile = async function () {
+		i3 = 1;
+		fileId = "0008";
+		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建状态文件" + "\r\n";
+		sdata = cmd_CreateBinaryFile(fileId, "001E");
+		result = await CommandTypeACPU(sdata);
+		if (result.code != "9000") {
+			return result;
+		}
+		i3 = i3 + 1;
+	}
 	CreateCardHolderFile = async function () {
 		i3 = 1;
 		//1.创建持卡人基本数据文件(二进制文件)
@@ -317,9 +357,11 @@
 		i3 = i3 + 1;
 		//2.写入持卡人基本信息  
 		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入持卡人基本信息" + "\r\n";
+		
 		var utilityData = str2ascii(document.getElementById("utilityID").value);
+		var cardType = str2ascii(document.getElementById("cardType").value);
 		var userData = str2ascii(document.getElementById("userID").value);
-		sdata=cmd_UpdateBinary("00",utilityData + '' + userData,);
+		sdata=cmd_UpdateBinary("00",cardType + '' + utilityData + '' + userData,);
 		var result = await WriteFile(fileId, sdata);
 		return result;
 
@@ -491,7 +533,7 @@
 		i3 = i3 + 1;
 		//2.写入上次充值TOKEN
 		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入上次充值TOKEN" + "\r\n";
-		sdata=cmd_UpdateBinary("00",'00' + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "00" + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "00" + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "00");
+		sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + + bytesToHex(decimal20ToBCD10("00000000000000000000")) + + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "00" + "00" + "00" + "00" + "00");
 		var result = await WriteFile(fileId, sdata);
 		return result;
 	}
