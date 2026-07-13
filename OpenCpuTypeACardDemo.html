@@ -77,10 +77,10 @@
 					<option value="02">维护卡</option>
 				</SELECT></td>
 			<td style="width:90px"><span class="label-text">表号:</span></td>
-			<td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="20
-					value="20260511145959" /></td>
+			<td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="20" oninput="checkEmpty(this,'utilityHint')"
+					value="20260511145959" /><span class="error-hint" id="utilityHint">请输入表号，最大长度为20位</span></td>
 			<td style="width:90px;text-align:right"><span class="label-text">用户ID:</span></td>
-			<td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="20 value="000000000001" />
+			<td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="20" oninput="checkEmpty(this,'userHint')" value="000000000001" /><span class="error-hint" id="userHint">请输入用户ID，最大长度为20位</span>
 			</td>
 		</tr>
 		<tr>
@@ -110,6 +110,33 @@
 	var messageText = document.getElementById("messageText");
 	var key = document.getElementById("key");
 	ReadTypeACPUCard = async function () {
+		// ===== 输入校验 =====
+		var errors = [];
+		// 初始密钥：长度必须32位
+		var initkey = document.getElementById("initkey").value;
+		if (initkey.length !== 32) {
+			errors.push("初始密钥");
+		}
+		// 主控密钥：长度必须32位
+		var key = document.getElementById("key").value;
+		if (key.length !== 32) {
+			errors.push("主控密钥");
+		}
+		// 表号：不能为空
+		var utilityID = document.getElementById("utilityID").value.trim();
+		if (utilityID === "") {
+			errors.push("表号");
+		}
+		// 用户ID：不能为空
+		var userID = document.getElementById("userID").value.trim();
+		if (userID === "") {
+			errors.push("用户ID");
+		}
+		if (errors.length > 0) {
+			alert("以下输入项不合法：\n" + errors.join("\n"));
+			return;
+		}
+		// ===== 校验结束 =====
 		i1 = 0;
 		messageText.value = messageText.value + i1 + ".初始化连接" + "\r\n";
 		r = await InitTypeACPU();
@@ -629,6 +656,16 @@
 				if(hint) hint.classList.remove("show");
 			}
 		}
+		checkEmpty = function(el, hintId) {
+			var hint = document.getElementById(hintId);
+			if(el.value.trim() === "") {
+				el.classList.add("input-error");
+				if(hint) hint.classList.add("show");
+			} else {
+				el.classList.remove("input-error");
+				if(hint) hint.classList.remove("show");
+			}
+		};
 	ClearLog = async function (command) {
 		messageText.value = "";
 	}
