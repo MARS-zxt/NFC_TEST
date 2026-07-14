@@ -421,9 +421,10 @@ dateFormat = function (fmt, date) {
         "Y+": date.getFullYear().toString(),        // 年
         "M+": (date.getMonth() + 1).toString(),     // 月
         "D+": date.getDate().toString(),            // 日
+        "W+": date.getDay().toString(),             // 星期(0=周日,1-6=周一至周六)
         "H+": date.getHours().toString(),           // 时
         "m+": date.getMinutes().toString(),         // 分
-        "s+": date.getSeconds().toString()          // 秒
+        "s+": date.getSeconds().toString(),         // 秒
     };
     for (let k in opt) {
         ret = new RegExp("(" + k + ")").exec(fmt);
