@@ -616,7 +616,7 @@
 		i3 = i3 + 1;
 		//2.写入TOKEN值
 		messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入充值TOKEN初始值" + "\r\n";
-		sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + + bytesToHex(decimal20ToBCD10("00000000000000000000")) + + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "00" + "00" + "00" + "00" + "00");
+		sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "88" + "88" + "88" + "88" + "88");
 		var result = await WriteFile(fileId, sdata);
 		return result;
 	}
