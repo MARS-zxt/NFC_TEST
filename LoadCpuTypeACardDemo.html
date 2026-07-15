@@ -214,7 +214,7 @@
 		</tr>
 			<tr>
 			<td style="width:10%;text-align:right"><span class="label-text">卡类型：</span> </td>
-			<td style="width:15%"><INPUT style="width:95%" id=utilityID type=text value="" /></td>
+			<td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
 			<td></td>
 			<td></td>
 			<td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
@@ -394,7 +394,19 @@
 		var result = await WriteFile(fileId, sdata);
 	}
 
-	// tokenToHex =  function(tokenStr){
+		getCardTypeText = function (val) {
+			if (val === "01" || val === "1") return "用户卡";
+			if (val === "02" || val === "2") return "维护卡";
+			return "未知卡";
+		}
+
+		parsePaddedFrame = function (hexStr) {
+			var len = parseInt(hexStr.slice(0, 2), 16);
+			var dataHex = hexStr.slice(2, 2 + len * 2);
+			return ascii2str(dataHex);
+		}
+
+		// tokenToHex =  function(tokenStr){
 	// 	// 字符串转UTF8字节，再转十六进制
 	// 	let hex = '';
 	// 	for (let i = 0; i < tokenStr.length; i++) {
@@ -441,15 +453,18 @@
 
 		i2 = i2 + 1;
 		messageText.value = messageText.value + i1 +"-"+ i2 + ".读取持卡人基本信息" + "\r\n";
-		r = await CommandTypeACPU(ReadBinary("00", "20"));;
+		r = await CommandTypeACPU(ReadBinary("00", "2B"));;
 		if(r.code!="9000"){
 			alert("读取持卡人基本信息失败:"+r.code);
+			document.getElementById("cardType").textContent = "未知卡"
 			document.getElementById("utilityID").value = "NaN";
 			document.getElementById("userID").value = "NaN"
 		//	return;
 		}else{
-			document.getElementById("utilityID").value = ascii2str(r.data.slice(0, 28));
-			document.getElementById("userID").value = ascii2str(r.data.slice(28, 52));
+			var cardTypeVal = r.data.slice(0, 2);
+			document.getElementById("cardType").textContent = getCardTypeText(cardTypeVal);
+			document.getElementById("utilityID").value = parsePaddedFrame(r.data.slice(2, 44));
+			document.getElementById("userID").value = parsePaddedFrame(r.data.slice(44, 86));
 		}
 	}
 
@@ -490,9 +505,9 @@
 		}
 		
 		i2 = i2 + 1;
-		messageText.value = messageText.value + i1 +"-"+ i2 + ".读取上次充值TOKEN" + "\r\n";
+		messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN文件" + "\r\n";
 		cmd_SelectFileByID("001C");
-		r = await CommandTypeACPU(ReadBinary("00", "28"));;
+		r = await CommandTypeACPU(ReadBinary("00", "38"));;
 		if(r.code!="9000"){
 			alert("读取上次充值TOKEN失败:"+r.code);
 			document.getElementById("lastToken").value = "NaN";
@@ -514,10 +529,11 @@
 		}
 
 		// i2 = i2 + 1;
-		// messageText.value = messageText.value + i1 +"-"+ i2 + ".读取免费用水信息" + "\r\n";
+		// messageText.value = messageText.value + i1 +"-"+ i2 + ".读取燃气表状态" + "\r\n";
+		// cmd_SelectFileByID("0008");
 		// r = await CommandTypeACPU(ReadBinary("88", "09"));;
 		// if(r.code!="9000"){
-		// 	alert("读取免费用水信息失败:"+r.code);
+		// 	alert("读取燃气表状态失败:"+r.code);
 		// 	document.getElementById("freeUsage").value = "NaN";
 		// //	return;
 		// }else{
