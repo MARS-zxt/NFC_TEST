@@ -212,11 +212,11 @@
 
 
 		</tr>
-			<tr>
-			<td style="width:10%;text-align:right"><span class="label-text">卡类型：</span> </td>
+		<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
 			<td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
-			<td></td>
-			<td></td>
+			<td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
+			<td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
 			<td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
 			<td style="width:15%"><INPUT style="width:95%" id=tokenID4  value="72118514774802197971" type=text  /></td>
 			<td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
@@ -225,10 +225,10 @@
 
 		</tr>
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
+			<td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
+			<td style="width:10%;text-align:right"><span class="label-text">累计气量:</span> </td>
+			<td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
 			<td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
 			<td style="width:15%"><INPUT style="width:95%" id=tokenID5  value="72118514774802197971" type=text  /></td>
 			<td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
@@ -237,20 +237,69 @@
 
 		</tr>
 		<tr>
-			<td></td>
+			<td style="width:10%;text-align:right"><span class="label-text">信用额度:</span> </td>
+			<td style="width:15%"><span id="creditLimit" style="font-weight:bold;"></span></td>
+			<td style="width:10%;text-align:right"><span class="label-text">表内余额:</span> </td>
+			<td style="width:15%"><span id="balance" style="font-weight:bold;"></span></td>
+			<td style="width:10%;text-align:right"><span class="label-text">主电电压:</span> </td>
+			<td style="width:15%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
 			<td style="width:15%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td style="width:20%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
+			<td style="width:15%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
-			<!-- <td style="width:10%;text-align:right">免费用水情况: </td>
-			<td style="width:15%"><INPUT style="width:95%" id=freeUsage readonly type=text value="" /></td> -->
-			<!-- <td style="width:10%;text-align:right">上次充值TOKEN: </td>
-			<td style="width:15%"><INPUT style="width:95%" id=lastToken readonly type=text value="" /></td> -->
 		</tr>
+
+		<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
+			<td style="width:15%"><span id="day1" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day2" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day3" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day4" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day5" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day6" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day7" style="font-weight:bold;"></span></td>
+		</tr>
+		<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">日冻结量:</span> </td>
+			<td style="width:15%"><span id="day1_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day2_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day3_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day4_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day5_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day6_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="day7_value" style="font-weight:bold;"></span></td>
+        </tr>   
+				<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
+			<td style="width:15%"><span id="month1" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month2" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month3" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month4" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month5" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month6" style="font-weight:bold;"></span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">月冻结量:</span> </td>
+			<td style="width:15%"><span id="month1_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month2_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month3_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month4_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month5_value" style="font-weight:bold;"></span></td>
+			<td style="width:15%"><span id="month6_value" style="font-weight:bold;"></span></td>
+			<td></td>
+        </tr>   
+
+		<tr>
+			<td style="width:10%;text-align:right"><span class="label-text">关阀事件记录:</span> </td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+        </tr>   
+
 		<!-- <tr>
 			<td style="width:10%;text-align:right">剩余水量(L): </td>
 			<td style="width:15%"><INPUT style="width:95%" id=balance readonly type=text value="" /></td>
@@ -489,11 +538,70 @@
 		// r = await CommandTypeACPU(ReadEpBalance());
 		// if(r.code!="9000"){
 		// 	alert("读取剩余水量失败:"+r.code);
-		// 	document.getElementById("balance").value = "NaN";
+		// 	document.getElementById("balance").textContent = "NaN";
 		// //	return;
 		// }else{
 		// 	document.getElementById("balance").value = parseInt((r.data.substr(0, 8)), 16) / 10;
 		// }
+		i2 = i2 + 1;
+		messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0008" + "\r\n";
+		sdata = cmd_SelectFileByID("0008");
+		r = await CommandTypeACPU(sdata);
+		if(r.code!="9000"){
+			alert("选择0008:"+r.code);
+			return;
+		}
+
+		i2 = i2 + 1;
+		messageText.value = messageText.value + i1 +"-"+ i2 + ".读取燃气表状态" + "\r\n";
+		cmd_SelectFileByID("0008");
+		r = await CommandTypeACPU(ReadBinary("00", "22"));;
+		if(r.code!="9000"){
+			alert("读取燃气表状态失败:"+r.code);
+			document.getElementById("readDate").textContent = "NaN";
+			document.getElementById("meterStatus").textContent = "NaN";
+			document.getElementById("totalGas").textContent = "NaN";
+			document.getElementById("creditLimit").textContent = "NaN";
+			document.getElementById("balance").textContent = "NaN";
+			document.getElementById("mainVoltage").textContent = "NaN";
+
+		//	return;
+		}else{
+			document.getElementById("readDate").textContent = r.data.slice(0, 24);
+			document.getElementById("meterStatus").textContent = r.data.slice(24, 32);
+			var mask_status = parseInt(r.data.slice(32, 40), 16);
+			document.getElementById("totalGas").textContent = r.data.slice(40, 48);
+			document.getElementById("creditLimit").textContent = r.data.slice(48, 56);
+			document.getElementById("balance").textContent = r.data.slice(56, 64);
+			document.getElementById("mainVoltage").textContent = r.data.slice(64, 68);
+
+			// var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
+			// var octetDate = r.data.substr(8, 10);
+			// var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
+			// var dateMon = parseInt(octetDate.substr(4, 2), 16);
+			// var dateDay = parseInt(octetDate.substr(6, 2), 16);
+			// document.getElementById("readDate").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
+		}
+
+		// i2 = i2 + 1;
+		// messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
+		// cmd_SelectFileByID("0009");
+		// r = await CommandTypeACPU(ReadBinary("00", "58"));;
+		// if(r.code!="9000"){
+		// 	alert("读取冻结日志失败:"+r.code);
+		// 	document.getElementById("freeUsage").value = "NaN";
+		// //	return;
+		// }else{
+		// 	document.getElementById("tokenNum").value = r.data.slice(22, 42);
+			// var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
+			// var octetDate = r.data.substr(8, 10);
+			// var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
+			// var dateMon = parseInt(octetDate.substr(4, 2), 16);
+			// var dateDay = parseInt(octetDate.substr(6, 2), 16);
+			// document.getElementById("freeUsage").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
+		// }
+
+
 
 		i2 = i2 + 1;
 		messageText.value = messageText.value + i1 +"-"+ i2 + ".选择001C" + "\r\n";
@@ -528,22 +636,6 @@
 			document.getElementById("lastToken").value = r.data;
 		}
 
-		// i2 = i2 + 1;
-		// messageText.value = messageText.value + i1 +"-"+ i2 + ".读取燃气表状态" + "\r\n";
-		// cmd_SelectFileByID("0008");
-		// r = await CommandTypeACPU(ReadBinary("88", "09"));;
-		// if(r.code!="9000"){
-		// 	alert("读取燃气表状态失败:"+r.code);
-		// 	document.getElementById("freeUsage").value = "NaN";
-		// //	return;
-		// }else{
-		// 	var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
-		// 	var octetDate = r.data.substr(8, 10);
-		// 	var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
-		// 	var dateMon = parseInt(octetDate.substr(4, 2), 16);
-		// 	var dateDay = parseInt(octetDate.substr(6, 2), 16);
-		// 	document.getElementById("freeUsage").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
-		// }
 
 		// i2 = i2 + 1;
 		// messageText.value = messageText.value + i1 +"-"+ i2 + ".读取交易记录" + "\r\n";
