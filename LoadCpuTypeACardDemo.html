@@ -264,9 +264,27 @@
 
         .gas-table td {
 
-            padding: 12px 10px;
+            padding: 10px 8px;
 
             vertical-align: middle;
+
+        }
+
+
+
+        .gas-table input[type=text] {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 6px 8px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 6px;
+
+            font-size: 13px;
 
         }
 
@@ -440,6 +458,17 @@
 
     <table class="gas-table" border="0">
 
+    <colgroup>
+        <col style="width:9%">
+        <col style="width:16%">
+        <col style="width:7%">
+        <col style="width:10%">
+        <col style="width:8%">
+        <col style="width:16%">
+        <col style="width:5%">
+        <col style="width:14%">
+    </colgroup>
+
     <!-- <table border="0" style="width: 98%;">-->
 
         <tbody class="data-group token-input">
@@ -453,7 +482,7 @@
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
 
-            <td style="width:5%"><SELECT style="width:95%" id=tokenNum>
+            <td style="width:5%"><SELECT id=tokenNum>
 
                 <option value="1">1</option>
 
@@ -469,11 +498,11 @@
 
             <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID1 value="72118514774802197971" type=text  /></td>
+            <td style="width:15%"><INPUT id=tokenID1 value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
 
-            <td style="width:10%"><INPUT style="width:95%"  placeholder="00 unused,01 success,02 fail" id=result1  type=text value="" /></td>
+            <td style="width:10%"><INPUT  id=result1  type=text value="" /></td>
 
             
 
@@ -489,13 +518,13 @@
 
             <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
 
-            <td style="width:20%"><INPUT style="width:95%" id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
+            <td style="width:20%"><INPUT id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
 
             </td>
 
             <td style="width:10%;text-align:right"><span class="label-text">卡序列号: </span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=cardID readonly type=text value="" /></td>
+            <td style="width:15%"><INPUT id=cardID readonly type=text value="" /></td>
 
 
 
@@ -503,11 +532,11 @@
 
             <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID2 value="72118514774802197971"  type=text  /></td>
+            <td style="width:15%"><INPUT id=tokenID2 value="72118514774802197971"  type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
 
-            <td style="width:10%"><INPUT style="width:95%" placeholder="00 unused,01 success,02 fail" id=result2  type=text value="" /></td>
+            <td style="width:10%"><INPUT id=result2  type=text value="" /></td>
 
 
 
@@ -521,21 +550,21 @@
 
             <td style="width:10%;text-align:right"><span class="label-text">表号ID:</span> </td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=utilityID type=text value="" /></td>
+            <td style="width:15%"><INPUT id=utilityID type=text value="" /></td>
 
             <td style="width:10%;text-align:right"><span class="label-text">用户ID: </span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=userID type=text value="" /></td>
+            <td style="width:15%"><INPUT id=userID type=text value="" /></td>
 
 
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID3  value="72118514774802197971" type=text  /></td>
+            <td style="width:15%"><INPUT id=tokenID3  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
 
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result3  type=text value="" /></td>
+            <td style="width:10%"><INPUTid=result3  type=text value="" /></td>
 
 
 
@@ -555,11 +584,11 @@
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID4  value="72118514774802197971" type=text  /></td>
+            <td style="width:15%"><INPUT id=tokenID4  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
 
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result4  type=text value="" /></td>
+            <td style="width:10%"><INPUTid=result4  type=text value="" /></td>
 
 
 
@@ -576,11 +605,11 @@
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID5  value="72118514774802197971" type=text  /></td>
+            <td style="width:15%"><INPUT id=tokenID5  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
 
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result5  type=text value="" /></td>
+            <td style="width:10%"><INPUTid=result5  type=text value="" /></td>
 
 
 
@@ -750,17 +779,17 @@
 
             <td style="width:10%;text-align:right">剩余水量(L): </td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=balance readonly type=text value="" /></td>
+            <td style="width:15%"><INPUT id=balance readonly type=text value="" /></td>
 
             <td style="width:10%;text-align:right">圈存/消费金额: </td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=loadAmount type=text value="" placeholder="最多支持一位小数"/></td>
+            <td style="width:15%"><INPUT id=loadAmount type=text value="" placeholder="最多支持一位小数"/></td>
 
             <td style="width:10%;text-align:right"><span style="color: red;">*</span>口令(3字节): </td>
 
-            <td style="width:15%"><INPUT style="width:95%" id=pin type=text maxlength="6" value="321048" /></td>
+            <td style="width:15%"><INPUT id=pin type=text maxlength="6" value="321048" /></td>
 
-            <td style="width:10%"><INPUT style="width:95%" id=tran type=button value=Load/Purchase
+            <td style="width:10%"><INPUT id=tran type=button value=Load/Purchase
 
                     onclick="LoadTypeACPUCard()" /></td>
 
