@@ -150,8 +150,6 @@
 
         .data-group tr td {
 
-            background: rgba(235, 245, 255, 0.72);
-
             backdrop-filter: blur(6px);
 
             padding: 12px 10px;
@@ -160,9 +158,41 @@
 
 
 
+        .data-group.card-info tr td {
+
+            background: rgba(219, 234, 254, 0.78);
+
+        }
+
+
+
+        .data-group.day-freeze tr td {
+
+            background: rgba(209, 250, 240, 0.78);
+
+        }
+
+
+
+        .data-group.month-freeze tr td {
+
+            background: rgba(237, 233, 254, 0.78);
+
+        }
+
+
+
+        .data-group.valve-log tr td {
+
+            background: rgba(254, 243, 223, 0.78);
+
+        }
+
+
+
         .data-group tr:first-of-type td {
 
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(148, 163, 184, 0.35);
 
         }
 
@@ -170,7 +200,7 @@
 
         .data-group tr:last-of-type td {
 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.35);
 
         }
 
@@ -178,7 +208,7 @@
 
         .data-group tr td:first-child {
 
-            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(148, 163, 184, 0.35);
 
         }
 
@@ -186,7 +216,7 @@
 
         .data-group tr td:last-child {
 
-            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(148, 163, 184, 0.35);
 
         }
 
@@ -548,7 +578,7 @@
 
 
         </tr>
-		<tbody class="data-group">
+		<tbody class="data-group card-info">
         <tr>
 			            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
 
@@ -593,7 +623,7 @@
 
 
 
-        <tbody class="data-group">
+        <tbody class="data-group day-freeze">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
@@ -635,7 +665,7 @@
         </tr>
         </tbody>   
 
-                <tbody class="data-group">
+                <tbody class="data-group month-freeze">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
@@ -680,7 +710,7 @@
 
         </tbody>
 
-        <tbody class="data-group">
+        <tbody class="data-group valve-log">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录:</span> </td>
