@@ -427,14 +427,14 @@
         </tr>
 
         <tr>
+			<td></td>
+			
+			<td style="width:15%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
+			
+			<td></td>
+			
+			<td style="width:15%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
-
-            <td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
-
-            <td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
-
-            <td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
 
@@ -452,13 +452,10 @@
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
-
-            <td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
-
-            <td style="width:10%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
-
-            <td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
 
@@ -473,6 +470,25 @@
 
 
         </tr>
+		<tr>
+			            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
+
+            <td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
+
+            <td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
+
+			            <td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
+
+            <td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
+
+            <td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
+
+
+		</tr>
 
         <tr>
 
@@ -488,9 +504,8 @@
 
             <td style="width:15%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
-
-            <td style="width:15%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
+			<td></td>
+			<td></td>
 
 
 
@@ -520,7 +535,7 @@
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">日冻结量:</span> </td>
+            <td style="width:10%;text-align:right"><span class="label-text">日冻结量(10⁻3 m³):</span> </td>
 
             <td style="width:15%"><span id="day1_value" style="font-weight:bold;"></span></td>
 
@@ -560,7 +575,7 @@
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">月冻结量:</span> </td>
+            <td style="width:10%;text-align:right"><span class="label-text">月冻结量(10⁻3 m³):</span> </td>
 
             <td style="width:15%"><span id="month1_value" style="font-weight:bold;"></span></td>
 
@@ -1164,63 +1179,96 @@
 
             document.getElementById("mainVoltage").textContent = parseInt(r.data.slice(64, 68), 16);
 
+        }
 
+        i2 = i2 + 1;
 
-            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0009" + "\r\n";
 
-            // var octetDate = r.data.substr(8, 10);
+        sdata = cmd_SelectFileByID("0009");
 
-            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
+        r = await CommandTypeACPU(sdata);
 
-            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
+        if(r.code!="9000"){
 
-            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
+            alert("选择0009:"+r.code);
 
-            // document.getElementById("readDate").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
+            return;
 
         }
 
 
+        i2 = i2 + 1;
 
-        // i2 = i2 + 1;
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
 
-        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
+        cmd_SelectFileByID("0009");
 
-        // cmd_SelectFileByID("0009");
+        r = await CommandTypeACPU(ReadBinary("00", "57"));;
 
-        // r = await CommandTypeACPU(ReadBinary("00", "58"));;
+        if(r.code!="9000"){
 
-        // if(r.code!="9000"){
+        	alert("读取冻结日志失败:"+r.code);
 
-        // 	alert("读取冻结日志失败:"+r.code);
+        	document.getElementById("day1").textContent = "NaN";
+			document.getElementById("day2").textContent = "NaN";
+			document.getElementById("day3").textContent = "NaN";
+			document.getElementById("day4").textContent = "NaN";
+			document.getElementById("day5").textContent = "NaN";
+			document.getElementById("day6").textContent = "NaN";
+			document.getElementById("day7").textContent = "NaN";
+			document.getElementById("day1_value").textContent = "NaN";
+			document.getElementById("day2_value").textContent = "NaN";
+			document.getElementById("day3_value").textContent = "NaN";
+			document.getElementById("day4_value").textContent = "NaN";
+			document.getElementById("day5_value").textContent = "NaN";
+			document.getElementById("day6_value").textContent = "NaN";
+			document.getElementById("day7_value").textContent = "NaN";
+			document.getElementById("month1").textContent = "NaN";
+			document.getElementById("month2").textContent = "NaN";
+			document.getElementById("month3").textContent = "NaN";
+			document.getElementById("month4").textContent = "NaN";
+			document.getElementById("month5").textContent = "NaN";
+			document.getElementById("month6").textContent = "NaN";
+			document.getElementById("month1_value").textContent = "NaN";
+			document.getElementById("month2_value").textContent = "NaN";
+			document.getElementById("month3_value").textContent = "NaN";
+			document.getElementById("month4_value").textContent = "NaN";
+			document.getElementById("month5_value").textContent = "NaN";
+			document.getElementById("month6_value").textContent = "NaN";
 
-        // 	document.getElementById("freeUsage").value = "NaN";
+        //	return;
 
-        // //	return;
+        }else{
 
-        // }else{
+			var year = 2000 + parseInt(r.data.slice(0, 2), 16);
+			var month = parseInt(r.data.slice(2, 4), 16);
+			var day = parseInt(r.data.slice(4, 6), 16);
+			var dayCount = parseInt(r.data.slice(6, 8), 16);
+			var startDate = new Date(year, month - 1, day);
+			for (var i = 0; i < 7; i++) {
+			    var d = new Date(startDate);
+			    d.setDate(d.getDate() - i);
+			    var label = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+			    document.getElementById("day" + (i + 1)).textContent = i < dayCount ? label : "";
+			    var offset = 8 + i * 8;
+			    document.getElementById("day" + (i + 1) + "_value").textContent = parseInt(r.data.slice(offset, offset + 8), 16);
+			}
 
-        // 	document.getElementById("tokenNum").value = r.data.slice(22, 42);
+			var monYear = 2000 + parseInt(r.data.slice(64, 66), 16);
+			var monMonth = parseInt(r.data.slice(66, 68), 16);
+			var monCount = parseInt(r.data.slice(68, 70), 16);
+			var monStartDate = new Date(monYear, monMonth - 1, 1);
+			for (var i = 0; i < 6; i++) {
+			    var md = new Date(monStartDate);
+			    md.setMonth(md.getMonth() - i);
+			    var monLabel = md.getFullYear() + "年" + (md.getMonth() + 1) + "月";
+			    document.getElementById("month" + (i + 1)).textContent = i < monCount ? monLabel : "";
+			    var monOffset = 70 + i * 8;
+			    document.getElementById("month" + (i + 1) + "_value").textContent = parseInt(r.data.slice(monOffset, monOffset + 8), 16);
+			}
 
-            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
-
-            // var octetDate = r.data.substr(8, 10);
-
-            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
-
-            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
-
-            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
-
-            // document.getElementById("freeUsage").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
-
-        // }
-
-
-
-
-
-
+        }
 
         i2 = i2 + 1;
 

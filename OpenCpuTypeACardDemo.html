@@ -1180,7 +1180,7 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表冻结日志状态文件(二进制文件)" + "\r\n";
 
-        sdata = cmd_CreateBinaryFile(fileId, "0058");
+        sdata = cmd_CreateBinaryFile(fileId, "0057");
 
         result = await CommandTypeACPU(sdata);
 
@@ -1196,7 +1196,7 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表冻结日志状态信息" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","0000000000000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000");
+        sdata=cmd_UpdateBinary("00","0000000000000000000000000000000000000000000000000000000000000000" + "000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000");
 
         var result = await WriteFile(fileId, sdata);
 
