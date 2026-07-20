@@ -435,6 +435,26 @@ dateFormat = function (fmt, date) {
     return fmt;
 }
 
+dateFormatHex = function (fmt, date) {
+    let ret;
+    const opt = {
+        "Y+": date.getFullYear().toString(16).toUpperCase(),
+        "M+": (date.getMonth() + 1).toString(16).toUpperCase(),
+        "D+": date.getDate().toString(16).toUpperCase(),
+        "W+": date.getDay().toString(16).toUpperCase(),
+        "H+": date.getHours().toString(16).toUpperCase(),
+        "m+": date.getMinutes().toString(16).toUpperCase(),
+        "s+": date.getSeconds().toString(16).toUpperCase(),
+    };
+    for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+        };
+    };
+    return fmt;
+}
+
 ascii2str = function(asciiStr) {
     var str = "";
     for (var i = 0; i < asciiStr.length / 2; i++) {

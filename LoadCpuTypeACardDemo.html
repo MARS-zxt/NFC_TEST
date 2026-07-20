@@ -1,779 +1,1571 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>TypeACPU Card Demo</title>
-    <style type="text/css">
-        table {
-            width: 500px;
-            margin: 10px auto;
-            border-collapse: collapse;
-        }
-        body {
-           background-image: url('image/vector-art-colorful-8140x8140-12144.jpg');
-           background-size: cover;
-           background-attachment: fixed;
-           font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-           margin: 0;
-           padding: 40px 20px;
-        }
-        .content-wrapper {
-        max-width: 1300px;
-        margin: 0 auto;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(2px);
-        border-radius: 24px;
-        padding: 20px 30px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-         .glass-card {
-            max-width: 1300px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            border-radius: 28px;
-            padding: 28px 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-        .formtd,
-        .formth {
-            border: 1px solid #333;
-        }
-         h3 {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 600;
-            margin: 0 0 28px 0;
-            color: #1e293b;
-            letter-spacing: 1px;
-            position: relative;
-            padding-bottom: 12px;
-        }
-        
-        h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #007bff, #00c6ff);
-            border-radius: 2px;
-        }
-
- /* 表格样式优化 */
-        .gas-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: transparent;
-        }
-        
-        .gas-table td {
-            padding: 12px 10px;
-            vertical-align: middle;
-        }
- /* 标签文字样式 */
-        .label-text {
-            font-weight: 600;
-            color: #334155;
-            white-space: nowrap;
-        }
-        
-        .required {
-            color: #ef4444;
-            margin-right: 4px;
-        }
-        .btn-blue {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 50%;
-            box-shadow: 0 2px 5px rgba(70, 233, 242, 0.746);
-        }
-
-        .btn-blue:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-            background: linear-gradient(135deg, #0056b3, #003d80);
-        }
-        
-        .btn-blue:active {
-        transform: translateY(1px);
-        }
-
-            .btn-green {
-            background: linear-gradient(135deg, #0fe2d1, #08bee7);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 50%;
-            box-shadow: 0 2px 5px rgba(188, 217, 215, 0.917);
-        }
-
-        .btn-green:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(26, 241, 216, 0.3);
-            background: linear-gradient(135deg, #0056b3, #044777);
-        }
-        
-        .btn-green:active {
-            transform: translateY(1px);
-        }
-
-         @media (max-width: 900px) {
-            .glass-card {
-                padding: 20px;
-            }
-            
-            .gas-table td {
-                display: block;
-                width: 100% !important;
-                padding: 8px;
-            }
-             .label-text {
-                margin-bottom: 4px;
-            }
-
-            h3 {
-                font-size: 22px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="glass-card">
-    <h3>燃气卡读写界面</h3>
-
-    <table class="gas-table" border="0">
-    <!-- <table border="0" style="width: 98%;">-->
-        <tr>
-            <td style="width:10%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
-            <td style="width:15%"><INPUT class="btn-blue"   id=send type=button value=读卡 onclick="ReadTypeACPUCard()" />
-            </td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
-            <td style="width:5%"><SELECT style="width:95%" id=tokenNum>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </SELECT></td>
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID1 value="72118514774802197971" type=text  /></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
-            <td style="width:10%"><INPUT style="width:95%"  placeholder="00 unused,01 success,02 fail" id=result1  type=text value="" /></td>
-            
-            
-            
-        </tr>
-        <tr>
-            
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
-            <td style="width:20%"><INPUT style="width:95%" id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
-            </td>
-            <td style="width:10%;text-align:right"><span class="label-text">卡序列号: </span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=cardID readonly type=text value="" /></td>
-
-
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID2 value="72118514774802197971"  type=text  /></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
-            <td style="width:10%"><INPUT style="width:95%" placeholder="00 unused,01 success,02 fail" id=result2  type=text value="" /></td>
-
-
-            
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">表号ID:</span> </td>
-            <td style="width:15%"><INPUT style="width:95%" id=utilityID type=text value="" /></td>
-            <td style="width:10%;text-align:right"><span class="label-text">用户ID: </span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=userID type=text value="" /></td>
-
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID3  value="72118514774802197971" type=text  /></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result3  type=text value="" /></td>
-
-
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
-            <td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
-            <td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
-            <td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID4  value="72118514774802197971" type=text  /></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result4  type=text value="" /></td>
-
-
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
-            <td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
-            <td style="width:10%;text-align:right"><span class="label-text">累计气量:</span> </td>
-            <td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
-            <td style="width:15%"><INPUT style="width:95%" id=tokenID5  value="72118514774802197971" type=text  /></td>
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
-            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result5  type=text value="" /></td>
-
-
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">信用额度:</span> </td>
-            <td style="width:15%"><span id="creditLimit" style="font-weight:bold;"></span></td>
-            <td style="width:10%;text-align:right"><span class="label-text">表内余额:</span> </td>
-            <td style="width:15%"><span id="balance" style="font-weight:bold;"></span></td>
-            <td style="width:10%;text-align:right"><span class="label-text">主电电压:</span> </td>
-            <td style="width:15%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
-            <td style="width:15%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
-
-        </tr>
-
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
-            <td style="width:15%"><span id="day1" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day2" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day3" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day4" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day5" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day6" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day7" style="font-weight:bold;"></span></td>
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">日冻结量:</span> </td>
-            <td style="width:15%"><span id="day1_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day2_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day3_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day4_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day5_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day6_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="day7_value" style="font-weight:bold;"></span></td>
-        </tr>   
-                <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
-            <td style="width:15%"><span id="month1" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month2" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month3" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month4" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month5" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month6" style="font-weight:bold;"></span></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">月冻结量:</span> </td>
-            <td style="width:15%"><span id="month1_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month2_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month3_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month4_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month5_value" style="font-weight:bold;"></span></td>
-            <td style="width:15%"><span id="month6_value" style="font-weight:bold;"></span></td>
-            <td></td>
-        </tr>   
-
-        <tr>
-            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录:</span> </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>   
-
-        <!-- <tr>
-            <td style="width:10%;text-align:right">剩余水量(L): </td>
-            <td style="width:15%"><INPUT style="width:95%" id=balance readonly type=text value="" /></td>
-            <td style="width:10%;text-align:right">圈存/消费金额: </td>
-            <td style="width:15%"><INPUT style="width:95%" id=loadAmount type=text value="" placeholder="最多支持一位小数"/></td>
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span>口令(3字节): </td>
-            <td style="width:15%"><INPUT style="width:95%" id=pin type=text maxlength="6" value="321048" /></td>
-            <td style="width:10%"><INPUT style="width:95%" id=tran type=button value=Load/Purchase
-                    onclick="LoadTypeACPUCard()" /></td>
-            <td style="width:15%"><INPUT id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
-        </tr> -->
-    </table>
-    <!-- <div style="height: 145px;overflow-y: auto;">
-        <table border="0" cellspacing="0" style="width: 98%;text-align: center;font-size: x-small;">
-            <thead>
-                <tr>
-                    <td class="formtd" style="width:25%;">交易ID</td>
-                    <td class="formtd" style="width:25%;">交易终端</td>
-                    <td class="formtd" style="width:25%;">交易量(L)</td>
-                    <td class="formtd" style="width:25%;">交易时间</td>
-                </tr>
-            </thead>
-            <tbody id="records">
-            </tbody>
-        </table>
-    </div> -->
-    
-    <table style="width: 98%;">
-        <tr>
-            <td colspan=8>
-                <textarea id="messageText" name="messageText" rows="20" style="width:99%" readonly></textarea>
-            </td>
-        </tr>
-    </table>
-</div>
-</body>
-<script type="text/javascript" src="./dcrf32_client.js"></script>
-<script type="text/javascript" src="./crypto-js.min.js"></script>
-<script type="text/javascript" src="./typeacpu_command.js"></script>
-<script type="text/javascript" src="./typeacpu_util.js"></script>
-<script type="text/javascript">
-    var handle;
-    var i1 = 0, i2 = 0;
-    var messageText = document.getElementById("messageText");
-    ReadTypeACPUCard = async function () {
-        var r;
-        i1 = 1;
-        messageText.value = messageText.value + i1 + ".初始化连接" + "\r\n";
-        r = await InitTypeACPU();
-        if (r.code != 0) {
-            alert("初始化连接失败");
-            return;
-        }else{
-            handle = r.data.handle;
-            document.getElementById("cardID").value = r.data.cardID;
-        }
-        i1 = i1 + 1;
-        messageText.value = messageText.value + i1 + ".读取MF主目录文件" + "\r\n";
-        await readMFFile();
-        i1 = i1 + 1;
-        messageText.value = messageText.value + i1 + ".读取应用ADF01目录文件" + "\r\n";
-        await readADF01File();
-    }
-    writeTypeACPUCard = async function () {
-        var r;
-        i1 = 1;
-        messageText.value = messageText.value + i1 + ".初始化连接" + "\r\n";
-        r = await InitTypeACPU();
-        if (r.code != 0) {
-            alert("初始化连接失败");
-            return;
-        }else{
-            handle = r.data.handle;
-            document.getElementById("cardID").value = r.data.cardID;
-        }
-        i1 = i1 + 1;
-        messageText.value = messageText.value + i1 + ".写token" + "\r\n";
-        await writeTokenFile();
-        
-    }
-    writeTokenFile = async function () {
-        fileId = "001C";
-        i2 = 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择MF主目录文件" + "\r\n";
-        sdata = cmd_SelectFileByID("3F00");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择MF主目录文件失败:"+r.code);
-            return;
-        }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".外部认证" + "\r\n";
-        r = await TripleDesExternalAuthenticate("00");
-        if(r.code!="9000" && r.data!="9000"){
-            alert("外部认证失败:"+r.code);
-        //	return;
-        }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择卡应用ADF01目录文件" + "\r\n";
-        sdata = cmd_SelectFileByID("1001");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择卡应用ADF目录文件失败:"+r.code);
-            return;
-        }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 + "-" + i2 + ".写充值TOKEN" + "\r\n";
-        var token1 = document.getElementById("tokenID1").value
-        var result1 = '99'
-        var token2 = document.getElementById("tokenID2").value
-        var result2 = '99'
-        var token3 = document.getElementById("tokenID3").value
-        var result3 = '99'
-        var token4 = document.getElementById("tokenID4").value
-        var result4 = '99'
-        var token5 = document.getElementById("tokenID5").value
-        var result5 = '99'
-        var tokenNum = document.getElementById("tokenNum").value
-        if(token1.length !== 20){
-            alert("要写入20位token:"+r.code);
-            return;
-        }
-        if(token1.length !== 20){
-            alert("要写入20位token:"+r.code);
-            return;
-        }
-        if(token3.length !== 20){
-            alert("要写入20位token:"+r.code);
-            return;
-        }
-        if(token4.length !== 20){
-            alert("要写入20位token:"+r.code);
-            return;
-        }
-        if(token5.length !== 20){
-            alert("要写入20位token:"+r.code);
-            return;
-        }
-        var token = tokenNum.toString(16).padStart(2, '0') + bytesToHex(decimal20ToBCD10(token1))  + bytesToHex(decimal20ToBCD10(token2)) + bytesToHex(decimal20ToBCD10(token3)) + bytesToHex(decimal20ToBCD10(token4)) + bytesToHex(decimal20ToBCD10(token5)) + int8StrToHex(result1) + int8StrToHex(result2) + int8StrToHex(result3) + int8StrToHex(result4) + int8StrToHex(result5)
-        sdata=cmd_UpdateBinary("00", token);
-        var result = await WriteFile(fileId, sdata);
-    }
-
-        getCardTypeText = function (val) {
-            if (val === "01" || val === "1") return "用户卡";
-            if (val === "02" || val === "2") return "维护卡";
-            return "未知卡";
-        }
-
-        parsePaddedFrame = function (hexStr) {
-            var len = parseInt(hexStr.slice(0, 2), 16);
-            var dataHex = hexStr.slice(2, 2 + len * 2);
-            return ascii2str(dataHex);
-        }
-
-        // tokenToHex =  function(tokenStr){
-    // 	// 字符串转UTF8字节，再转十六进制
-    // 	let hex = '';
-    // 	for (let i = 0; i < tokenStr.length; i++) {
-    // 		hex += tokenStr.charCodeAt(i).toString(16).padStart(2, '0');
-    // 	}
-
-    // 	// 固定 40 位（20字节），不足补0，超长截断
-    // 	return hex.padEnd(40, '0').slice(0, 40).toUpperCase();
-    // }
-    WriteFile = async function(fileId,fileData){
-        var result = await WriteFileData(fileId,fileData,key.value);
-        var sw=result.data.substr(result.data.length-4,4);
-        if(sw=="")sw=result.code;
-        result.code=sw;
-        messageText.value = messageText.value + result.msg;
-        return result;
-    }
-
-    readMFFile = async function() {
-        i2 = 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择MF主目录文件" + "\r\n";
-        sdata = cmd_SelectFileByID("3F00");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择MF主目录文件失败:"+r.code);
-            return;
-        }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".外部认证" + "\r\n";
-        r = await TripleDesExternalAuthenticate("00");
-        if(r.data!="9000" && r.code!="9000"){
-            alert("外部认证失败:"+r.code);
-        //	return;
-        }
-
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0016" + "\r\n";
-        sdata = cmd_SelectFileByID("0016");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择0016:"+r.code);
-            return;
-        }
-
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取持卡人基本信息" + "\r\n";
-        r = await CommandTypeACPU(ReadBinary("00", "2B"));;
-        if(r.code!="9000"){
-            alert("读取持卡人基本信息失败:"+r.code);
-            document.getElementById("cardType").textContent = "未知卡"
-            document.getElementById("utilityID").value = "NaN";
-            document.getElementById("userID").value = "NaN"
-        //	return;
-        }else{
-            var cardTypeVal = r.data.slice(0, 2);
-            document.getElementById("cardType").textContent = getCardTypeText(cardTypeVal);
-            document.getElementById("utilityID").value = parsePaddedFrame(r.data.slice(2, 44));
-            document.getElementById("userID").value = parsePaddedFrame(r.data.slice(44, 86));
-        }
-    }
-
-    readADF01File = async function(){
-        i2 = 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择卡应用ADF01目录文件" + "\r\n";
-        sdata = cmd_SelectFileByID("1001");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择卡应用ADF目录文件失败:"+r.code);
-            return;
-        }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".卡应用认证" + "\r\n";
-        r = await TripleDesExternalAuthenticate("01");
-        if(r.code!="9000" && r.data!="9000"){
-            alert("卡应用认证失败:"+r.code);
-        //	return;
-        }
-        // i2 = i2 + 1;
-        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取剩余水量" + "\r\n";
-        // r = await CommandTypeACPU(ReadEpBalance());
-        // if(r.code!="9000"){
-        // 	alert("读取剩余水量失败:"+r.code);
-        // 	document.getElementById("balance").textContent = "NaN";
-        // //	return;
-        // }else{
-        // 	document.getElementById("balance").value = parseInt((r.data.substr(0, 8)), 16) / 10;
-        // }
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0008" + "\r\n";
-        sdata = cmd_SelectFileByID("0008");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择0008:"+r.code);
-            return;
-        }
-
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取燃气表状态" + "\r\n";
-        cmd_SelectFileByID("0008");
-        r = await CommandTypeACPU(ReadBinary("00", "22"));;
-        if(r.code!="9000"){
-            alert("读取燃气表状态失败:"+r.code);
-            document.getElementById("readDate").textContent = "NaN";
-            document.getElementById("meterStatus").textContent = "NaN";
-            document.getElementById("totalGas").textContent = "NaN";
-            document.getElementById("creditLimit").textContent = "NaN";
-            document.getElementById("balance").textContent = "NaN";
-            document.getElementById("mainVoltage").textContent = "NaN";
-
-        //	return;
-        }else{
-            document.getElementById("readDate").textContent = r.data.slice(0, 24);
-            document.getElementById("meterStatus").textContent = r.data.slice(24, 32);
-            var mask_status = parseInt(r.data.slice(32, 40), 16);
-            document.getElementById("totalGas").textContent = r.data.slice(40, 48);
-            document.getElementById("creditLimit").textContent = r.data.slice(48, 56);
-            document.getElementById("balance").textContent = r.data.slice(56, 64);
-            document.getElementById("mainVoltage").textContent = r.data.slice(64, 68);
-
-            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
-            // var octetDate = r.data.substr(8, 10);
-            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
-            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
-            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
-            // document.getElementById("readDate").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
-        }
-
-        // i2 = i2 + 1;
-        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
-        // cmd_SelectFileByID("0009");
-        // r = await CommandTypeACPU(ReadBinary("00", "58"));;
-        // if(r.code!="9000"){
-        // 	alert("读取冻结日志失败:"+r.code);
-        // 	document.getElementById("freeUsage").value = "NaN";
-        // //	return;
-        // }else{
-        // 	document.getElementById("tokenNum").value = r.data.slice(22, 42);
-            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
-            // var octetDate = r.data.substr(8, 10);
-            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
-            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
-            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
-            // document.getElementById("freeUsage").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
-        // }
-
-
-
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择001C" + "\r\n";
-        sdata = cmd_SelectFileByID("001C");
-        r = await CommandTypeACPU(sdata);
-        if(r.code!="9000"){
-            alert("选择001C:"+r.code);
-            return;
-        }
-        
-        i2 = i2 + 1;
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN文件" + "\r\n";
-        cmd_SelectFileByID("001C");
-        r = await CommandTypeACPU(ReadBinary("00", "38"));;
-        if(r.code!="9000"){
-            alert("读取上次充值TOKEN失败:"+r.code);
-            document.getElementById("lastToken").value = "NaN";
-        //	return;
-        }else{
-            document.getElementById("tokenNum").value = parseInt(r.data.slice(0, 2), 16);
-            document.getElementById("tokenID1").value = bcdToDecimal(hexToBcd(r.data.slice(2, 22)));
-        
-            document.getElementById("tokenID2").value = bcdToDecimal(hexToBcd(r.data.slice(22, 42)));
-            document.getElementById("tokenID3").value = bcdToDecimal(hexToBcd(r.data.slice(42, 62)));
-            document.getElementById("tokenID4").value = bcdToDecimal(hexToBcd(r.data.slice(62, 82)));
-            document.getElementById("tokenID5").value = bcdToDecimal(hexToBcd(r.data.slice(82, 102)));
-            document.getElementById("result1").value = Toint8(parseInt(r.data.slice(102, 104), 16));
-            document.getElementById("result2").value = Toint8(parseInt(r.data.slice(104, 106), 16));
-            document.getElementById("result3").value = Toint8(parseInt(r.data.slice(106, 108), 16));
-            document.getElementById("result4").value = Toint8(parseInt(r.data.slice(108, 110), 16));
-            document.getElementById("result5").value = Toint8(parseInt(r.data.slice(110, 112), 16));
-            document.getElementById("lastToken").value = r.data;
-        }
-
-
-        // i2 = i2 + 1;
-        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取交易记录" + "\r\n";
-        // r = await ReadTranRecords();
-        // if(r.code!="9000" && r.code!="6A83"){
-        // 	alert("读取交易记录失败:"+r.code);
-        // //	return;
-        // }
-    }
-
-    // LoadTypeACPUCard = async function () {
-    // 	i1 = 1;
-    // 	var terminalID = "112233445566";
-    // 	var tranTime = dateFormat("YYYYMMDDHHmmss", new Date());
-    // 	var amount = document.getElementById("loadAmount").value;
-    // 	var reg = /^[-]{0,1}[0-9]+([.]{1}[0-9]){0,1}$/;
-    // 	if(amount=="" || amount==0 || !reg.test(amount)){
-    // 		alert("金额无效");
-    // 		return;
-    // 	}
-    // 	if (amount > 0) {
-    // 		messageText.value = messageText.value + i1 + ".圈存充值" + "\r\n";
-    // 		var result = await load(document.getElementById("pin").value, "01", document.getElementById("key").value,
-    // 			amount, terminalID, tranTime);
-    // 		messageText.value = messageText.value + result.msg;
-    // 		var sw=result.data.substr(result.data.length-4,4);
-    // 		if(sw=="")sw=result.code;
-    // 		if(sw!="9000"){
-    // 			alert("圈存充值失败:"+sw);
-    // 		//	return;
-    // 		}else{
-    // 			alert("圈存充值成功");
-    // 		}
-    // 	} else {
-    // 		messageText.value = messageText.value + i1 + ".消费交易" + "\r\n";
-    // 		var result = await purchase("01", document.getElementById("key").value,
-    // 			amount, terminalID, tranTime);
-    // 		messageText.value = messageText.value + result.msg;
-    // 		var sw=result.data.substr(result.data.length-4,4);
-    // 		if(sw=="")sw=result.code;
-    // 		if(sw!="9000"){
-    // 			alert("消费交易失败:"+sw);
-    // 		//	return;
-    // 		}else{
-    // 			alert("消费交易成功");
-    // 		}
-
-    // 	}
-    // 	i1 = i1 + 1;
-    // 	messageText.value = messageText.value + i1 + ".交易结束" + "\r\n";
-    // }
-
-    // ReadTranRecords = async function () {
-    // 	var tbody = document.getElementById("records");
-    // 	tbody.innerHTML = "";
-    // 	var seqNo = 1;
-    // 	while (seqNo != 0) {
-    // 		//1.读取交易记录
-    // 		var seqNoStr = seqNo.toString(16);
-    // 		zeroNum = 2 - seqNoStr.length;
-    // 		for (var i = 0; i < zeroNum; i++) {
-    // 			seqNoStr = "0" + seqNoStr;
-    // 		}
-    // 		sdata = ReadOneRecord(seqNoStr, "C4");
-    // 		result = await CommandTypeACPU(sdata);
-    // 		if (result.code !== "9000") {
-    // 			seqNo = 0;
-    // 			return result;
-    // 		}
-    // 		var order = result.data;
-    // 		var orderNo = order.substr(0, 4);
-    // 		var orderAmount = parseInt(order.substr(10, 8), 16) / 10;
-    // 		var orderType = order.substr(18, 2);
-    // 		if (orderType == "02") {
-    // 			orderAmount = "+" + orderAmount;
-    // 		} else {
-    // 			orderAmount = "-" + orderAmount;
-    // 		}
-    // 		var terminalID = order.substr(20, 12);
-    // 		var orderDate = order.substr(32, 4) + "/" + order.substr(36, 2) + "/" + order.substr(38, 2);
-    // 		var orderTime = order.substr(40, 2) + ":" + order.substr(42, 2) + ":" + order.substr(44, 2);
-    // 		var orderData = { "orderNo": orderNo, "terminalID": terminalID, "orderAmount": orderAmount, "orderDatetime": orderDate +" "+ orderTime };
-
-    // 		var tr = document.createElement("tr");
-    // 		tbody.appendChild(tr);
-    // 		//往tr每一行里面创建单元格
-    // 		for (var k in orderData)   //里面的for循环是 列
-    // 		{
-    // 			var td = document.createElement("td");  //创建单元格
-    // 			td.className = "formtd";
-    // 			tr.appendChild(td);
-    // 			td.innerHTML = orderData[k];
-    // 		}
-    // 		seqNo = seqNo + 1;
-    // 	}
-    // }
-
-    ExternalAuthenticate = async function (keyID) {
-        var result = await externalAuthenticate(keyID, document.getElementById("key").value);
-        var sw=result.data.substr(result.data.length-4,4);
-        if(sw=="")sw=result.code;
-        result.code=sw;
-        messageText.value = messageText.value + result.msg;
-        return result;
-    }
-
-    TripleDesExternalAuthenticate = async function (keyID) {
-        var result = await tripleDesExternalAuthenticate(keyID,document.getElementById("key").value);
-        messageText.value = messageText.value + result.msg;
-        return result;
-    }
-
-    
-
-    CommandTypeACPU = async function (command) {
-        var result = await sendCommand(command, handle);
-        var sw=result.data.substr(result.data.length-4,4);
-        if(sw=="")sw=result.code;
-        result.code=sw;
-        messageText.value = messageText.value + result.msg;
-        return result;
-    }
-
-    InitTypeACPU = async function () {
-        var result = await init();
-        messageText.value = messageText.value + result.msg;
-        return result;
-    }
-
-    ExitTypeACPU = async function () {
-        result = await dc_exit(handle);
-        messageText.value = messageText.value + "<<关闭设备成功" + "\r\n";
-        return;
-    }
-
-    ClearLog = async function (command) {
-        messageText.value = "";
-    }
-</script>
-
+<!doctype html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>TypeACPU Card Demo</title>
+
+    <style type="text/css">
+
+        table {
+
+            width: 500px;
+
+            margin: 10px auto;
+
+            border-collapse: collapse;
+
+        }
+
+        body {
+
+           background-image: url('image/vector-art-colorful-8140x8140-12144.jpg');
+
+           background-size: cover;
+
+           background-attachment: fixed;
+
+           font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+           margin: 0;
+
+           padding: 40px 20px;
+
+        }
+
+        .content-wrapper {
+
+        max-width: 1300px;
+
+        margin: 0 auto;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        backdrop-filter: blur(2px);
+
+        border-radius: 24px;
+
+        padding: 20px 30px;
+
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+        }
+
+         .glass-card {
+
+            max-width: 1300px;
+
+            margin: 0 auto;
+
+            background: rgba(255, 255, 255, 0.92);
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 28px;
+
+            padding: 28px 32px;
+
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            transition: all 0.3s ease;
+
+        }
+
+        .formtd,
+
+        .formth {
+
+            border: 1px solid #333;
+
+        }
+
+         h3 {
+
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: 600;
+
+            margin: 0 0 28px 0;
+
+            color: #1e293b;
+
+            letter-spacing: 1px;
+
+            position: relative;
+
+            padding-bottom: 12px;
+
+        }
+
+        
+
+        h3::after {
+
+            content: '';
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 80px;
+
+            height: 3px;
+
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+
+            border-radius: 2px;
+
+        }
+
+
+
+ /* 表格样式优化 */
+
+        .gas-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background: transparent;
+
+        }
+
+        
+
+        .gas-table td {
+
+            padding: 12px 10px;
+
+            vertical-align: middle;
+
+        }
+
+ /* 标签文字样式 */
+
+        .label-text {
+
+            font-weight: 600;
+
+            color: #334155;
+
+            white-space: nowrap;
+
+        }
+
+        
+
+        .required {
+
+            color: #ef4444;
+
+            margin-right: 4px;
+
+        }
+
+        .btn-blue {
+
+            background: linear-gradient(135deg, #007bff, #0056b3);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 10px 24px;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            width: 50%;
+
+            box-shadow: 0 2px 5px rgba(70, 233, 242, 0.746);
+
+        }
+
+
+
+        .btn-blue:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+
+            background: linear-gradient(135deg, #0056b3, #003d80);
+
+        }
+
+        
+
+        .btn-blue:active {
+
+        transform: translateY(1px);
+
+        }
+
+
+
+            .btn-green {
+
+            background: linear-gradient(135deg, #0fe2d1, #08bee7);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 10px 24px;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            width: 50%;
+
+            box-shadow: 0 2px 5px rgba(188, 217, 215, 0.917);
+
+        }
+
+
+
+        .btn-green:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 4px 12px rgba(26, 241, 216, 0.3);
+
+            background: linear-gradient(135deg, #0056b3, #044777);
+
+        }
+
+        
+
+        .btn-green:active {
+
+            transform: translateY(1px);
+
+        }
+
+
+
+         @media (max-width: 900px) {
+
+            .glass-card {
+
+                padding: 20px;
+
+            }
+
+            
+
+            .gas-table td {
+
+                display: block;
+
+                width: 100% !important;
+
+                padding: 8px;
+
+            }
+
+             .label-text {
+
+                margin-bottom: 4px;
+
+            }
+
+
+
+            h3 {
+
+                font-size: 22px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+    <div class="glass-card">
+
+    <h3>燃气卡读写界面</h3>
+
+
+
+    <table class="gas-table" border="0">
+
+    <!-- <table border="0" style="width: 98%;">-->
+
+        <tr>
+
+            <td style="width:10%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
+
+            <td style="width:15%"><INPUT class="btn-blue"   id=send type=button value=读卡 onclick="ReadTypeACPUCard()" />
+
+            </td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
+
+            <td style="width:5%"><SELECT style="width:95%" id=tokenNum>
+
+                <option value="1">1</option>
+
+                <option value="2">2</option>
+
+                <option value="3" selected>3</option>
+
+                <option value="4">4</option>
+
+                <option value="5">5</option>
+
+            </SELECT></td>
+
+            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=tokenID1 value="72118514774802197971" type=text  /></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
+
+            <td style="width:10%"><INPUT style="width:95%"  placeholder="00 unused,01 success,02 fail" id=result1  type=text value="" /></td>
+
+            
+
+            
+
+            
+
+        </tr>
+
+        <tr>
+
+            
+
+            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
+
+            <td style="width:20%"><INPUT style="width:95%" id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
+
+            </td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">卡序列号: </span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=cardID readonly type=text value="" /></td>
+
+
+
+
+
+            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=tokenID2 value="72118514774802197971"  type=text  /></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
+
+            <td style="width:10%"><INPUT style="width:95%" placeholder="00 unused,01 success,02 fail" id=result2  type=text value="" /></td>
+
+
+
+
+
+            
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">表号ID:</span> </td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=utilityID type=text value="" /></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">用户ID: </span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=userID type=text value="" /></td>
+
+
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=tokenID3  value="72118514774802197971" type=text  /></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
+
+            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result3  type=text value="" /></td>
+
+
+
+
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
+
+            <td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
+
+            <td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=tokenID4  value="72118514774802197971" type=text  /></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
+
+            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result4  type=text value="" /></td>
+
+
+
+
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
+
+            <td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
+
+            <td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=tokenID5  value="72118514774802197971" type=text  /></td>
+
+            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
+
+            <td style="width:10%"><INPUT style="width:95%"placeholder="00 unused,01 success,02 fail" id=result5  type=text value="" /></td>
+
+
+
+
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">信用额度(m³):</span> </td>
+
+            <td style="width:15%"><span id="creditLimit" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">表内余额(m³):</span> </td>
+
+            <td style="width:15%"><span id="balance" style="font-weight:bold;"></span></td>
+
+            <td style="width:10%;text-align:right"><span class="label-text">主电电压(mV):</span> </td>
+
+            <td style="width:15%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
+
+            <td style="width:15%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
+
+
+
+        </tr>
+
+
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
+
+            <td style="width:15%"><span id="day1" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day2" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day3" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day4" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day5" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day6" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day7" style="font-weight:bold;"></span></td>
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">日冻结量:</span> </td>
+
+            <td style="width:15%"><span id="day1_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day2_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day3_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day4_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day5_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day6_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="day7_value" style="font-weight:bold;"></span></td>
+
+        </tr>   
+
+                <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
+
+            <td style="width:15%"><span id="month1" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month2" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month3" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month4" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month5" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month6" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+        </tr>
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">月冻结量:</span> </td>
+
+            <td style="width:15%"><span id="month1_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month2_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month3_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month4_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month5_value" style="font-weight:bold;"></span></td>
+
+            <td style="width:15%"><span id="month6_value" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+        </tr>   
+
+
+
+        <tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录:</span> </td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+        </tr>   
+
+
+
+        <!-- <tr>
+
+            <td style="width:10%;text-align:right">剩余水量(L): </td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=balance readonly type=text value="" /></td>
+
+            <td style="width:10%;text-align:right">圈存/消费金额: </td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=loadAmount type=text value="" placeholder="最多支持一位小数"/></td>
+
+            <td style="width:10%;text-align:right"><span style="color: red;">*</span>口令(3字节): </td>
+
+            <td style="width:15%"><INPUT style="width:95%" id=pin type=text maxlength="6" value="321048" /></td>
+
+            <td style="width:10%"><INPUT style="width:95%" id=tran type=button value=Load/Purchase
+
+                    onclick="LoadTypeACPUCard()" /></td>
+
+            <td style="width:15%"><INPUT id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
+
+        </tr> -->
+
+    </table>
+
+    <!-- <div style="height: 145px;overflow-y: auto;">
+
+        <table border="0" cellspacing="0" style="width: 98%;text-align: center;font-size: x-small;">
+
+            <thead>
+
+                <tr>
+
+                    <td class="formtd" style="width:25%;">交易ID</td>
+
+                    <td class="formtd" style="width:25%;">交易终端</td>
+
+                    <td class="formtd" style="width:25%;">交易量(L)</td>
+
+                    <td class="formtd" style="width:25%;">交易时间</td>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="records">
+
+            </tbody>
+
+        </table>
+
+    </div> -->
+
+    
+
+    <table style="width: 98%;">
+
+        <tr>
+
+            <td colspan=8>
+
+                <textarea id="messageText" name="messageText" rows="20" style="width:99%" readonly></textarea>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="./dcrf32_client.js"></script>
+
+<script type="text/javascript" src="./crypto-js.min.js"></script>
+
+<script type="text/javascript" src="./typeacpu_command.js"></script>
+
+<script type="text/javascript" src="./typeacpu_util.js"></script>
+
+<script type="text/javascript">
+
+    var handle;
+
+    var i1 = 0, i2 = 0;
+
+    var messageText = document.getElementById("messageText");
+
+    ReadTypeACPUCard = async function () {
+
+        var r;
+
+        i1 = 1;
+
+        messageText.value = messageText.value + i1 + ".初始化连接" + "\r\n";
+
+        r = await InitTypeACPU();
+
+        if (r.code != 0) {
+
+            alert("初始化连接失败");
+
+            return;
+
+        }else{
+
+            handle = r.data.handle;
+
+            document.getElementById("cardID").value = r.data.cardID;
+
+        }
+
+        i1 = i1 + 1;
+
+        messageText.value = messageText.value + i1 + ".读取MF主目录文件" + "\r\n";
+
+        await readMFFile();
+
+        i1 = i1 + 1;
+
+        messageText.value = messageText.value + i1 + ".读取应用ADF01目录文件" + "\r\n";
+
+        await readADF01File();
+
+    }
+
+    writeTypeACPUCard = async function () {
+
+        var r;
+
+        i1 = 1;
+
+        messageText.value = messageText.value + i1 + ".初始化连接" + "\r\n";
+
+        r = await InitTypeACPU();
+
+        if (r.code != 0) {
+
+            alert("初始化连接失败");
+
+            return;
+
+        }else{
+
+            handle = r.data.handle;
+
+            document.getElementById("cardID").value = r.data.cardID;
+
+        }
+
+        i1 = i1 + 1;
+
+        messageText.value = messageText.value + i1 + ".写token" + "\r\n";
+
+        await writeTokenFile();
+
+        
+
+    }
+
+    writeTokenFile = async function () {
+
+        fileId = "001C";
+
+        i2 = 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择MF主目录文件" + "\r\n";
+
+        sdata = cmd_SelectFileByID("3F00");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择MF主目录文件失败:"+r.code);
+
+            return;
+
+        }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".外部认证" + "\r\n";
+
+        r = await TripleDesExternalAuthenticate("00");
+
+        if(r.code!="9000" && r.data!="9000"){
+
+            alert("外部认证失败:"+r.code);
+
+        //	return;
+
+        }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择卡应用ADF01目录文件" + "\r\n";
+
+        sdata = cmd_SelectFileByID("1001");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择卡应用ADF目录文件失败:"+r.code);
+
+            return;
+
+        }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".写充值TOKEN" + "\r\n";
+
+        var token1 = document.getElementById("tokenID1").value
+
+        var result1 = '99'
+
+        var token2 = document.getElementById("tokenID2").value
+
+        var result2 = '99'
+
+        var token3 = document.getElementById("tokenID3").value
+
+        var result3 = '99'
+
+        var token4 = document.getElementById("tokenID4").value
+
+        var result4 = '99'
+
+        var token5 = document.getElementById("tokenID5").value
+
+        var result5 = '99'
+
+        var tokenNum = document.getElementById("tokenNum").value
+
+        if(token1.length !== 20){
+
+            alert("要写入20位token:"+r.code);
+
+            return;
+
+        }
+
+        if(token1.length !== 20){
+
+            alert("要写入20位token:"+r.code);
+
+            return;
+
+        }
+
+        if(token3.length !== 20){
+
+            alert("要写入20位token:"+r.code);
+
+            return;
+
+        }
+
+        if(token4.length !== 20){
+
+            alert("要写入20位token:"+r.code);
+
+            return;
+
+        }
+
+        if(token5.length !== 20){
+
+            alert("要写入20位token:"+r.code);
+
+            return;
+
+        }
+
+        var token = tokenNum.toString(16).padStart(2, '0') + bytesToHex(decimal20ToBCD10(token1))  + bytesToHex(decimal20ToBCD10(token2)) + bytesToHex(decimal20ToBCD10(token3)) + bytesToHex(decimal20ToBCD10(token4)) + bytesToHex(decimal20ToBCD10(token5)) + int8StrToHex(result1) + int8StrToHex(result2) + int8StrToHex(result3) + int8StrToHex(result4) + int8StrToHex(result5)
+
+        sdata=cmd_UpdateBinary("00", token);
+
+        var result = await WriteFile(fileId, sdata);
+
+    }
+
+
+
+        getCardTypeText = function (val) {
+
+            if (val === "01" || val === "1") return "用户卡";
+
+            if (val === "02" || val === "2") return "维护卡";
+
+            return "未知卡";
+
+        }
+
+
+
+        parsePaddedFrame = function (hexStr) {
+
+            var len = parseInt(hexStr.slice(0, 2), 16);
+
+            var dataHex = hexStr.slice(2, 2 + len * 2);
+
+            return ascii2str(dataHex);
+
+        }
+
+        formatReadDate = function (hexStr) {
+            var year = parseInt(hexStr.slice(0, 4), 16);
+            var month = parseInt(hexStr.slice(4, 6), 16);
+            var day = parseInt(hexStr.slice(6, 8), 16);
+            var weekday = parseInt(hexStr.slice(8, 10), 16);
+            var hour = parseInt(hexStr.slice(10, 12), 16);
+            var minute = parseInt(hexStr.slice(12, 14), 16);
+            var second = parseInt(hexStr.slice(14, 16), 16);
+            return year + "年" + month + "月" + day + "日 星期" + weekday + " " +
+                hour.toString().padStart(2, "0") + ":" +
+                minute.toString().padStart(2, "0") + ":" +
+                second.toString().padStart(2, "0");
+        }
+
+
+
+        // tokenToHex =  function(tokenStr){
+
+    // 	// 字符串转UTF8字节，再转十六进制
+
+    // 	let hex = '';
+
+    // 	for (let i = 0; i < tokenStr.length; i++) {
+
+    // 		hex += tokenStr.charCodeAt(i).toString(16).padStart(2, '0');
+
+    // 	}
+
+
+
+    // 	// 固定 40 位（20字节），不足补0，超长截断
+
+    // 	return hex.padEnd(40, '0').slice(0, 40).toUpperCase();
+
+    // }
+
+    WriteFile = async function(fileId,fileData){
+
+        var result = await WriteFileData(fileId,fileData,key.value);
+
+        var sw=result.data.substr(result.data.length-4,4);
+
+        if(sw=="")sw=result.code;
+
+        result.code=sw;
+
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+    }
+
+
+
+    readMFFile = async function() {
+
+        i2 = 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择MF主目录文件" + "\r\n";
+
+        sdata = cmd_SelectFileByID("3F00");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择MF主目录文件失败:"+r.code);
+
+            return;
+
+        }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".外部认证" + "\r\n";
+
+        r = await TripleDesExternalAuthenticate("00");
+
+        if(r.data!="9000" && r.code!="9000"){
+
+            alert("外部认证失败:"+r.code);
+
+        //	return;
+
+        }
+
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0016" + "\r\n";
+
+        sdata = cmd_SelectFileByID("0016");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择0016:"+r.code);
+
+            return;
+
+        }
+
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取持卡人基本信息" + "\r\n";
+
+        r = await CommandTypeACPU(ReadBinary("00", "2B"));;
+
+        if(r.code!="9000"){
+
+            alert("读取持卡人基本信息失败:"+r.code);
+
+            document.getElementById("cardType").textContent = "未知卡"
+
+            document.getElementById("utilityID").value = "NaN";
+
+            document.getElementById("userID").value = "NaN"
+
+        //	return;
+
+        }else{
+
+            var cardTypeVal = r.data.slice(0, 2);
+
+            document.getElementById("cardType").textContent = getCardTypeText(cardTypeVal);
+
+            document.getElementById("utilityID").value = parsePaddedFrame(r.data.slice(2, 44));
+
+            document.getElementById("userID").value = parsePaddedFrame(r.data.slice(44, 86));
+
+        }
+
+    }
+
+
+
+    readADF01File = async function(){
+
+        i2 = 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择卡应用ADF01目录文件" + "\r\n";
+
+        sdata = cmd_SelectFileByID("1001");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择卡应用ADF目录文件失败:"+r.code);
+
+            return;
+
+        }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".卡应用认证" + "\r\n";
+
+        r = await TripleDesExternalAuthenticate("01");
+
+        if(r.code!="9000" && r.data!="9000"){
+
+            alert("卡应用认证失败:"+r.code);
+
+        //	return;
+
+        }
+
+        // i2 = i2 + 1;
+
+        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取剩余水量" + "\r\n";
+
+        // r = await CommandTypeACPU(ReadEpBalance());
+
+        // if(r.code!="9000"){
+
+        // 	alert("读取剩余水量失败:"+r.code);
+
+        // 	document.getElementById("balance").textContent = "NaN";
+
+        // //	return;
+
+        // }else{
+
+        // 	document.getElementById("balance").value = parseInt((r.data.substr(0, 8)), 16) / 10;
+
+        // }
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0008" + "\r\n";
+
+        sdata = cmd_SelectFileByID("0008");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择0008:"+r.code);
+
+            return;
+
+        }
+
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取燃气表状态" + "\r\n";
+
+        cmd_SelectFileByID("0008");
+
+        r = await CommandTypeACPU(ReadBinary("00", "22"));;
+
+        if(r.code!="9000"){
+
+            alert("读取燃气表状态失败:"+r.code);
+
+            document.getElementById("readDate").textContent = "NaN";
+
+            document.getElementById("meterStatus").textContent = "NaN";
+
+            document.getElementById("totalGas").textContent = "NaN";
+
+            document.getElementById("creditLimit").textContent = "NaN";
+
+            document.getElementById("balance").textContent = "NaN";
+
+            document.getElementById("mainVoltage").textContent = "NaN";
+
+
+
+        //	return;
+
+        }else{
+
+            document.getElementById("readDate").textContent = formatReadDate(r.data.slice(0, 24));
+
+            document.getElementById("meterStatus").textContent = r.data.slice(24, 32);
+
+            var mask_status = parseInt(r.data.slice(32, 40), 16);
+
+            document.getElementById("totalGas").textContent = parseInt(r.data.slice(40, 48), 16);
+
+            document.getElementById("creditLimit").textContent = parseInt(r.data.slice(48, 56), 16);
+
+            document.getElementById("balance").textContent = parseInt(r.data.slice(56, 64), 16);
+
+            document.getElementById("mainVoltage").textContent = parseInt(r.data.slice(64, 68), 16);
+
+
+
+            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
+
+            // var octetDate = r.data.substr(8, 10);
+
+            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
+
+            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
+
+            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
+
+            // document.getElementById("readDate").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
+
+        }
+
+
+
+        // i2 = i2 + 1;
+
+        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
+
+        // cmd_SelectFileByID("0009");
+
+        // r = await CommandTypeACPU(ReadBinary("00", "58"));;
+
+        // if(r.code!="9000"){
+
+        // 	alert("读取冻结日志失败:"+r.code);
+
+        // 	document.getElementById("freeUsage").value = "NaN";
+
+        // //	return;
+
+        // }else{
+
+        // 	document.getElementById("tokenNum").value = r.data.slice(22, 42);
+
+            // var amount = parseInt((r.data.substr(6, 2)+r.data.substr(4, 2)+r.data.substr(2, 2)+r.data.substr(0, 2)), 16) / 10;
+
+            // var octetDate = r.data.substr(8, 10);
+
+            // var dateYear = parseInt(octetDate.substr(0, 2), 16) * 256 + parseInt(octetDate.substr(2, 2), 16);
+
+            // var dateMon = parseInt(octetDate.substr(4, 2), 16);
+
+            // var dateDay = parseInt(octetDate.substr(6, 2), 16);
+
+            // document.getElementById("freeUsage").value = amount + "(" + dateYear + "/" + dateMon + "/" + dateDay + ")";
+
+        // }
+
+
+
+
+
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择001C" + "\r\n";
+
+        sdata = cmd_SelectFileByID("001C");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择001C:"+r.code);
+
+            return;
+
+        }
+
+        
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN文件" + "\r\n";
+
+        cmd_SelectFileByID("001C");
+
+        r = await CommandTypeACPU(ReadBinary("00", "38"));;
+
+        if(r.code!="9000"){
+
+            alert("读取上次充值TOKEN失败:"+r.code);
+
+            document.getElementById("lastToken").value = "NaN";
+
+        //	return;
+
+        }else{
+
+            document.getElementById("tokenNum").value = parseInt(r.data.slice(0, 2), 16);
+
+            document.getElementById("tokenID1").value = bcdToDecimal(hexToBcd(r.data.slice(2, 22)));
+
+        
+
+            document.getElementById("tokenID2").value = bcdToDecimal(hexToBcd(r.data.slice(22, 42)));
+
+            document.getElementById("tokenID3").value = bcdToDecimal(hexToBcd(r.data.slice(42, 62)));
+
+            document.getElementById("tokenID4").value = bcdToDecimal(hexToBcd(r.data.slice(62, 82)));
+
+            document.getElementById("tokenID5").value = bcdToDecimal(hexToBcd(r.data.slice(82, 102)));
+
+            document.getElementById("result1").value = Toint8(parseInt(r.data.slice(102, 104), 16));
+
+            document.getElementById("result2").value = Toint8(parseInt(r.data.slice(104, 106), 16));
+
+            document.getElementById("result3").value = Toint8(parseInt(r.data.slice(106, 108), 16));
+
+            document.getElementById("result4").value = Toint8(parseInt(r.data.slice(108, 110), 16));
+
+            document.getElementById("result5").value = Toint8(parseInt(r.data.slice(110, 112), 16));
+
+            document.getElementById("lastToken").value = r.data;
+
+        }
+
+
+
+
+
+        // i2 = i2 + 1;
+
+        // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取交易记录" + "\r\n";
+
+        // r = await ReadTranRecords();
+
+        // if(r.code!="9000" && r.code!="6A83"){
+
+        // 	alert("读取交易记录失败:"+r.code);
+
+        // //	return;
+
+        // }
+
+    }
+
+
+
+    // LoadTypeACPUCard = async function () {
+
+    // 	i1 = 1;
+
+    // 	var terminalID = "112233445566";
+
+    // 	var tranTime = dateFormat("YYYYMMDDHHmmss", new Date());
+
+    // 	var amount = document.getElementById("loadAmount").value;
+
+    // 	var reg = /^[-]{0,1}[0-9]+([.]{1}[0-9]){0,1}$/;
+
+    // 	if(amount=="" || amount==0 || !reg.test(amount)){
+
+    // 		alert("金额无效");
+
+    // 		return;
+
+    // 	}
+
+    // 	if (amount > 0) {
+
+    // 		messageText.value = messageText.value + i1 + ".圈存充值" + "\r\n";
+
+    // 		var result = await load(document.getElementById("pin").value, "01", document.getElementById("key").value,
+
+    // 			amount, terminalID, tranTime);
+
+    // 		messageText.value = messageText.value + result.msg;
+
+    // 		var sw=result.data.substr(result.data.length-4,4);
+
+    // 		if(sw=="")sw=result.code;
+
+    // 		if(sw!="9000"){
+
+    // 			alert("圈存充值失败:"+sw);
+
+    // 		//	return;
+
+    // 		}else{
+
+    // 			alert("圈存充值成功");
+
+    // 		}
+
+    // 	} else {
+
+    // 		messageText.value = messageText.value + i1 + ".消费交易" + "\r\n";
+
+    // 		var result = await purchase("01", document.getElementById("key").value,
+
+    // 			amount, terminalID, tranTime);
+
+    // 		messageText.value = messageText.value + result.msg;
+
+    // 		var sw=result.data.substr(result.data.length-4,4);
+
+    // 		if(sw=="")sw=result.code;
+
+    // 		if(sw!="9000"){
+
+    // 			alert("消费交易失败:"+sw);
+
+    // 		//	return;
+
+    // 		}else{
+
+    // 			alert("消费交易成功");
+
+    // 		}
+
+
+
+    // 	}
+
+    // 	i1 = i1 + 1;
+
+    // 	messageText.value = messageText.value + i1 + ".交易结束" + "\r\n";
+
+    // }
+
+
+
+    // ReadTranRecords = async function () {
+
+    // 	var tbody = document.getElementById("records");
+
+    // 	tbody.innerHTML = "";
+
+    // 	var seqNo = 1;
+
+    // 	while (seqNo != 0) {
+
+    // 		//1.读取交易记录
+
+    // 		var seqNoStr = seqNo.toString(16);
+
+    // 		zeroNum = 2 - seqNoStr.length;
+
+    // 		for (var i = 0; i < zeroNum; i++) {
+
+    // 			seqNoStr = "0" + seqNoStr;
+
+    // 		}
+
+    // 		sdata = ReadOneRecord(seqNoStr, "C4");
+
+    // 		result = await CommandTypeACPU(sdata);
+
+    // 		if (result.code !== "9000") {
+
+    // 			seqNo = 0;
+
+    // 			return result;
+
+    // 		}
+
+    // 		var order = result.data;
+
+    // 		var orderNo = order.substr(0, 4);
+
+    // 		var orderAmount = parseInt(order.substr(10, 8), 16) / 10;
+
+    // 		var orderType = order.substr(18, 2);
+
+    // 		if (orderType == "02") {
+
+    // 			orderAmount = "+" + orderAmount;
+
+    // 		} else {
+
+    // 			orderAmount = "-" + orderAmount;
+
+    // 		}
+
+    // 		var terminalID = order.substr(20, 12);
+
+    // 		var orderDate = order.substr(32, 4) + "/" + order.substr(36, 2) + "/" + order.substr(38, 2);
+
+    // 		var orderTime = order.substr(40, 2) + ":" + order.substr(42, 2) + ":" + order.substr(44, 2);
+
+    // 		var orderData = { "orderNo": orderNo, "terminalID": terminalID, "orderAmount": orderAmount, "orderDatetime": orderDate +" "+ orderTime };
+
+
+
+    // 		var tr = document.createElement("tr");
+
+    // 		tbody.appendChild(tr);
+
+    // 		//往tr每一行里面创建单元格
+
+    // 		for (var k in orderData)   //里面的for循环是 列
+
+    // 		{
+
+    // 			var td = document.createElement("td");  //创建单元格
+
+    // 			td.className = "formtd";
+
+    // 			tr.appendChild(td);
+
+    // 			td.innerHTML = orderData[k];
+
+    // 		}
+
+    // 		seqNo = seqNo + 1;
+
+    // 	}
+
+    // }
+
+
+
+    ExternalAuthenticate = async function (keyID) {
+
+        var result = await externalAuthenticate(keyID, document.getElementById("key").value);
+
+        var sw=result.data.substr(result.data.length-4,4);
+
+        if(sw=="")sw=result.code;
+
+        result.code=sw;
+
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+    }
+
+
+
+    TripleDesExternalAuthenticate = async function (keyID) {
+
+        var result = await tripleDesExternalAuthenticate(keyID,document.getElementById("key").value);
+
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+    }
+
+
+
+    
+
+
+
+    CommandTypeACPU = async function (command) {
+
+        var result = await sendCommand(command, handle);
+
+        var sw=result.data.substr(result.data.length-4,4);
+
+        if(sw=="")sw=result.code;
+
+        result.code=sw;
+
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+    }
+
+
+
+    InitTypeACPU = async function () {
+
+        var result = await init();
+
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+    }
+
+
+
+    ExitTypeACPU = async function () {
+
+        result = await dc_exit(handle);
+
+        messageText.value = messageText.value + "<<关闭设备成功" + "\r\n";
+
+        return;
+
+    }
+
+
+
+    ClearLog = async function (command) {
+
+        messageText.value = "";
+
+    }
+
+</script>
+
+
+
 </html>
