@@ -124,7 +124,7 @@
 
 <body>
     <div class="glass-card">
-    <h3>APDU测试界面</h3>
+    <h3>APDU测试</h3>
     <table class="gas-table" border="0">
         <tr>
             <td style="width:10%;text-align:right"><span class="label-text">连接操作</span></td>
@@ -463,6 +463,14 @@ ClearLog = async function (command) {
         messageText.value += result.msg;
     };
 
+
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'setBackground') {
+        document.body.style.backgroundImage = e.data.backgroundImage;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+    }
+});
 
 </script>
 

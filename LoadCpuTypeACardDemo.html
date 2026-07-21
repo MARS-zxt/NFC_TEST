@@ -399,7 +399,7 @@
 
     <div class="glass-card">
 
-    <h3>燃气卡读写界面</h3>
+    <h3>燃气卡读写</h3>
 
 
 
@@ -1748,6 +1748,14 @@ ReadTypeACPUCard = async function () {
         messageText.value = "";
 
     }
+
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'setBackground') {
+        document.body.style.backgroundImage = e.data.backgroundImage;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+    }
+});
 
 </script>
 

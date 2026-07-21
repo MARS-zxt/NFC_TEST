@@ -78,7 +78,7 @@
 
     <div class="glass-card">
 
-    <h3>开卡界面</h3>
+    <h3>燃气卡开卡</h3>
 
     <table class="gas-table" border="0">
 
@@ -87,30 +87,6 @@
             <td style="width:90px"><span class="label-text">卡序列号:</span></td>
 
             <td style="width:300px"><INPUT style="width:95%" id=cardID readonly type=text value="" /></td>
-
-            <!-- <td style="width:90px"><INPUT style="width:80px" id=send type=button value=初始化连接
-
-                    onclick="ReadTypeACPUCard()" /></td> -->
-
-            <!-- <td style="width:90px">
-
-                <INPUT style="width:150px" id=factory type=button value=des外部认证
-
-                    onclick="ExternalAuthenticate()" />
-
-            </td> -->
-
-            <!-- <td><INPUT id=verify type=button value=3DES外部认证 onclick="TripleDesExternalAuthenticate()" />	</td> -->
-
-            <!-- <td><INPUT style="width:150px" id=factory
-
-                    type=button value=卡片擦除(DES) onclick="OutClearTypeACPUCard()" /></td>
-
-             -->
-
-
-
-
 
 
 
@@ -160,11 +136,11 @@
 
             <td style="width:300px"><INPUT style="width:95%" id=utilityID type=text maxlength="20" oninput="checkEmpty(this,'utilityHint')"
 
-                    value="20260511145959" /><span class="error-hint" id="utilityHint">请输入表号，最大长度为20位</span></td>
+                    value="24888888888888" /><span class="error-hint" id="utilityHint">请输入表号，最大长度为20位</span></td>
 
             <td style="width:90px;text-align:right"><span class="label-text">用户ID:</span></td>
 
-            <td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="20" oninput="checkEmpty(this,'userHint')" value="000000000001" /><span class="error-hint" id="userHint">请输入用户ID，最大长度为20位</span>
+            <td style="width:300px"><INPUT style="width:95%" id=userID type=text maxlength="20" oninput="checkEmpty(this,'userHint')" value="HX0000000001" /><span class="error-hint" id="userHint">请输入用户ID，最大长度为20位</span>
 
             </td>
 
@@ -1382,7 +1358,13 @@
 
     }
 
-
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'setBackground') {
+        document.body.style.backgroundImage = e.data.backgroundImage;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
+    }
+});
 
 </script>
 
