@@ -458,11 +458,8 @@
 
 
 
-    <table class="gas-table" border="0">
-
-    <!-- <table border="0" style="width: 98%;">-->
-
-        <tbody class="data-group token-input">
+    
+    <table class="gas-table" border="0"><tbody class="data-group token-input">
 <tr>
 
             <td style="width:10%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
@@ -607,10 +604,9 @@
 
 
         </tr>
-        </tbody>
+        </tbody></table>
 
-
-		<tbody class="data-group card-info">
+    <table class="gas-table" border="0"><tbody class="data-group card-info">
         <tr>
 			            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
 
@@ -651,11 +647,9 @@
 
 
         </tr>
-        </tbody>
+        </tbody></table>
 
-
-
-        <tbody class="data-group day-freeze">
+    <table class="gas-table" border="0"><tbody class="data-group day-freeze">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
@@ -695,9 +689,9 @@
             <td style="width:15%"><span id="day7_value" style="font-weight:bold;"></span></td>
 
         </tr>
-        </tbody>   
+        </tbody></table>
 
-                <tbody class="data-group month-freeze">
+    <table class="gas-table" border="0"><tbody class="data-group month-freeze">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
@@ -740,9 +734,9 @@
 
 
 
-        </tbody>
+        </tbody></table>
 
-        <tbody class="data-group valve-log">
+    <table class="gas-table" border="0"><tbody class="data-group valve-log">
         <tr>
 
             <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
@@ -801,59 +795,7 @@
 
         </tr>
 
-        </tbody>
-
-
-
-        <!-- <tr>
-
-            <td style="width:10%;text-align:right">剩余水量(L): </td>
-
-            <td style="width:15%"><INPUT id=balance readonly type=text value="" /></td>
-
-            <td style="width:10%;text-align:right">圈存/消费金额: </td>
-
-            <td style="width:15%"><INPUT id=loadAmount type=text value="" placeholder="最多支持一位小数"/></td>
-
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span>口令(3字节): </td>
-
-            <td style="width:15%"><INPUT id=pin type=text maxlength="6" value="321048" /></td>
-
-            <td style="width:10%"><INPUT id=tran type=button value=Load/Purchase
-
-                    onclick="LoadTypeACPUCard()" /></td>
-
-            <td style="width:15%"><INPUT id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
-
-        </tr> -->
-
-    </table>
-
-    <!-- <div style="height: 145px;overflow-y: auto;">
-
-        <table border="0" cellspacing="0" style="width: 98%;text-align: center;font-size: x-small;">
-
-            <thead>
-
-                <tr>
-
-                    <td class="formtd" style="width:25%;">交易ID</td>
-
-                    <td class="formtd" style="width:25%;">交易终端</td>
-
-                    <td class="formtd" style="width:25%;">交易量(L)</td>
-
-                    <td class="formtd" style="width:25%;">交易时间</td>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="records">
-
-            </tbody>
-
-        </table>
+        </tbody></table>
 
     </div> -->
 
@@ -1392,7 +1334,7 @@
 
         cmd_SelectFileByID("0009");
 
-        r = await CommandTypeACPU(ReadBinary("00", "58"));;
+        r = await CommandTypeACPU(ReadBinary("00", "57"));;
 
         if(r.code!="9000"){
 
