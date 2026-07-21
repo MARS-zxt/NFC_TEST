@@ -745,23 +745,62 @@
         <tbody class="data-group valve-log">
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录:</span> </td>
+            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
+
+            <td style="width:15%"><span id="event_datetime1" style="font-weight:bold;"></span></td>
 
             <td></td>
 
-            <td></td>
+            <td style="width:15%"><span id="event_type1" style="font-weight:bold;"></span></td>
 
             <td></td>
 
-            <td></td>
-
-            <td></td>
+            <td style="width:15%"><span id="event_details1" style="font-weight:bold;"></span></td>
 
             <td></td>
 
             <td></td>
 
         </tr>
+		<tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录2:</span> </td>
+
+            <td style="width:15%"><span id="event_datetime2" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:15%"><span id="event_type2" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:15%"><span id="event_details2" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td></td>
+
+        </tr>
+				<tr>
+
+            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录3:</span> </td>
+
+            <td style="width:15%"><span id="event_datetime3" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:15%"><span id="event_type3" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:15%"><span id="event_details3" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td></td>
+
+        </tr>
+
         </tbody>
 
 
@@ -1353,7 +1392,7 @@
 
         cmd_SelectFileByID("0009");
 
-        r = await CommandTypeACPU(ReadBinary("00", "57"));;
+        r = await CommandTypeACPU(ReadBinary("00", "58"));;
 
         if(r.code!="9000"){
 
@@ -1366,6 +1405,7 @@
 			document.getElementById("day5").textContent = "NaN";
 			document.getElementById("day6").textContent = "NaN";
 			document.getElementById("day7").textContent = "NaN";
+
 			document.getElementById("day1_value").textContent = "NaN";
 			document.getElementById("day2_value").textContent = "NaN";
 			document.getElementById("day3_value").textContent = "NaN";
@@ -1373,18 +1413,32 @@
 			document.getElementById("day5_value").textContent = "NaN";
 			document.getElementById("day6_value").textContent = "NaN";
 			document.getElementById("day7_value").textContent = "NaN";
+
 			document.getElementById("month1").textContent = "NaN";
 			document.getElementById("month2").textContent = "NaN";
 			document.getElementById("month3").textContent = "NaN";
 			document.getElementById("month4").textContent = "NaN";
 			document.getElementById("month5").textContent = "NaN";
 			document.getElementById("month6").textContent = "NaN";
+
 			document.getElementById("month1_value").textContent = "NaN";
 			document.getElementById("month2_value").textContent = "NaN";
 			document.getElementById("month3_value").textContent = "NaN";
 			document.getElementById("month4_value").textContent = "NaN";
 			document.getElementById("month5_value").textContent = "NaN";
 			document.getElementById("month6_value").textContent = "NaN";
+
+			document.getElementById("event_datetime1").textContent = "NaN";
+			document.getElementById("event_datetime2").textContent = "NaN";
+			document.getElementById("event_datetime3").textContent = "NaN";
+
+			document.getElementById("event_type1").textContent = "NaN";
+			document.getElementById("event_type2").textContent = "NaN";
+			document.getElementById("event_type3").textContent = "NaN";
+
+			document.getElementById("event_details1").textContent = "NaN";
+			document.getElementById("event_details2").textContent = "NaN";
+			document.getElementById("event_details3").textContent = "NaN";
 
         //	return;
 
@@ -1416,7 +1470,34 @@
 			    var monOffset = 70 + i * 8;
 			    document.getElementById("month" + (i + 1) + "_value").textContent = parseInt(r.data.slice(monOffset, monOffset + 8), 16);
 			}
+			
+			
 
+			// 关阀事件记录解析
+			var eventCount = parseInt(r.data.slice(118, 120), 16);
+			for (var ei = 0; ei < 3; ei++) {
+			    var base = 120 + ei * 18;
+			    var typeHex = r.data.slice(base, base + 4);
+			    var timeHex = r.data.slice(base + 4, base + 16);
+			    var detailHex = r.data.slice(base + 16, base + 18);
+			    var ey = 2000 + parseInt(timeHex.slice(0, 2), 16);
+			    var eM = parseInt(timeHex.slice(2, 4), 16);
+			    var ed = parseInt(timeHex.slice(4, 6), 16);
+			    var eh = parseInt(timeHex.slice(6, 8), 16);
+			    var em = parseInt(timeHex.slice(8, 10), 16);
+			    var es = parseInt(timeHex.slice(10, 12), 16);
+			    var timeStr = ey + "年" + eM + "月" + ed + "日 " + eh + ":" + em + ":" + es;
+			    var idx = ei + 1;
+			    if (ei < eventCount) {
+			        document.getElementById("event_type" + idx).textContent = typeHex;
+			        document.getElementById("event_datetime" + idx).textContent = timeStr;
+			        document.getElementById("event_details" + idx).textContent = detailHex;
+			    } else {
+			        document.getElementById("event_type" + idx).textContent = "";
+			        document.getElementById("event_datetime" + idx).textContent = "";
+			        document.getElementById("event_details" + idx).textContent = "";
+			    }
+			}
         }
 
         i2 = i2 + 1;
