@@ -31,6 +31,7 @@
            background-attachment: fixed;
 
            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+           -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 
            margin: 0;
 
@@ -92,7 +93,7 @@
 
             text-align: center;
 
-            font-size: 28px;
+            font-size: 24px;
 
             font-weight: 600;
 
@@ -151,6 +152,8 @@
         }
 
 
+
+        .data-value { font-weight: 600; }
 
         .data-group tr td {
             background: rgba(255, 255, 255, 0.45);
@@ -380,7 +383,7 @@
 
             h3 {
 
-                font-size: 22px;
+                font-size: 20px;
 
             }
 
@@ -410,7 +413,7 @@
 
             </td>
 
-            <td style="width:6%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
+            <td style="width:6%;text-align:right"><span class="required">*</span><span class="label-text">token数</span></td>
 
             <td style="width:13%"><SELECT id=tokenNum>
 
@@ -426,11 +429,11 @@
 
             </SELECT></td>
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1:</span> </td>
+            <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token1:</span> </td>
 
             <td style="width:14%"><INPUT id=tokenID1 value="" type=text oninput="validateToken('tokenID1')" /><span class="error-hint" id="tokenID1Hint">请输入20位数字</span></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result1</span> </td>
 
             <td style="width:5%"><INPUT  id=result1  type=text value="" /></td>
 
@@ -446,7 +449,7 @@
 
             
 
-            <td style="width:8%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
+            <td style="width:8%;text-align:right"><span class="required">*</span><span class="label-text">密钥(16字节): </span></td>
 
             <td style="width:20%"><INPUT id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" oninput="validateKey()" /><span class="error-hint" id="keyHint">请输入32位密钥(16字节)</span>
 
@@ -460,11 +463,11 @@
 
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2:</span></td>
+            <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token2:</span></td>
 
             <td style="width:14%"><INPUT id=tokenID2 value="" type=text oninput="validateToken('tokenID2')" /><span class="error-hint" id="tokenID2Hint">请输入20位数字</span></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result2 </span></td>
 
             <td style="width:5%"><INPUT id=result2  type=text value="" /></td>
 
@@ -488,11 +491,11 @@
 
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3:</span></td>
+            <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token3:</span></td>
 
             <td style="width:14%"><INPUT id=tokenID3 value="" type=text oninput="validateToken('tokenID3')" /><span class="error-hint" id="tokenID3Hint">请输入20位数字</span></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result3 </span></td>
 
             <td style="width:5%"><INPUT id=result3  type=text value="" /></td>
 
@@ -512,11 +515,11 @@
 			<td style="width:13%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4:</span></td>
+            <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token4:</span></td>
 
             <td style="width:14%"><INPUT id=tokenID4 value="" type=text oninput="validateToken('tokenID4')" /><span class="error-hint" id="tokenID4Hint">请输入20位数字</span></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result4 </span></td>
 
             <td style="width:5%"><INPUT id=result4  type=text value="" /></td>
 
@@ -533,11 +536,11 @@
 			<td></td>
 			<td></td>
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5:</span></td>
+            <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token5:</span></td>
 
             <td style="width:14%"><INPUT id=tokenID5 value="" type=text oninput="validateToken('tokenID5')" /><span class="error-hint" id="tokenID5Hint">请输入20位数字</span></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result5 </span></td>
 
             <td style="width:5%"><INPUT id=result5  type=text value="" /></td>
 
@@ -552,19 +555,19 @@
         <tr>
 			            <td style="width:9%;text-align:right"><span class="label-text">卡类型:</span> </td>
 
-            <td style="width:16%"><span id="cardType" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="cardType" class="data-value"></span></td>
 
             <td style="width:9%;text-align:right"><span class="label-text">读取日期:</span> </td>
 
-            <td style="width:16%"><span id="readDate" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="readDate" class="data-value"></span></td>
 
 			            <td style="width:9%;text-align:right"><span class="label-text">表状态:</span> </td>
 
-            <td style="width:16%"><span id="meterStatus" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="meterStatus" class="data-value"></span></td>
 
             <td style="width:9%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
 
-            <td style="width:16%"><span id="totalGas" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="totalGas" class="data-value"></span></td>
 
 
 		</tr>
@@ -573,15 +576,15 @@
 
             <td style="width:9%;text-align:right"><span class="label-text">信用额度(m³):</span> </td>
 
-            <td style="width:16%"><span id="creditLimit" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="creditLimit" class="data-value"></span></td>
 
             <td style="width:9%;text-align:right"><span class="label-text">表内余额(m³):</span> </td>
 
-            <td style="width:16%"><span id="balance" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="balance" class="data-value"></span></td>
 
             <td style="width:9%;text-align:right"><span class="label-text">主电电压(mV):</span> </td>
 
-            <td style="width:16%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="mainVoltage" class="data-value"></span></td>
 
 			<td></td>
 			<td></td>
@@ -596,19 +599,19 @@
 
             <td style="width:16%;text-align:right"><span class="label-text">日冻结:</span> </td>
 
-            <td style="width:12%"><span id="day1" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day1" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day2" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day2" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day3" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day3" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day4" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day4" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day5" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day5" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day6" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day6" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day7" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day7" class="data-value"></span></td>
 
         </tr>
 
@@ -616,19 +619,19 @@
 
             <td style="width:16%;text-align:right"><span class="label-text">日冻结量(10⁻³ m³):</span> </td>
 
-            <td style="width:12%"><span id="day1_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day1_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day2_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day2_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day3_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day3_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day4_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day4_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day5_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day5_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day6_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day6_value" class="data-value"></span></td>
 
-            <td style="width:12%"><span id="day7_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day7_value" class="data-value"></span></td>
 
         </tr>
         </tbody></table>
@@ -638,17 +641,17 @@
 
             <td style="width:16%;text-align:right"><span class="label-text">月冻结:</span> </td>
 
-            <td style="width:14%"><span id="month1" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month1" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month2" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month2" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month3" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month3" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month4" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month4" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month5" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month5" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month6" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month6" class="data-value"></span></td>
 
             <td></td>
 
@@ -658,17 +661,17 @@
 
             <td style="width:16%;text-align:right"><span class="label-text">月冻结量(10⁻³ m³):</span> </td>
 
-            <td style="width:14%"><span id="month1_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month1_value" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month2_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month2_value" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month3_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month3_value" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month4_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month4_value" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month5_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month5_value" class="data-value"></span></td>
 
-            <td style="width:14%"><span id="month6_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month6_value" class="data-value"></span></td>
 
             <td></td>
 
@@ -703,15 +706,15 @@
 
             <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
 
-            <td style="width:22%"><span id="event_datetime1" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime1" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:8%"><span id="event_type1" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type1" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:6%"><span id="event_details1" style="font-weight:bold;"></span></td>
+            <td style="width:6%"><span id="event_details1" class="data-value"></span></td>
 
             <td></td>
 
@@ -722,15 +725,15 @@
 
             <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录2:</span> </td>
 
-            <td style="width:22%"><span id="event_datetime2" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime2" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:8%"><span id="event_type2" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type2" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:6%"><span id="event_details2" style="font-weight:bold;"></span></td>
+            <td style="width:6%"><span id="event_details2" class="data-value"></span></td>
 
             <td></td>
 
@@ -741,15 +744,15 @@
 
             <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录3:</span> </td>
 
-            <td style="width:22%"><span id="event_datetime3" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime3" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:8%"><span id="event_type3" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type3" class="data-value"></span></td>
 
             <td></td>
 
-            <td style="width:6%"><span id="event_details3" style="font-weight:bold;"></span></td>
+            <td style="width:6%"><span id="event_details3" class="data-value"></span></td>
 
             <td></td>
 
