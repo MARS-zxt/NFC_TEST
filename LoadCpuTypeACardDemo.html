@@ -262,6 +262,12 @@
 
         }
 
+        .data-group.day-freeze td:not(:first-child),
+        .data-group.month-freeze td:not(:first-child),
+        .data-group.valve-log td:not(:first-child) {
+            text-align: center;
+        }
+
         
 
         .gas-table td {
@@ -462,15 +468,15 @@
     <table class="gas-table" border="0"><tbody class="data-group token-input">
 <tr>
 
-            <td style="width:10%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
+            <td style="width:8%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
 
-            <td style="width:19%"><INPUT class="btn-blue"   id=send type=button value=读卡 onclick="ReadTypeACPUCard()" />
+            <td style="width:20%"><INPUT class="btn-blue"   id=send type=button value=读卡 onclick="ReadTypeACPUCard()" />
 
             </td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
+            <td style="width:6%;text-align:right"><span style="color: red;">*</span><span class="label-text">token数</span></td>
 
-            <td style="width:12%"><SELECT id=tokenNum>
+            <td style="width:13%"><SELECT id=tokenNum>
 
                 <option value="1">1</option>
 
@@ -484,13 +490,13 @@
 
             </SELECT></td>
 
-            <td style="width:8%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
 
-            <td style="width:12%"><INPUT id=tokenID1 value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID1 value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
 
-            <td style="width:4%"><INPUT  id=result1  type=text value="" /></td>
+            <td style="width:5%"><INPUT  id=result1  type=text value="" /></td>
 
             
 
@@ -504,27 +510,27 @@
 
             
 
-            <td style="width:10%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
+            <td style="width:8%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
 
             <td style="width:20%"><INPUT id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
 
             </td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">卡序列号: </span></td>
+            <td style="width:6%;text-align:right"><span class="label-text">卡序列号: </span></td>
 
-            <td style="width:12%"><INPUT id=cardID readonly type=text value="" /></td>
-
-
+            <td style="width:13%"><INPUT id=cardID readonly type=text value="" /></td>
 
 
 
-            <td style="width:8%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
 
-            <td style="width:12%"><INPUT id=tokenID2 value="72118514774802197971"  type=text  /></td>
+
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
+
+            <td style="width:14%"><INPUT id=tokenID2 value="72118514774802197971"  type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
 
-            <td style="width:4%"><INPUT id=result2  type=text value="" /></td>
+            <td style="width:5%"><INPUT id=result2  type=text value="" /></td>
 
 
 
@@ -536,23 +542,23 @@
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">表号ID:</span> </td>
+            <td style="width:8%;text-align:right"><span class="label-text">表号ID:</span> </td>
 
-            <td style="width:19%"><INPUT id=utilityID type=text value="" /></td>
+            <td style="width:20%"><INPUT id=utilityID type=text value="" /></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">用户ID: </span></td>
+            <td style="width:6%;text-align:right"><span class="label-text">用户ID: </span></td>
 
-            <td style="width:12%"><INPUT id=userID type=text value="" /></td>
+            <td style="width:13%"><INPUT id=userID type=text value="" /></td>
 
 
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
 
-            <td style="width:12%"><INPUT id=tokenID3  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID3  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
 
-            <td style="width:4%"><INPUT id=result3  type=text value="" /></td>
+            <td style="width:5%"><INPUT id=result3  type=text value="" /></td>
 
 
 
@@ -563,20 +569,20 @@
         <tr>
 			<td></td>
 			
-			<td style="width:19%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
+			<td style="width:20%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
 			
 			<td></td>
 			
-			<td style="width:12%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
+			<td style="width:13%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
 
-            <td style="width:12%"><INPUT id=tokenID4  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID4  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
 
-            <td style="width:4%"><INPUT id=result4  type=text value="" /></td>
+            <td style="width:5%"><INPUT id=result4  type=text value="" /></td>
 
 
 
@@ -591,13 +597,13 @@
 			<td></td>
 			<td></td>
 
-            <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
 
-            <td style="width:12%"><INPUT id=tokenID5  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID5  value="72118514774802197971" type=text  /></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
 
-            <td style="width:4%"><INPUT id=result5  type=text value="" /></td>
+            <td style="width:5%"><INPUT id=result5  type=text value="" /></td>
 
 
 
@@ -608,38 +614,38 @@
 
     <table class="gas-table" border="0"><tbody class="data-group card-info">
         <tr>
-			            <td style="width:10%;text-align:right"><span class="label-text">卡类型:</span> </td>
+			            <td style="width:9%;text-align:right"><span class="label-text">卡类型:</span> </td>
 
-            <td style="width:15%"><span id="cardType" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="cardType" style="font-weight:bold;"></span></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">读取日期:</span> </td>
+            <td style="width:9%;text-align:right"><span class="label-text">读取日期:</span> </td>
 
-            <td style="width:15%"><span id="readDate" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="readDate" style="font-weight:bold;"></span></td>
 
-			            <td style="width:10%;text-align:right"><span class="label-text">表状态:</span> </td>
+			            <td style="width:9%;text-align:right"><span class="label-text">表状态:</span> </td>
 
-            <td style="width:15%"><span id="meterStatus" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="meterStatus" style="font-weight:bold;"></span></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
+            <td style="width:9%;text-align:right"><span class="label-text">累计气量(m³):</span> </td>
 
-            <td style="width:15%"><span id="totalGas" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="totalGas" style="font-weight:bold;"></span></td>
 
 
 		</tr>
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">信用额度(m³):</span> </td>
+            <td style="width:9%;text-align:right"><span class="label-text">信用额度(m³):</span> </td>
 
-            <td style="width:15%"><span id="creditLimit" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="creditLimit" style="font-weight:bold;"></span></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">表内余额(m³):</span> </td>
+            <td style="width:9%;text-align:right"><span class="label-text">表内余额(m³):</span> </td>
 
-            <td style="width:15%"><span id="balance" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="balance" style="font-weight:bold;"></span></td>
 
-            <td style="width:10%;text-align:right"><span class="label-text">主电电压(mV):</span> </td>
+            <td style="width:9%;text-align:right"><span class="label-text">主电电压(mV):</span> </td>
 
-            <td style="width:15%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
+            <td style="width:16%"><span id="mainVoltage" style="font-weight:bold;"></span></td>
 
 			<td></td>
 			<td></td>
@@ -652,41 +658,41 @@
     <table class="gas-table" border="0"><tbody class="data-group day-freeze">
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">日冻结:</span> </td>
+            <td style="width:16%;text-align:right"><span class="label-text">日冻结:</span> </td>
 
-            <td style="width:15%"><span id="day1" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day1" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day2" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day2" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day3" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day3" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day4" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day4" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day5" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day5" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day6" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day6" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day7" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day7" style="font-weight:bold;"></span></td>
 
         </tr>
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">日冻结量(10⁻3 m³):</span> </td>
+            <td style="width:16%;text-align:right"><span class="label-text">日冻结量(10⁻³ m³):</span> </td>
 
-            <td style="width:15%"><span id="day1_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day1_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day2_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day2_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day3_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day3_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day4_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day4_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day5_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day5_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day6_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day6_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="day7_value" style="font-weight:bold;"></span></td>
+            <td style="width:12%"><span id="day7_value" style="font-weight:bold;"></span></td>
 
         </tr>
         </tbody></table>
@@ -694,19 +700,19 @@
     <table class="gas-table" border="0"><tbody class="data-group month-freeze">
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">月冻结:</span> </td>
+            <td style="width:16%;text-align:right"><span class="label-text">月冻结:</span> </td>
 
-            <td style="width:15%"><span id="month1" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month1" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month2" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month2" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month3" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month3" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month4" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month4" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month5" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month5" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month6" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month6" style="font-weight:bold;"></span></td>
 
             <td></td>
 
@@ -714,19 +720,19 @@
 
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">月冻结量(10⁻3 m³):</span> </td>
+            <td style="width:16%;text-align:right"><span class="label-text">月冻结量(10⁻³ m³):</span> </td>
 
-            <td style="width:15%"><span id="month1_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month1_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month2_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month2_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month3_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month3_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month4_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month4_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month5_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month5_value" style="font-weight:bold;"></span></td>
 
-            <td style="width:15%"><span id="month6_value" style="font-weight:bold;"></span></td>
+            <td style="width:14%"><span id="month6_value" style="font-weight:bold;"></span></td>
 
             <td></td>
 
@@ -737,19 +743,39 @@
         </tbody></table>
 
     <table class="gas-table" border="0"><tbody class="data-group valve-log">
+		 <tr>
+
+            <td></td>
+
+            <td style="width:12%;text-align:center"><span class="label-text">时间</span> </td>
+
+            <td></td>
+
+           <td style="width:12%;text-align:center"><span class="label-text">事件类型</span> </td>
+
+            <td></td>
+
+            <td style="width:12%;text-align:center"><span class="label-text">详情</span> </td>
+
+            <td></td>
+
+            <td></td>
+
+        </tr>
+
         <tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
+            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
 
-            <td style="width:15%"><span id="event_datetime1" style="font-weight:bold;"></span></td>
-
-            <td></td>
-
-            <td style="width:15%"><span id="event_type1" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime1" style="font-weight:bold;"></span></td>
 
             <td></td>
 
-            <td style="width:15%"><span id="event_details1" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type1" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:6%"><span id="event_details1" style="font-weight:bold;"></span></td>
 
             <td></td>
 
@@ -758,17 +784,17 @@
         </tr>
 		<tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录2:</span> </td>
+            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录2:</span> </td>
 
-            <td style="width:15%"><span id="event_datetime2" style="font-weight:bold;"></span></td>
-
-            <td></td>
-
-            <td style="width:15%"><span id="event_type2" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime2" style="font-weight:bold;"></span></td>
 
             <td></td>
 
-            <td style="width:15%"><span id="event_details2" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type2" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:6%"><span id="event_details2" style="font-weight:bold;"></span></td>
 
             <td></td>
 
@@ -777,17 +803,17 @@
         </tr>
 				<tr>
 
-            <td style="width:10%;text-align:right"><span class="label-text">关阀事件记录3:</span> </td>
+            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录3:</span> </td>
 
-            <td style="width:15%"><span id="event_datetime3" style="font-weight:bold;"></span></td>
-
-            <td></td>
-
-            <td style="width:15%"><span id="event_type3" style="font-weight:bold;"></span></td>
+            <td style="width:22%"><span id="event_datetime3" style="font-weight:bold;"></span></td>
 
             <td></td>
 
-            <td style="width:15%"><span id="event_details3" style="font-weight:bold;"></span></td>
+            <td style="width:8%"><span id="event_type3" style="font-weight:bold;"></span></td>
+
+            <td></td>
+
+            <td style="width:6%"><span id="event_details3" style="font-weight:bold;"></span></td>
 
             <td></td>
 
