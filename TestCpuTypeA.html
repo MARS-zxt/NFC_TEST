@@ -17,7 +17,7 @@
            margin: 0; padding: 40px 20px;
         }
         .content-wrapper { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(2px); border-radius: 24px; padding: 20px 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-		.glass-card { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 28px; padding: 28px 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s ease; }
+		.glass-card { max-width: 1300px; margin: 0 auto; background: rgba(255,255,255,0.62); backdrop-filter: blur(24px) saturate(1.2); -webkit-backdrop-filter: blur(24px) saturate(1.2); border-radius: 28px; padding: 28px 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.35); transition: all 0.3s ease; }
 		.formtd, .formth { border: 1px solid #333; }
 		h3 { text-align: center; font-size: 28px; font-weight: 600; margin: 0 0 28px 0; color: #1e293b; letter-spacing: 1px; position: relative; padding-bottom: 12px; }
         h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 2px; }
@@ -39,7 +39,9 @@
 
         /* 测试数据写入区块样式 */
         .data-section-header td {
-            background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+            background: rgba(232, 240, 254, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             font-weight: 600;
             color: #1e3a5f;
             padding: 10px 14px;
@@ -48,7 +50,9 @@
         .data-section-header td:first-child { border-radius: 10px 0 0 0; }
         .data-section-header td:last-child { border-radius: 0 10px 0 0; }
         .data-sub-header td {
-            background: rgba(241, 245, 249, 0.7);
+            background: rgba(241, 245, 249, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #475569;
             font-weight: 500;
             font-size: 13px;
@@ -58,10 +62,13 @@
             width: 100%;
             box-sizing: border-box;
             padding: 6px 8px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid rgba(203, 213, 225, 0.5);
             border-radius: 6px;
             font-size: 13px;
             font-family: 'Consolas', 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
         .data-input:focus {
             outline: none;
@@ -72,11 +79,14 @@
             width: 100%;
             box-sizing: border-box;
             padding: 6px 4px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid rgba(203, 213, 225, 0.5);
             border-radius: 6px;
             font-size: 13px;
             text-align: center;
             font-family: 'Consolas', 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
         .data-input-num:focus {
             outline: none;

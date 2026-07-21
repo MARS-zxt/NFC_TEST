@@ -62,17 +62,19 @@
 
             margin: 0 auto;
 
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.62);
 
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(24px) saturate(1.2);
+
+            -webkit-backdrop-filter: blur(24px) saturate(1.2);
 
             border-radius: 28px;
 
             padding: 28px 32px;
 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
 
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.35);
 
             transition: all 0.3s ease;
 
@@ -151,84 +153,14 @@
 
 
         .data-group tr td {
-
-            backdrop-filter: blur(6px);
-
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             padding: 12px 10px;
-
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
         }
 
-
-
-        .data-group.token-input tr td {
-
-            background: rgba(245, 248, 254, 0.80);
-
-        }
-
-
-
-        .data-group.card-info tr td {
-
-            background: rgba(237, 243, 252, 0.80);
-
-        }
-
-
-
-        .data-group.day-freeze tr td {
-
-            background: rgba(214, 228, 248, 0.80);
-
-        }
-
-
-
-        .data-group.month-freeze tr td {
-
-            background: rgba(189, 210, 240, 0.80);
-
-        }
-
-
-
-        .data-group.valve-log tr td {
-
-            background: rgba(164, 192, 230, 0.80);
-
-        }
-
-
-
-        .data-group tr:first-of-type td {
-
-            border-top: 1px solid rgba(148, 163, 184, 0.35);
-
-        }
-
-
-
-        .data-group tr:last-of-type td {
-
-            border-bottom: 1px solid rgba(148, 163, 184, 0.35);
-
-        }
-
-
-
-        .data-group tr td:first-child {
-
-            border-left: 1px solid rgba(148, 163, 184, 0.35);
-
-        }
-
-
-
-        .data-group tr td:last-child {
-
-            border-right: 1px solid rgba(148, 163, 184, 0.35);
-
-        }
+        .data-group tr:last-of-type td { border-bottom: none; }
 
 
 
@@ -414,7 +346,11 @@
 
 
 
-         @media (max-width: 900px) {
+         .input-error { border: 2px solid #ef4444 !important; background: #fef2f2; }
+        .error-hint { color: #ef4444; font-size: 12px; margin-left: 4px; display: none; }
+        .error-hint.show { display: inline; }
+
+        @media (max-width: 900px) {
 
             .glass-card {
 
@@ -490,9 +426,9 @@
 
             </SELECT></td>
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1(10位)</span> </td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token1:</span> </td>
 
-            <td style="width:14%"><INPUT id=tokenID1 value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID1 value="" type=text oninput="validateToken('tokenID1')" /><span class="error-hint" id="tokenID1Hint">请输入20位数字</span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result1</span> </td>
 
@@ -512,7 +448,7 @@
 
             <td style="width:8%;text-align:right"><span style="color: red;">*</span><span class="label-text">密钥(16字节): </span></td>
 
-            <td style="width:20%"><INPUT id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" />
+            <td style="width:20%"><INPUT id=key type=text maxlength="32" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" placeholder="57415443484441544154696D65434F53" oninput="validateKey()" /><span class="error-hint" id="keyHint">请输入32位密钥(16字节)</span>
 
             </td>
 
@@ -524,9 +460,9 @@
 
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token2:</span></td>
 
-            <td style="width:14%"><INPUT id=tokenID2 value="72118514774802197971"  type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID2 value="" type=text oninput="validateToken('tokenID2')" /><span class="error-hint" id="tokenID2Hint">请输入20位数字</span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result2 </span></td>
 
@@ -552,9 +488,9 @@
 
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token3:</span></td>
 
-            <td style="width:14%"><INPUT id=tokenID3  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID3 value="" type=text oninput="validateToken('tokenID3')" /><span class="error-hint" id="tokenID3Hint">请输入20位数字</span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result3 </span></td>
 
@@ -576,9 +512,9 @@
 			<td style="width:13%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token4:</span></td>
 
-            <td style="width:14%"><INPUT id=tokenID4  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID4 value="" type=text oninput="validateToken('tokenID4')" /><span class="error-hint" id="tokenID4Hint">请输入20位数字</span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result4 </span></td>
 
@@ -597,9 +533,9 @@
 			<td></td>
 			<td></td>
 
-            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5 (10位)</span></td>
+            <td style="width:7%;text-align:right"><span style="color: red;">*</span><span class="label-text">token5:</span></td>
 
-            <td style="width:14%"><INPUT id=tokenID5  value="72118514774802197971" type=text  /></td>
+            <td style="width:14%"><INPUT id=tokenID5 value="" type=text oninput="validateToken('tokenID5')" /><span class="error-hint" id="tokenID5Hint">请输入20位数字</span></td>
 
             <td style="width:5%;text-align:right"><span style="color: red;">*</span><span class="label-text">result5 </span></td>
 
@@ -861,7 +797,39 @@
 
     var messageText = document.getElementById("messageText");
 
-    ReadTypeACPUCard = async function () {
+    // ===== 输入校验函数 =====
+    validateKey = function () {
+        var el = document.getElementById("key");
+        var hint = document.getElementById("keyHint");
+        if (el.value.length !== 32) {
+            el.classList.add("input-error");
+            if (hint) hint.classList.add("show");
+            return false;
+        } else {
+            el.classList.remove("input-error");
+            if (hint) hint.classList.remove("show");
+            return true;
+        }
+    };
+
+    validateToken = function (id) {
+        var el = document.getElementById(id);
+        var hint = document.getElementById(id + "Hint");
+        var val = el.value;
+        if (val.length !== 20 || !/^\d{20}$/.test(val)) {
+            el.classList.add("input-error");
+            if (hint) hint.classList.add("show");
+            return false;
+        } else {
+            el.classList.remove("input-error");
+            if (hint) hint.classList.remove("show");
+            return true;
+        }
+    };
+
+ReadTypeACPUCard = async function () {
+
+        if (!validateKey()) { alert("密钥长度不正确，请输入32位十六进制密钥（16字节）"); return; }
 
         var r;
 
@@ -900,6 +868,14 @@
     }
 
     writeTypeACPUCard = async function () {
+
+        var tokenNames = ["tokenID1", "tokenID2", "tokenID3", "tokenID4", "tokenID5"];
+        for (var i = 0; i < tokenNames.length; i++) {
+            if (!validateToken(tokenNames[i])) {
+                alert("第" + (i + 1) + "个token输入不合法，请输入20位数字");
+                return;
+            }
+        }
 
         var r;
 
@@ -1008,46 +984,6 @@
         var result5 = '99'
 
         var tokenNum = document.getElementById("tokenNum").value
-
-        if(token1.length !== 20){
-
-            alert("要写入20位token:"+r.code);
-
-            return;
-
-        }
-
-        if(token1.length !== 20){
-
-            alert("要写入20位token:"+r.code);
-
-            return;
-
-        }
-
-        if(token3.length !== 20){
-
-            alert("要写入20位token:"+r.code);
-
-            return;
-
-        }
-
-        if(token4.length !== 20){
-
-            alert("要写入20位token:"+r.code);
-
-            return;
-
-        }
-
-        if(token5.length !== 20){
-
-            alert("要写入20位token:"+r.code);
-
-            return;
-
-        }
 
         var token = tokenNum.toString(16).padStart(2, '0') + bytesToHex(decimal20ToBCD10(token1))  + bytesToHex(decimal20ToBCD10(token2)) + bytesToHex(decimal20ToBCD10(token3)) + bytesToHex(decimal20ToBCD10(token4)) + bytesToHex(decimal20ToBCD10(token5)) + int8StrToHex(result1) + int8StrToHex(result2) + int8StrToHex(result3) + int8StrToHex(result4) + int8StrToHex(result5)
 

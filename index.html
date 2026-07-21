@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC 燃气表 CPU 卡测试工具</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background-image: url('image/vector-art-colorful-8140x8140-12144.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* ===== 主布局 ===== */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar {
+            width: 220px;
+            min-width: 220px;
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.25s ease, min-width 0.25s ease;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar.collapsed {
+            width: 52px;
+            min-width: 52px;
+        }
+
+        /* 顶栏：Logo + 折叠按钮 */
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            min-height: 56px;
+        }
+
+        .sidebar-logo {
+            font-size: 15px;
+            font-weight: 700;
+            color: #f1f5f9;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-logo .logo-icon {
+            display: inline-block;
+            width: 24px;
+            text-align: center;
+            margin-right: 6px;
+        }
+
+        .sidebar.collapsed .sidebar-logo { display: none; }
+
+        .btn-toggle {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 6px;
+            line-height: 1;
+            transition: color 0.15s, background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .btn-toggle:hover {
+            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* 菜单区 */
+        .sidebar-nav {
+            flex: 1;
+            padding: 12px 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            padding: 8px 16px 4px;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .nav-section-title { display: none; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 11px 16px;
+            cursor: pointer;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 123, 255, 0.12);
+            color: #60a5fa;
+            border-left-color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .nav-item .nav-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .sidebar.collapsed .nav-item {
+            padding: 12px 0;
+            justify-content: center;
+            border-left: none;
+            border-right: 3px solid transparent;
+        }
+
+        .sidebar.collapsed .nav-item.active {
+            border-left: none;
+            border-right-color: #3b82f6;
+        }
+
+        .sidebar.collapsed .nav-item .nav-icon {
+            margin-right: 0;
+            font-size: 20px;
+        }
+
+        .sidebar.collapsed .nav-label { display: none; }
+
+        /* 底部 */
+        .sidebar-footer {
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 11px;
+            color: #475569;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .sidebar-footer { display: none; }
+
+        /* ===== 内容区 ===== */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+            position: relative;
+        }
+
+        /* 顶条 */
+        .content-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.62);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+            flex-shrink: 0;
+        }
+
+        .content-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .content-hint {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* iframe */
+        .iframe-wrapper {
+            flex: 1;
+            position: relative;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin: 12px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* iframe 加载中遮罩 */
+        .iframe-loading {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(248, 250, 252, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 5;
+        }
+
+        .iframe-loading.show { opacity: 1; }
+
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 52px;
+                min-width: 52px;
+            }
+            .sidebar .sidebar-logo,
+            .sidebar .nav-label,
+            .sidebar .nav-section-title,
+            .sidebar .sidebar-footer { display: none; }
+            .sidebar .nav-item {
+                padding: 12px 0;
+                justify-content: center;
+                border-left: none;
+            }
+            .sidebar .nav-item .nav-icon { margin-right: 0; font-size: 20px; }
+            .sidebar .nav-item.active { border-left: none; border-right: 3px solid #3b82f6; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- ===== 侧边栏 ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-logo">
+                    <span class="logo-icon">📡</span>NFC 测试工具
+                </span>
+                <button class="btn-toggle" id="btnToggle" title="折叠/展开侧边栏">☰</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">功能页面</div>
+                <div class="nav-item active" data-page="OpenCpuTypeACardDemo.html" data-title="开卡界面">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">开卡</span>
+                </div>
+                <div class="nav-item" data-page="LoadCpuTypeACardDemo.html" data-title="燃气卡读写界面">
+                    <span class="nav-icon">📖</span>
+                    <span class="nav-label">读写卡</span>
+                </div>
+                <div class="nav-item" data-page="TestCpuTypeA.html" data-title="APDU 测试界面">
+                    <span class="nav-icon">🔧</span>
+                    <span class="nav-label">APDU 测试</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">NFC TypeA CPU Card Tool</div>
+        </aside>
+
+        <!-- ===== 内容区 ===== -->
+        <main class="content-area">
+            <div class="content-topbar">
+                <span class="content-title" id="contentTitle">开卡界面</span>
+                <span class="content-hint">← 侧边栏可折叠</span>
+            </div>
+            <div class="iframe-wrapper">
+                <div class="iframe-loading show" id="loadingOverlay">
+                    <div class="spinner"></div>
+                </div>
+                <iframe id="contentFrame" src="OpenCpuTypeACardDemo.html" title="主内容区"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            var sidebar = document.getElementById("sidebar");
+            var btnToggle = document.getElementById("btnToggle");
+            var contentFrame = document.getElementById("contentFrame");
+            var contentTitle = document.getElementById("contentTitle");
+            var loadingOverlay = document.getElementById("loadingOverlay");
+            var navItems = document.querySelectorAll(".nav-item");
+
+            var STORAGE_KEY_COLLAPSED = "nfc_tool_sidebar_collapsed";
+            var STORAGE_KEY_PAGE = "nfc_tool_active_page";
+
+            // ---- 状态恢复 ----
+            var collapsed = localStorage.getItem(STORAGE_KEY_COLLAPSED) === "1";
+            if (collapsed) {
+                sidebar.classList.add("collapsed");
+            }
+
+            var savedPage = localStorage.getItem(STORAGE_KEY_PAGE);
+            if (savedPage) {
+                navItems.forEach(function (item) {
+                    if (item.getAttribute("data-page") === savedPage) {
+                        item.classList.add("active");
+                        contentFrame.src = savedPage;
+                        contentTitle.textContent = item.getAttribute("data-title") || "";
+                    } else {
+                        item.classList.remove("active");
+                    }
+                });
+            }
+
+            // ---- 折叠切换 ----
+            btnToggle.addEventListener("click", function () {
+                sidebar.classList.toggle("collapsed");
+                var isCollapsed = sidebar.classList.contains("collapsed");
+                localStorage.setItem(STORAGE_KEY_COLLAPSED, isCollapsed ? "1" : "0");
+            });
+
+            // ---- 菜单切换 ----
+            navItems.forEach(function (item) {
+                item.addEventListener("click", function () {
+                    var page = item.getAttribute("data-page");
+                    if (contentFrame.src.indexOf(page) !== -1 && item.classList.contains("active")) {
+                        return; // 已经在当前页，不重复加载
+                    }
+
+                    // 更新激活状态
+                    navItems.forEach(function (n) { n.classList.remove("active"); });
+                    item.classList.add("active");
+
+                    // 显示加载遮罩
+                    loadingOverlay.classList.add("show");
+
+                    // 切换 iframe
+                    contentFrame.src = page;
+                    contentTitle.textContent = item.getAttribute("data-title") || "";
+
+                    // 保存到 localStorage
+                    localStorage.setItem(STORAGE_KEY_PAGE, page);
+                });
+            });
+
+            // ---- iframe 加载完成 ----
+            contentFrame.addEventListener("load", function () {
+                loadingOverlay.classList.remove("show");
+            });
+
+            // ---- 小屏自动折叠 ----
+            function handleResize() {
+                // 只在从未手动设置过折叠状态时自动处理
+                if (localStorage.getItem(STORAGE_KEY_COLLAPSED) === null) {
+                    if (window.innerWidth < 900) {
+                        sidebar.classList.add("collapsed");
+                    }
+                }
+            }
+            handleResize();
+        })();
+    </script>
+</body>
+
+</html>
