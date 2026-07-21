@@ -21,7 +21,8 @@
 		.formtd, .formth { border: 1px solid #333; }
 		h3 { text-align: center; font-size: 28px; font-weight: 600; margin: 0 0 28px 0; color: #1e293b; letter-spacing: 1px; position: relative; padding-bottom: 12px; }
         h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 2px; }
-        .gas-table { width: 100%; border-collapse: collapse; background: transparent; }
+        .gas-table { width: 100%; table-layout: fixed; border-collapse: collapse; background: transparent; }
+        .gas-table + .gas-table { margin-top: 18px; }
         .gas-table td { padding: 12px 10px; vertical-align: middle; }
         .label-text { font-weight: 600; color: #334155; white-space: nowrap; }
         .required { color: #ef4444; margin-right: 4px; }
@@ -137,6 +138,15 @@
             </td>
         </tr>
 
+    </table>
+
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:10%"><col style="width:15%">
+            <col style="width:10%"><col style="width:15%">
+            <col style="width:10%"><col style="width:15%">
+            <col style="width:10%"><col style="width:15%">
+        </colgroup>
         <!-- ===== 文件0008 燃气表状态数据写入 ===== -->
         <tbody class="data-group">
         <tr class="data-section-header">
@@ -165,6 +175,15 @@
         </tr>
         </tbody>
 
+    </table>
+
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:10%"><col style="width:16%">
+            <col style="width:8%"><col style="width:14%">
+            <col style="width:6%"><col style="width:12%">
+            <col style="width:17%"><col style="width:17%">
+        </colgroup>
         <!-- ===== 文件0009 冻结日志数据写入 ===== -->
         <tbody class="data-group">
         <tr class="data-section-header">
@@ -178,7 +197,7 @@
         <tr class="data-sub-header"><td colspan="8">日冻结数据 (bytes 0-31)</td></tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">起始日:</span></td>
-            <td style="width:15%">
+            <td style="width:16%">
                 <input id="f09_dayY" class="data-input-num" style="width:30%" value="26" placeholder="年" maxlength="2">-
                 <input id="f09_dayM" class="data-input-num" style="width:20%" value="7" placeholder="月" maxlength="2">-
                 <input id="f09_dayD" class="data-input-num" style="width:20%" value="21" placeholder="日" maxlength="2">
@@ -199,7 +218,7 @@
         <tr class="data-sub-header"><td colspan="8">月冻结数据 (bytes 32-58)</td></tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">起始月:</span></td>
-            <td style="width:15%">
+            <td style="width:16%">
                 <input id="f09_monY" class="data-input-num" style="width:35%" value="26" placeholder="年" maxlength="2">-
                 <input id="f09_monM" class="data-input-num" style="width:25%" value="7" placeholder="月" maxlength="2">
                 <span class="data-label-sm">条数:</span><input id="f09_monCount" class="data-input-num" style="width:20%" value="6" placeholder="条" maxlength="1">
@@ -218,38 +237,41 @@
         <tr class="data-sub-header"><td colspan="8">关阀事件记录 (bytes 59-86)</td></tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">事件数:</span></td>
-            <td style="width:15%"><input id="f09_evtCount" class="data-input-num" style="width:40px" value="0" maxlength="1"></td>
+            <td style="width:16%"><input id="f09_evtCount" class="data-input-num" style="width:40px" value="0" maxlength="1"></td>
             <td colspan="6"></td>
         </tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">事件1:</span></td>
-            <td style="width:15%">类型:<input id="f09_evt1Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:10%;text-align:right">时间:</td>
-            <td style="width:15%"><input id="f09_evt1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:10%;text-align:right">详情:</td>
-            <td style="width:15%"><input id="f09_evt1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:16%">类型:<input id="f09_evt1Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:8%;text-align:right">时间:</td>
+            <td style="width:14%"><input id="f09_evt1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="f09_evt1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">事件2:</span></td>
-            <td>类型:<input id="f09_evt2Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="text-align:right">时间:</td>
-            <td><input id="f09_evt2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="text-align:right">详情:</td>
-            <td><input id="f09_evt2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:16%">类型:<input id="f09_evt2Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:8%;text-align:right">时间:</td>
+            <td style="width:14%"><input id="f09_evt2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="f09_evt2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
             <td style="width:10%;text-align:right"><span class="data-label-sm">事件3:</span></td>
-            <td>类型:<input id="f09_evt3Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="text-align:right">时间:</td>
-            <td><input id="f09_evt3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="text-align:right">详情:</td>
-            <td><input id="f09_evt3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:16%">类型:<input id="f09_evt3Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:8%;text-align:right">时间:</td>
+            <td style="width:14%"><input id="f09_evt3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="f09_evt3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         </tbody>
 
+    </table>
+
+    <table class="gas-table" border="0">
         <tr>
             <td colspan=2>
                 <textarea id="messageText" name="messageText" rows="20" style="width:99%" readonly></textarea>
