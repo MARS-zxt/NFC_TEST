@@ -35,6 +35,78 @@
         .input-error { border: 2px solid #ef4444 !important; background: #fef2f2; }
         .error-hint { color: #ef4444; font-size: 12px; margin-left: 4px; display: none; }
         .error-hint.show { display: inline; }
+
+        /* 测试数据写入区块样式 */
+        .data-section-header td {
+            background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+            font-weight: 600;
+            color: #1e3a5f;
+            padding: 10px 14px;
+            font-size: 15px;
+        }
+        .data-section-header td:first-child { border-radius: 10px 0 0 0; }
+        .data-section-header td:last-child { border-radius: 0 10px 0 0; }
+        .data-sub-header td {
+            background: rgba(241, 245, 249, 0.7);
+            color: #475569;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 8px 10px;
+        }
+        .data-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        .data-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.12);
+        }
+        .data-input-num {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 6px 4px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        .data-input-num:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.12);
+        }
+        .data-label-sm {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .btn-write {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(16,185,129,0.3);
+        }
+        .btn-write:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(16,185,129,0.4);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        .btn-write:active { transform: translateY(1px); }
+
     </style>
 </head>
 
@@ -64,6 +136,120 @@
                 <INPUT class="btn-blue" id=send type=button value=发送 style="width:auto; min-width:110px; padding:8px 16px;" onclick="CommandTypeACPU()" />
             </td>
         </tr>
+
+        <!-- ===== 文件0008 燃气表状态数据写入 ===== -->
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:10%;text-align:right"><span style="font-weight:700;color:#1e3a5f;">文件0008</span></td>
+            <td style="width:15%"><span style="font-size:12px;color:#64748b;">燃气表状态 (34字节)</span></td>
+            <td colspan="6" style="text-align:right">
+                <button class="btn-write" onclick="writeTestData0008()">写入0008</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">表状态(4B):</span></td>
+            <td style="width:15%"><input id="f08_meterStatus" class="data-input" value="00000000" maxlength="8" placeholder="8位hex"></td>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">阀门状态(4B):</span></td>
+            <td style="width:15%"><input id="f08_maskStatus" class="data-input" value="00000000" maxlength="8" placeholder="8位hex"></td>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">累计气量(4B):</span></td>
+            <td style="width:15%"><input id="f08_totalGas" class="data-input" value="0" placeholder="十进制"></td>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">信用额度(4B):</span></td>
+            <td style="width:15%"><input id="f08_creditLimit" class="data-input" value="0" placeholder="十进制"></td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">余额(4B):</span></td>
+            <td style="width:15%"><input id="f08_balance" class="data-input" value="0" placeholder="十进制"></td>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">主电电压(2B):</span></td>
+            <td style="width:15%"><input id="f08_mainVoltage" class="data-input" value="0" placeholder="十进制"></td>
+            <td colspan="4"></td>
+        </tr>
+        </tbody>
+
+        <!-- ===== 文件0009 冻结日志数据写入 ===== -->
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:10%;text-align:right"><span style="font-weight:700;color:#1e3a5f;">文件0009</span></td>
+            <td style="width:15%"><span style="font-size:12px;color:#64748b;">冻结日志 (87字节)</span></td>
+            <td colspan="6" style="text-align:right">
+                <button class="btn-write" onclick="writeTestData0009()">写入0009</button>
+            </td>
+        </tr>
+        <!-- 日冻结 -->
+        <tr class="data-sub-header"><td colspan="8">日冻结数据 (bytes 0-31)</td></tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">起始日:</span></td>
+            <td style="width:15%">
+                <input id="f09_dayY" class="data-input-num" style="width:30%" value="26" placeholder="年" maxlength="2">-
+                <input id="f09_dayM" class="data-input-num" style="width:20%" value="7" placeholder="月" maxlength="2">-
+                <input id="f09_dayD" class="data-input-num" style="width:20%" value="21" placeholder="日" maxlength="2">
+                <span class="data-label-sm">条数:</span><input id="f09_dayCount" class="data-input-num" style="width:15%" value="7" placeholder="条" maxlength="1">
+            </td>
+            <td colspan="6">
+                <span class="data-label-sm">日量:</span>
+                <input id="f09_day1" class="data-input-num" style="width:10%" value="0" placeholder="d1">
+                <input id="f09_day2" class="data-input-num" style="width:10%" value="0" placeholder="d2">
+                <input id="f09_day3" class="data-input-num" style="width:10%" value="0" placeholder="d3">
+                <input id="f09_day4" class="data-input-num" style="width:10%" value="0" placeholder="d4">
+                <input id="f09_day5" class="data-input-num" style="width:10%" value="0" placeholder="d5">
+                <input id="f09_day6" class="data-input-num" style="width:10%" value="0" placeholder="d6">
+                <input id="f09_day7" class="data-input-num" style="width:10%" value="0" placeholder="d7">
+            </td>
+        </tr>
+        <!-- 月冻结 -->
+        <tr class="data-sub-header"><td colspan="8">月冻结数据 (bytes 32-58)</td></tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">起始月:</span></td>
+            <td style="width:15%">
+                <input id="f09_monY" class="data-input-num" style="width:35%" value="26" placeholder="年" maxlength="2">-
+                <input id="f09_monM" class="data-input-num" style="width:25%" value="7" placeholder="月" maxlength="2">
+                <span class="data-label-sm">条数:</span><input id="f09_monCount" class="data-input-num" style="width:20%" value="6" placeholder="条" maxlength="1">
+            </td>
+            <td colspan="6">
+                <span class="data-label-sm">月量:</span>
+                <input id="f09_mon1" class="data-input-num" style="width:11%" value="0" placeholder="m1">
+                <input id="f09_mon2" class="data-input-num" style="width:11%" value="0" placeholder="m2">
+                <input id="f09_mon3" class="data-input-num" style="width:11%" value="0" placeholder="m3">
+                <input id="f09_mon4" class="data-input-num" style="width:11%" value="0" placeholder="m4">
+                <input id="f09_mon5" class="data-input-num" style="width:11%" value="0" placeholder="m5">
+                <input id="f09_mon6" class="data-input-num" style="width:11%" value="0" placeholder="m6">
+            </td>
+        </tr>
+        <!-- 关阀事件 -->
+        <tr class="data-sub-header"><td colspan="8">关阀事件记录 (bytes 59-86)</td></tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">事件数:</span></td>
+            <td style="width:15%"><input id="f09_evtCount" class="data-input-num" style="width:40px" value="0" maxlength="1"></td>
+            <td colspan="6"></td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">事件1:</span></td>
+            <td style="width:15%">类型:<input id="f09_evt1Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:10%;text-align:right">时间:</td>
+            <td style="width:15%"><input id="f09_evt1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:10%;text-align:right">详情:</td>
+            <td style="width:15%"><input id="f09_evt1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">事件2:</span></td>
+            <td>类型:<input id="f09_evt2Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="text-align:right">时间:</td>
+            <td><input id="f09_evt2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="text-align:right">详情:</td>
+            <td><input id="f09_evt2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:10%;text-align:right"><span class="data-label-sm">事件3:</span></td>
+            <td>类型:<input id="f09_evt3Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="text-align:right">时间:</td>
+            <td><input id="f09_evt3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="text-align:right">详情:</td>
+            <td><input id="f09_evt3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        </tbody>
+
         <tr>
             <td colspan=2>
                 <textarea id="messageText" name="messageText" rows="20" style="width:99%" readonly></textarea>
@@ -123,6 +309,128 @@
 ClearLog = async function (command) {
         messageText.value = "";
     }
+
+    // ===== 测试数据写入辅助函数 =====
+    function decToHex4(val) {
+        var n = parseInt(val) || 0;
+        return ("0000000" + n.toString(16)).slice(-8);
+    }
+    function decToHex2(val) {
+        var n = parseInt(val) || 0;
+        return ("000" + n.toString(16)).slice(-4);
+    }
+    function decToHex1(val) {
+        var n = parseInt(val) || 0;
+        return ("0" + n.toString(16)).slice(-2);
+    }
+
+    // ===== 写入文件0008 燃气表状态 =====
+    writeTestData0008 = async function() {
+        if (!handle) { alert("请先初始化连接"); return; }
+        var keyVal = document.getElementById("key").value;
+
+        // 1. 选择MF主目录
+        messageText.value += ">>1.选择MF主目录(3F00)\r\n";
+        var r = await sendCommand(cmd_SelectFileByID("3F00"), handle);
+        r.code = r.data.substr(r.data.length - 4, 4);
+        messageText.value += r.msg;
+        if (r.code != "9000") { alert("选择MF失败:" + r.code); return; }
+
+        // 2. 外部认证
+        messageText.value += ">>2.外部认证\r\n";
+        r = await tripleDesExternalAuthenticate("00", keyVal);
+        messageText.value += r.msg;
+        r.code = r.data ? r.data.substr(r.data.length - 4, 4) : r.code;
+        if (r.code != "9000") { alert("外部认证失败:" + r.code); return; }
+
+        // 3. 选择ADF01
+        messageText.value += ">>3.选择ADF01(1001)\r\n";
+        r = await sendCommand(cmd_SelectFileByID("1001"), handle);
+        r.code = r.data.substr(r.data.length - 4, 4);
+        messageText.value += r.msg;
+        if (r.code != "9000") { alert("选择ADF01失败:" + r.code); return; }
+
+        // 4. 打包数据并写入
+        messageText.value += ">>4.写入0008燃气表状态\r\n";
+        var readDate = dateFormatHex("YYYYMMDDWWHHmmss", new Date()) + "00000000";
+        var data = readDate
+            + decToHex4(document.getElementById("f08_meterStatus").value)
+            + decToHex4(document.getElementById("f08_maskStatus").value)
+            + decToHex4(document.getElementById("f08_totalGas").value)
+            + decToHex4(document.getElementById("f08_creditLimit").value)
+            + decToHex4(document.getElementById("f08_balance").value)
+            + decToHex2(document.getElementById("f08_mainVoltage").value);
+        var updateCmd = cmd_UpdateBinary("00", data);
+        var result = await WriteFileData("0008", updateCmd, keyVal);
+        messageText.value += result.msg;
+    };
+
+    // ===== 写入文件0009 冻结日志 =====
+    writeTestData0009 = async function() {
+        if (!handle) { alert("请先初始化连接"); return; }
+        var keyVal = document.getElementById("key").value;
+
+        // 1. 选择MF主目录
+        messageText.value += ">>1.选择MF主目录(3F00)\r\n";
+        var r = await sendCommand(cmd_SelectFileByID("3F00"), handle);
+        r.code = r.data.substr(r.data.length - 4, 4);
+        messageText.value += r.msg;
+        if (r.code != "9000") { alert("选择MF失败:" + r.code); return; }
+
+        // 2. 外部认证
+        messageText.value += ">>2.外部认证\r\n";
+        r = await tripleDesExternalAuthenticate("00", keyVal);
+        messageText.value += r.msg;
+        r.code = r.data ? r.data.substr(r.data.length - 4, 4) : r.code;
+        if (r.code != "9000") { alert("外部认证失败:" + r.code); return; }
+
+        // 3. 选择ADF01
+        messageText.value += ">>3.选择ADF01(1001)\r\n";
+        r = await sendCommand(cmd_SelectFileByID("1001"), handle);
+        r.code = r.data.substr(r.data.length - 4, 4);
+        messageText.value += r.msg;
+        if (r.code != "9000") { alert("选择ADF01失败:" + r.code); return; }
+
+        // 4. 打包数据并写入
+        messageText.value += ">>4.写入0009冻结日志\r\n";
+        // 日冻结头 4B: year+month+day+count
+        var dayHeader = decToHex1(document.getElementById("f09_dayY").value)
+            + decToHex1(document.getElementById("f09_dayM").value)
+            + decToHex1(document.getElementById("f09_dayD").value)
+            + decToHex1(document.getElementById("f09_dayCount").value);
+        // 7条日冻结量 各4B
+        var dayData = "";
+        for (var i = 1; i <= 7; i++) {
+            dayData += decToHex4(document.getElementById("f09_day" + i).value);
+        }
+        // 月冻结头 3B + 1B padding
+        var monHeader = decToHex1(document.getElementById("f09_monY").value)
+            + decToHex1(document.getElementById("f09_monM").value)
+            + decToHex1(document.getElementById("f09_monCount").value);
+        // 6条月冻结量 各4B
+        var monData = "";
+        for (var i = 1; i <= 6; i++) {
+            monData += decToHex4(document.getElementById("f09_mon" + i).value);
+        }
+        // 关阀事件
+        var evtCount = parseInt(document.getElementById("f09_evtCount").value) || 0;
+        var evtData = decToHex1(String(evtCount));
+        for (var i = 1; i <= 3; i++) {
+            if (i <= evtCount) {
+                evtData += (document.getElementById("f09_evt" + i + "Type").value + "0000").slice(0, 4);
+                evtData += (document.getElementById("f09_evt" + i + "Time").value + "000000000000").slice(0, 12);
+                evtData += (document.getElementById("f09_evt" + i + "Detail").value + "00").slice(0, 2);
+            } else {
+                evtData += "000000000000000000"; // 18 hex chars = 9 zero bytes
+            }
+        }
+        var data = dayHeader + dayData + monHeader + monData + evtData;
+        var updateCmd = cmd_UpdateBinary("00", data);
+        var result = await WriteFileData("0009", updateCmd, keyVal);
+        messageText.value += result.msg;
+    };
+
+
 </script>
 
 </html>
