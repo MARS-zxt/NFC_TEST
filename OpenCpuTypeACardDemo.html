@@ -610,38 +610,80 @@
 
         }
 
-        //创建燃气冻结日志文件0009
+        //创建燃气表日冻结文件0009
 
         i2 = i2 + 1;
 
-        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表冻结状态文件" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表日冻结文件" + "\r\n";
 
-        r = await CreateCardFreezeLogFile();
+        r = await CreateCardDailyFreezeLogFile();
 
         if(r.code!="9000"){
 
-            alert("建立燃气表冻结状态文件失败:"+r.code);
+            alert("建立燃气表日冻结文件失败:"+r.code);
 
         }
 
-        //	return;
-
-        // 创建TOKEN文件001C
+        //创建燃气月冻结文件000A
 
         i2 = i2 + 1;
 
-        messageText.value = messageText.value + i1 + "-" + i2 + ".TOKEN文件" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表月冻结文件" + "\r\n";
 
-        r = await CreateLastTokenFile();
+        r = await CreateCardMonthlyFreezeLogFile();
 
         if(r.code!="9000"){
 
-            alert("建立TOKEN文件失败:"+r.code);
+            alert("建立燃气表月冻结文件失败:"+r.code);
+
+        }
+
+        //创建燃气表事件记录文件000B
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表事件记录文件" + "\r\n";
+
+        r = await CreateCardEventLogFile();
+
+        if(r.code!="9000"){
+
+            alert("建立燃气表事件记录文件失败:"+r.code);
+
+        }
+
+
+        // 创建TOKEN码文件001C
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".TOKEN码文件" + "\r\n";
+
+        r = await CreateTokenCodeFile();
+
+        if(r.code!="9000"){
+
+            alert("建立TOKEN码文件失败:"+r.code);
 
         //	return;
 
         }
 
+        // 创建TOKEN记录文件001D
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".TOKEN记录文件" + "\r\n";
+
+        r = await CreateTokenRecordFile();
+
+        if(r.code!="9000"){
+
+            alert("建立TOKEN记录文件失败:"+r.code);
+
+        //	return;
+
+        }
 
 
         // i2 = i2 + 1;
@@ -1148,17 +1190,17 @@
 
 
 
-    CreateCardFreezeLogFile = async function () {
+    CreateCardDailyFreezeLogFile = async function () {
 
         i3 = 1;
 
-        //1.创建燃气表冻结日志状态文件(二进制文件)
+        //1.创建燃气表日冻结文件(二进制文件)
 
         fileId = "0009";
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表冻结日志状态文件(二进制文件)" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表日冻结文件(二进制文件)" + "\r\n";
 
-        sdata = cmd_CreateBinaryFile(fileId, "0057");
+        sdata = cmd_CreateBinaryFile(fileId, "007C");
 
         result = await CommandTypeACPU(sdata);
 
@@ -1170,11 +1212,87 @@
 
         i3 = i3 + 1;
 
-        //2.写入燃气表冻结日志状态信息
+        //2.写入燃气表日冻结数据
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表冻结日志状态信息" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表日冻结数据" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","0000000000000000000000000000000000000000000000000000000000000000" + "000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000");
+        sdata=cmd_UpdateBinary("00","000000" + "00" + "00000000000000000000000000000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000000000000000000000000000"+ "00000000000000000000000000000000000000000000000000000000000000000000000000000000");
+
+        var result = await WriteFile(fileId, sdata);
+
+        return result;
+
+
+
+    }
+
+    CreateCardMonthlyFreezeLogFile = async function () {
+
+        i3 = 1;
+
+        //1.创建燃气表月冻结文件(二进制文件)
+
+        fileId = "000A";
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表月冻结文件(二进制文件)" + "\r\n";
+
+        sdata = cmd_CreateBinaryFile(fileId, "0033");
+
+        result = await CommandTypeACPU(sdata);
+
+        if (result.code != "9000") {
+
+            return result;
+
+        }
+
+        i3 = i3 + 1;
+
+        //2.写入燃气表月冻结状态数据
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表月冻结数据" + "\r\n";
+
+        sdata=cmd_UpdateBinary("00","0000" + "00" + "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+
+        var result = await WriteFile(fileId, sdata);
+
+        return result;
+
+
+
+    }
+
+    CreateCardEventLogFile = async function () {
+
+        i3 = 1;
+
+        //1.创建燃气表事件记录文件(二进制文件)
+
+        fileId = "000B";
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表事件记录文件(二进制文件)" + "\r\n";
+        
+        sdata = cmd_CreateBinaryFile(fileId, "00B5");
+
+        result = await CommandTypeACPU(sdata);
+
+        if (result.code != "9000") {
+
+            return result;
+
+        }
+
+        i3 = i3 + 1;
+
+        //2.写入燃气表事件记录数据
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表事件记录数据" + "\r\n";
+
+        sdata=cmd_UpdateBinary("00","00" + "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+
+                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ 
+                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+
+                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ 
+                                             "000000000000000000"+"000000000000000000"+ "000000000000000000"+ "000000000000000000" );
 
         var result = await WriteFile(fileId, sdata);
 
@@ -1185,18 +1303,17 @@
     }
 
 
-
-    CreateLastTokenFile = async function () {
+    CreateTokenCodeFile = async function () {
 
         i3 = 1;
 
-        //1.创建上次充值TOKEN文件(二进制文件)
+        //1.创建TOKEN码文件(二进制文件)
 
         fileId = "001C";
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建TOKEN文件(二进制文件)" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建TOKEN码文件(二进制文件)" + "\r\n";
 
-        sdata = cmd_CreateBinaryFile(fileId, "0038");
+        sdata = cmd_CreateBinaryFile(fileId, "0033");
 
         result = await CommandTypeACPU(sdata);
 
@@ -1210,9 +1327,9 @@
 
         //2.写入TOKEN值
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入充值TOKEN初始值" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入TOKEN初始值" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + "88" + "88" + "88" + "88" + "88");
+        sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")));
 
         var result = await WriteFile(fileId, sdata);
 
@@ -1220,6 +1337,39 @@
 
     }
 
+    CreateTokenRecordFile = async function () {
+
+        i3 = 1;
+
+        //1.创建TOKEN记录文件(二进制文件)
+
+        fileId = "001D";
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建TOKEN记录文件(二进制文件)" + "\r\n";
+
+        sdata = cmd_CreateBinaryFile(fileId, "0014");
+
+        result = await CommandTypeACPU(sdata);
+
+        if (result.code != "9000") {
+
+            return result;
+
+        }
+
+        i3 = i3 + 1;
+
+        //2.写入TOKEN记录数据
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入TOKEN记录初始值" + "\r\n";
+
+        sdata=cmd_UpdateBinary("00","0000000000" + "000000000000000000000000000000");
+
+        var result = await WriteFile(fileId, sdata);
+
+        return result;
+
+    }
 
 
     ExternalAuthenticate = async function () {
