@@ -454,7 +454,7 @@ ClearLog = async function (command) {
                 evtData += (document.getElementById("f09_evt" + i + "Time").value + "000000000000").slice(0, 12);
                 evtData += (document.getElementById("f09_evt" + i + "Detail").value + "00").slice(0, 2);
             } else {
-                evtData += "000000000000000000"; // 18 hex chars = 9 zero bytes
+                evtData += repeatHex("00", 9); // 9 zero bytes
             }
         }
         var data = dayHeader + dayData + monHeader + monData + evtData;

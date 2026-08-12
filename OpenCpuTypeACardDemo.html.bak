@@ -318,7 +318,7 @@
         //创建燃气冻结日志文件0009
 		i2 = i2 + 1;
 		messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表冻结状态文件" + "\r\n";
-		r = await CreateCardFreezeLogFile();
+		r = await CreateCardDailyFreezeLogFile();
 		if(r.code!="9000"){
 			alert("建立燃气表冻结状态文件失败:"+r.code);
 		}
@@ -326,7 +326,7 @@
         // 创建TOKEN文件001C
 		i2 = i2 + 1;
 		messageText.value = messageText.value + i1 + "-" + i2 + ".TOKEN文件" + "\r\n";
-		r = await CreateLastTokenFile();
+		r = await CreateTokenCodeFile();
 		if(r.code!="9000"){
 			alert("建立TOKEN文件失败:"+r.code);
 		//	return;
@@ -584,7 +584,7 @@
 
 	}
 
-	CreateCardFreezeLogFile = async function () {
+	CreateCardDailyFreezeLogFile = async function () {
 		i3 = 1;
 		//1.创建燃气表冻结日志状态文件(二进制文件)
 		fileId = "0009";
@@ -603,7 +603,7 @@
 
 	}
 
-	CreateLastTokenFile = async function () {
+	CreateTokenCodeFile = async function () {
 		i3 = 1;
 		//1.创建上次充值TOKEN文件(二进制文件)
 		fileId = "001C";

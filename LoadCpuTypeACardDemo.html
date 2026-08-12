@@ -389,6 +389,246 @@
 
         }
 
+    /* ===== 日冻结日历弹窗 (iOS26 毛玻璃风格) ===== */
+    .cal-overlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 1000;
+        justify-content: center; align-items: center;
+    }
+    .cal-overlay.show { display: flex; }
+    .cal-container {
+        max-width: 560px; width: 92%;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(24px) saturate(1.2);
+        -webkit-backdrop-filter: blur(24px) saturate(1.2);
+        border-radius: 28px;
+        padding: 28px 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        animation: calFadeIn 0.25s ease;
+    }
+    @keyframes calFadeIn {
+        from { opacity: 0; transform: translateY(-20px) scale(0.96); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .cal-header {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 20px;
+    }
+    .cal-header h3 {
+        margin: 0; font-size: 20px; letter-spacing: 1px; color: #1e293b;
+    }
+    .cal-header h3::after { display: none; }
+    .cal-close {
+        background: none; border: none; font-size: 26px; color: #94a3b8;
+        cursor: pointer; line-height: 1; padding: 0 6px; transition: color 0.2s;
+    }
+    .cal-close:hover { color: #334155; }
+    .cal-nav {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 16px;
+    }
+    .cal-nav .btn-blue { width: auto; min-width: 72px; padding: 8px 16px; }
+    .cal-nav-title {
+        font-size: 18px; font-weight: 600; color: #1e293b;
+    }
+    .cal-grid {
+        width: 100%; border-collapse: separate; border-spacing: 4px;
+        table-layout: fixed;
+    }
+    .cal-grid th {
+        text-align: center; padding: 6px 0; font-size: 12px;
+        font-weight: 600; color: #94a3b8;
+    }
+    .cal-grid td {
+        width: 14.28%; height: 66px;
+        text-align: center; vertical-align: middle;
+        border-radius: 12px;
+        font-size: 12px;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        transition: all 0.2s ease;
+        cursor: default;
+    }
+    .cal-grid td.outrange {
+        background: rgba(255, 255, 255, 0.35);
+        color: #cbd5e1;
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08);
+    }
+    .cal-grid td.invalid {
+        background: rgba(0, 0, 0, 0.12);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+    .cal-grid td.normal {
+        background: rgba(255, 255, 255, 0.55);
+        box-shadow: 0 2px 8px rgba(15, 226, 209, 0.12),
+                    inset 0 0 0 1px rgba(15, 226, 209, 0.10);
+    }
+    .cal-grid td.normal:hover {
+        background: rgba(255, 255, 255, 0.75);
+        box-shadow: 0 4px 14px rgba(15, 226, 209, 0.20);
+        transform: translateY(-1px);
+    }
+    .cal-grid td.empty {
+        background: transparent; box-shadow: none;
+    }
+    .cal-grid td.today {
+        box-shadow: inset 0 0 0 2px #007bff !important;
+    }
+    .cal-day-num {
+        display: block; font-weight: 600; font-size: 14px; color: #334155;
+        margin-bottom: 2px;
+    }
+    .cal-grid td.outrange .cal-day-num { color: #cbd5e1; }
+    .cal-grid td.invalid .cal-day-num { color: #475569; }
+    .cal-day-val {
+        display: block; font-size: 10px; font-weight: 500;
+        color: #0891b2;
+    }
+    .cal-day-val.invalid-text {
+        color: #ef4444; font-weight: 600;
+    }
+    .cal-legend {
+        display: flex; gap: 24px; justify-content: center;
+        margin-top: 18px; font-size: 12px; color: #64748b;
+    }
+    .cal-legend .dot {
+        display: inline-block; width: 10px; height: 10px;
+        border-radius: 3px; margin-right: 5px; vertical-align: middle;
+    }
+    .dot-normal   { background: rgba(255,255,255,0.55); box-shadow: 0 1px 3px rgba(15,226,209,0.15); }
+    .dot-invalid  { background: rgba(0,0,0,0.15); }
+    .dot-outrange { background: rgba(255,255,255,0.30); box-shadow: inset 0 0 0 1px rgba(148,163,184,0.10); }
+    .cal-footer {
+        text-align: center; margin-top: 18px;
+    }
+
+    /* ===== 月冻结列表弹窗 (与日冻结风格统一) ===== */
+    .mon-overlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 1000;
+        justify-content: center; align-items: center;
+    }
+    .mon-overlay.show { display: flex; }
+    .mon-container {
+        max-width: 480px; width: 90%;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(24px) saturate(1.2);
+        -webkit-backdrop-filter: blur(24px) saturate(1.2);
+        border-radius: 28px;
+        padding: 28px 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        animation: calFadeIn 0.25s ease;
+    }
+    .mon-container h3 { margin: 0; font-size: 20px; letter-spacing: 1px; color: #1e293b; }
+    .mon-container h3::after { display: none; }
+    .mon-list {
+        width: 100%; border-collapse: separate; border-spacing: 0 6px;
+        margin: 16px 0; max-height: 420px; overflow-y: auto; display: block;
+    }
+    .mon-list tr {
+        display: flex; align-items: center;
+        background: rgba(255, 255, 255, 0.45);
+        border-radius: 12px;
+        padding: 10px 16px;
+        transition: all 0.15s ease;
+    }
+    .mon-list tr.normal {
+        box-shadow: 0 1px 4px rgba(15, 226, 209, 0.08);
+    }
+    .mon-list tr.normal:hover {
+        background: rgba(255, 255, 255, 0.65);
+        transform: translateX(2px);
+    }
+    .mon-list tr.invalid {
+        background: rgba(0, 0, 0, 0.10);
+    }
+    .mon-list tr.outrange {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    .mon-month {
+        flex: 0 0 140px; font-weight: 600; font-size: 14px; color: #334155;
+    }
+    .mon-list tr.outrange .mon-month { color: #cbd5e1; }
+    .mon-list tr.invalid .mon-month { color: #475569; }
+    .mon-value {
+        flex: 1; text-align: right; font-size: 14px; font-weight: 500; color: #0891b2;
+    }
+    .mon-value.invalid-text { color: #ef4444; font-weight: 600; }
+    .mon-list tr.outrange .mon-value { color: #cbd5e1; }
+    .mon-divider {
+        width: 1px; height: 20px; background: rgba(148, 163, 184, 0.15);
+        margin: 0 14px;
+    }
+
+    /* ===== 事件记录列表弹窗 ===== */
+    .evt-overlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.38);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 1000;
+        justify-content: center; align-items: center;
+    }
+    .evt-overlay.show { display: flex; }
+    .evt-container {
+        max-width: 640px; width: 94%;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(24px) saturate(1.2);
+        -webkit-backdrop-filter: blur(24px) saturate(1.2);
+        border-radius: 28px;
+        padding: 28px 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        animation: calFadeIn 0.25s ease;
+    }
+    .evt-container h3 { margin: 0; font-size: 20px; letter-spacing: 1px; color: #1e293b; }
+    .evt-container h3::after { display: none; }
+    .evt-table {
+        width: 100%; border-collapse: separate; border-spacing: 0 4px;
+        margin: 16px 0; max-height: 460px; overflow-y: auto; display: block;
+    }
+    .evt-table thead { display: table; width: 100%; table-layout: fixed; }
+    .evt-table tbody { display: block; }
+    .evt-table tr {
+        display: flex; align-items: center;
+        background: rgba(255, 255, 255, 0.45);
+        border-radius: 10px;
+        padding: 8px 12px;
+        transition: all 0.15s ease;
+    }
+    .evt-table tbody tr.normal {
+        box-shadow: 0 1px 4px rgba(15, 226, 209, 0.06);
+    }
+    .evt-table tbody tr.normal:hover {
+        background: rgba(255, 255, 255, 0.65);
+    }
+    .evt-table tbody tr.outrange {
+        background: rgba(255, 255, 255, 0.20);
+        color: #cbd5e1;
+    }
+    .evt-table th {
+        font-size: 12px; font-weight: 600; color: #94a3b8;
+        text-align: center; padding: 6px 4px;
+    }
+    .evt-col-idx  { flex: 0 0 40px;  text-align: center; }
+    .evt-col-type { flex: 0 0 100px; text-align: center; }
+    .evt-col-time { flex: 1;         text-align: center; }
+    .evt-col-dtl  { flex: 0 0 80px;  text-align: center; }
+    .evt-table tbody td {
+        font-size: 13px; color: #334155;
+    }
+    .evt-table tbody tr.outrange td { color: #cbd5e1; }
+
     </style>
 
 </head>
@@ -406,12 +646,17 @@
     
     <table class="gas-table" border="0"><tbody class="data-group token-input">
 <tr>
-
-            <td style="width:8%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
+                <td style="width:8%;text-align:right;"><span class="label-text">卡基本信息</span></td>   
 
             <td style="width:20%"><INPUT class="btn-blue"   id=send type=button value=读卡 onclick="ReadTypeACPUCard()" />
 
             </td>
+            <td></td>
+			<td style="width:20%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
+            <td></td>
+			<td style="width:13%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
+
+
 
             <td style="width:6%;text-align:right"><span class="required">*</span><span class="label-text">token数</span></td>
 
@@ -429,6 +674,16 @@
 
             </SELECT></td>
 
+
+</tr>
+
+
+        <tr>
+            <td style="width:6%;text-align:right"><span class="label-text">卡序列号: </span></td>
+
+            <td style="width:13%"><INPUT id=cardID readonly type=text value="" /></td>
+
+
             <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token1:</span> </td>
 
             <td style="width:14%"><INPUT id=tokenID1 value="" type=text oninput="validateToken('tokenID1')" /><span class="error-hint" id="tokenID1Hint">请输入20位数字</span></td>
@@ -436,6 +691,11 @@
             <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result1</span> </td>
 
             <td style="width:5%"><INPUT  id=result1  type=text value="" /></td>
+
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">TID1</span> </td>
+
+            <td style="width:5%"><INPUT  id=TID1  type=text value="" /></td>
+
 
             
 
@@ -455,9 +715,6 @@
 
             </td>
 
-            <td style="width:6%;text-align:right"><span class="label-text">卡序列号: </span></td>
-
-            <td style="width:13%"><INPUT id=cardID readonly type=text value="" /></td>
 
 
 
@@ -470,6 +727,12 @@
             <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result2 </span></td>
 
             <td style="width:5%"><INPUT id=result2  type=text value="" /></td>
+
+                        <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">TID2 </span></td>
+
+
+            <td style="width:5%"><INPUT id=TID2  type=text value="" /></td>
+
 
 
 
@@ -485,9 +748,7 @@
 
             <td style="width:20%"><INPUT id=utilityID type=text value="" /></td>
 
-            <td style="width:6%;text-align:right"><span class="label-text">用户ID: </span></td>
 
-            <td style="width:13%"><INPUT id=userID type=text value="" /></td>
 
 
 
@@ -499,6 +760,11 @@
 
             <td style="width:5%"><INPUT id=result3  type=text value="" /></td>
 
+                        <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">TID3 </span></td>
+
+            <td style="width:5%"><INPUT id=TID3  type=text value="" /></td>
+
+
 
 
 
@@ -506,13 +772,13 @@
         </tr>
 
         <tr>
-			<td></td>
+            <td style="width:6%;text-align:right"><span class="label-text">用户ID: </span></td>
+
+            <td style="width:13%"><INPUT id=userID type=text value="" /></td>
 			
-			<td style="width:20%"><INPUT class="btn-green" id=clear type=button value=清除日志 onclick="ClearLog()" /></td>
 			
-			<td></td>
+
 			
-			<td style="width:13%"><INPUT class="btn-blue" id=send type=button value=写token onclick="writeTypeACPUCard()" /></td>
 
 
             <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token4:</span></td>
@@ -523,6 +789,11 @@
 
             <td style="width:5%"><INPUT id=result4  type=text value="" /></td>
 
+            <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">  TID4 </span></td>
+
+            <td style="width:5%"><INPUT id=TID4  type=text value="" /></td>
+
+
 
 
 
@@ -533,8 +804,6 @@
 
 			<td></td>
 			<td></td>
-			<td></td>
-			<td></td>
 
             <td style="width:7%;text-align:right"><span class="required">*</span><span class="label-text">token5:</span></td>
 
@@ -543,6 +812,11 @@
             <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">result5 </span></td>
 
             <td style="width:5%"><INPUT id=result5  type=text value="" /></td>
+
+                        <td style="width:5%;text-align:right"><span class="required">*</span><span class="label-text">TID5 </span></td>
+
+            <td style="width:5%"><INPUT id=TID5  type=text value="" /></td>
+
 
 
 
@@ -596,171 +870,36 @@
 
     <table class="gas-table" border="0"><tbody class="data-group day-freeze">
         <tr>
-
-            <td style="width:16%;text-align:right"><span class="label-text">日冻结:</span> </td>
-
-            <td style="width:12%"><span id="day1" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day2" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day3" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day4" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day5" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day6" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day7" class="data-value"></span></td>
-
+            <td style="width:16%;text-align:right"><span class="label-text">日冻结:</span></td>
+            <td colspan="7">
+                <span id="dayFreezeSummary" class="data-value" style="margin-right:16px;"></span>
+                <button class="btn-blue" style="width:auto;padding:6px 18px;"
+                    onclick="showDailyFreezeCalendar()">查看日冻结数据</button>
+            </td>
         </tr>
-
-        <tr>
-
-            <td style="width:16%;text-align:right"><span class="label-text">日冻结量(10⁻³ m³):</span> </td>
-
-            <td style="width:12%"><span id="day1_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day2_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day3_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day4_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day5_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day6_value" class="data-value"></span></td>
-
-            <td style="width:12%"><span id="day7_value" class="data-value"></span></td>
-
-        </tr>
-        </tbody></table>
+    </tbody></table>
 
     <table class="gas-table" border="0"><tbody class="data-group month-freeze">
         <tr>
-
-            <td style="width:16%;text-align:right"><span class="label-text">月冻结:</span> </td>
-
-            <td style="width:14%"><span id="month1" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month2" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month3" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month4" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month5" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month6" class="data-value"></span></td>
-
-            <td></td>
-
+            <td style="width:16%;text-align:right"><span class="label-text">月冻结:</span></td>
+            <td colspan="7">
+                <span id="monFreezeSummary" class="data-value" style="margin-right:16px;"></span>
+                <button class="btn-blue" style="width:auto;padding:6px 18px;"
+                    onclick="showMonthlyFreezePopup()">查看月冻结数据</button>
+            </td>
         </tr>
-
-        <tr>
-
-            <td style="width:16%;text-align:right"><span class="label-text">月冻结量(10⁻³ m³):</span> </td>
-
-            <td style="width:14%"><span id="month1_value" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month2_value" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month3_value" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month4_value" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month5_value" class="data-value"></span></td>
-
-            <td style="width:14%"><span id="month6_value" class="data-value"></span></td>
-
-            <td></td>
-
-        </tr>   
-
-
-
-        </tbody></table>
+    </tbody></table>
 
     <table class="gas-table" border="0"><tbody class="data-group valve-log">
-		 <tr>
-
-            <td></td>
-
-            <td style="width:12%;text-align:center"><span class="label-text">时间</span> </td>
-
-            <td></td>
-
-           <td style="width:12%;text-align:center"><span class="label-text">事件类型</span> </td>
-
-            <td></td>
-
-            <td style="width:12%;text-align:center"><span class="label-text">详情</span> </td>
-
-            <td></td>
-
-            <td></td>
-
-        </tr>
-
         <tr>
-
-            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录1:</span> </td>
-
-            <td style="width:22%"><span id="event_datetime1" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:8%"><span id="event_type1" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:6%"><span id="event_details1" class="data-value"></span></td>
-
-            <td></td>
-
-            <td></td>
-
+            <td style="width:16%;text-align:right"><span class="label-text">关阀事件:</span></td>
+            <td colspan="7">
+                <span id="eventLogSummary" class="data-value" style="margin-right:16px;"></span>
+                <button class="btn-blue" style="width:auto;padding:6px 18px;"
+                    onclick="showEventLogPopup()">查看事件记录</button>
+            </td>
         </tr>
-		<tr>
-
-            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录2:</span> </td>
-
-            <td style="width:22%"><span id="event_datetime2" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:8%"><span id="event_type2" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:6%"><span id="event_details2" class="data-value"></span></td>
-
-            <td></td>
-
-            <td></td>
-
-        </tr>
-				<tr>
-
-            <td style="width:12%;text-align:right"><span class="label-text">关阀事件记录3:</span> </td>
-
-            <td style="width:22%"><span id="event_datetime3" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:8%"><span id="event_type3" class="data-value"></span></td>
-
-            <td></td>
-
-            <td style="width:6%"><span id="event_details3" class="data-value"></span></td>
-
-            <td></td>
-
-            <td></td>
-
-        </tr>
-
-        </tbody></table>
+    </tbody></table>
 
     </div> -->
 
@@ -782,6 +921,73 @@
 
 </div>
 
+<!-- ===== 日冻结日历弹窗 ===== -->
+<div id="calOverlay" class="cal-overlay" onclick="if(event.target===this)closeCalendar()">
+    <div class="cal-container">
+        <div class="cal-header">
+            <h3>日冻结数据</h3>
+            <button class="cal-close" onclick="closeCalendar()">&times;</button>
+        </div>
+        <div class="cal-nav">
+            <button class="btn-blue" onclick="changeCalendarMonth(-1)">◀ 上月</button>
+            <span class="cal-nav-title" id="calTitle"></span>
+            <button class="btn-blue" onclick="changeCalendarMonth(1)">下月 ▶</button>
+        </div>
+        <table class="cal-grid">
+            <thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead>
+            <tbody id="calBody"></tbody>
+        </table>
+        <div class="cal-legend">
+            <span><span class="dot dot-normal"></span> 正常数据</span>
+            <span><span class="dot dot-invalid"></span> 无效数据</span>
+            <span><span class="dot dot-outrange"></span> 超范围</span>
+        </div>
+        <div class="cal-footer">
+            <button class="btn-blue" style="width:auto;padding:8px 28px;" onclick="closeCalendar()">关闭</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 月冻结列表弹窗 ===== -->
+<div id="monOverlay" class="mon-overlay" onclick="if(event.target===this)closeMonthlyPopup()">
+    <div class="mon-container">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h3>月冻结数据</h3>
+            <button style="background:none;border:none;font-size:26px;color:#94a3b8;cursor:pointer;"
+                onclick="closeMonthlyPopup()">&times;</button>
+        </div>
+        <table class="mon-list">
+            <tbody id="monBody"></tbody>
+        </table>
+        <div class="cal-footer">
+            <button class="btn-blue" style="width:auto;padding:8px 28px;" onclick="closeMonthlyPopup()">关闭</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 事件记录列表弹窗 ===== -->
+<div id="evtOverlay" class="evt-overlay" onclick="if(event.target===this)closeEventPopup()">
+    <div class="evt-container">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h3>关阀事件记录</h3>
+            <button style="background:none;border:none;font-size:26px;color:#94a3b8;cursor:pointer;"
+                onclick="closeEventPopup()">&times;</button>
+        </div>
+        <table class="evt-table">
+            <thead><tr>
+                <th class="evt-col-idx">序号</th>
+                <th class="evt-col-type">事件类型</th>
+                <th class="evt-col-time">时间</th>
+                <th class="evt-col-dtl">详情</th>
+            </tr></thead>
+            <tbody id="evtBody"></tbody>
+        </table>
+        <div class="cal-footer">
+            <button class="btn-blue" style="width:auto;padding:8px 28px;" onclick="closeEventPopup()">关闭</button>
+        </div>
+    </div>
+</div>
+
 </body>
 
 <script type="text/javascript" src="./dcrf32_client.js"></script>
@@ -797,6 +1003,13 @@
     var handle;
 
     var i1 = 0, i2 = 0;
+
+    var dailyFreeze = { startYear: 0, startMonth: 0, startDay: 0, dayCount: 0, values: [] };
+    var calYear = 0, calMonth = 0;
+
+    var monthFreeze = { startYear: 0, startMonth: 0, monCount: 0, values: [] };
+
+    var eventLog = { eventCount: 0, events: [] };
 
     var messageText = document.getElementById("messageText");
 
@@ -988,7 +1201,7 @@ ReadTypeACPUCard = async function () {
 
         var tokenNum = document.getElementById("tokenNum").value
 
-        var token = tokenNum.toString(16).padStart(2, '0') + bytesToHex(decimal20ToBCD10(token1))  + bytesToHex(decimal20ToBCD10(token2)) + bytesToHex(decimal20ToBCD10(token3)) + bytesToHex(decimal20ToBCD10(token4)) + bytesToHex(decimal20ToBCD10(token5)) + int8StrToHex(result1) + int8StrToHex(result2) + int8StrToHex(result3) + int8StrToHex(result4) + int8StrToHex(result5)
+        var token = tokenNum.toString(16).padStart(2, '0') + bytesToHex(decimal20ToBCD10(token1))  + bytesToHex(decimal20ToBCD10(token2)) + bytesToHex(decimal20ToBCD10(token3)) + bytesToHex(decimal20ToBCD10(token4)) + bytesToHex(decimal20ToBCD10(token5))
 
         sdata=cmd_UpdateBinary("00", token);
 
@@ -1032,6 +1245,26 @@ ReadTypeACPUCard = async function () {
                 hour.toString().padStart(2, "0") + ":" +
                 minute.toString().padStart(2, "0") + ":" +
                 second.toString().padStart(2, "0");
+        }
+
+        // 解析日冻结文件(前4字节为起始日期+冻结天数，后续每4字节为单日冻结量)
+        parseDailyFreezeFile = function (rawHex) {
+            var header = {
+                startYear: parseInt(rawHex.slice(0, 2), 16),
+                startMonth: parseInt(rawHex.slice(2, 4), 16),
+                startDay: parseInt(rawHex.slice(4, 6), 16),
+                dayCount: parseInt(rawHex.slice(6, 8), 16)
+            };
+            var values = [];
+            for (var i = 0; i < 31; i++) {
+                var offset = 8 + i * 8;
+                if (offset + 8 <= rawHex.length) {
+                    values.push(parseInt(rawHex.slice(offset, offset + 8), 16));
+                } else {
+                    values.push(0);
+                }
+            }
+            return { header: header, values: values };
         }
 
 
@@ -1276,6 +1509,8 @@ ReadTypeACPUCard = async function () {
 
         }
 
+        // 读取最近1-31日冻结文件0009
+
         i2 = i2 + 1;
 
         messageText.value = messageText.value + i1 +"-"+ i2 + ".选择0009" + "\r\n";
@@ -1288,123 +1523,249 @@ ReadTypeACPUCard = async function () {
 
             alert("选择0009:"+r.code);
 
-        //	return;
+        //  return;
 
         }
 
 
         i2 = i2 + 1;
 
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取冻结日志" + "\r\n";
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取最近1-31日冻结数据" + "\r\n";
 
-        cmd_SelectFileByID("0009");
-
-        r = await CommandTypeACPU(ReadBinary("00", "57"));;
+        r = await CommandTypeACPU(ReadBinary("00", "80"));;
 
         if(r.code!="9000"){
 
-        	alert("读取冻结日志失败:"+r.code);
+            alert("读取最近1-31日冻结数据失败:"+r.code);
 
-        	document.getElementById("day1").textContent = "NaN";
-			document.getElementById("day2").textContent = "NaN";
-			document.getElementById("day3").textContent = "NaN";
-			document.getElementById("day4").textContent = "NaN";
-			document.getElementById("day5").textContent = "NaN";
-			document.getElementById("day6").textContent = "NaN";
-			document.getElementById("day7").textContent = "NaN";
+            dailyFreeze = { startYear: 0, startMonth: 0, startDay: 0, dayCount: 0, values: [] };
+            document.getElementById("dayFreezeSummary").textContent = "读取失败";
 
-			document.getElementById("day1_value").textContent = "NaN";
-			document.getElementById("day2_value").textContent = "NaN";
-			document.getElementById("day3_value").textContent = "NaN";
-			document.getElementById("day4_value").textContent = "NaN";
-			document.getElementById("day5_value").textContent = "NaN";
-			document.getElementById("day6_value").textContent = "NaN";
-			document.getElementById("day7_value").textContent = "NaN";
-
-			document.getElementById("month1").textContent = "NaN";
-			document.getElementById("month2").textContent = "NaN";
-			document.getElementById("month3").textContent = "NaN";
-			document.getElementById("month4").textContent = "NaN";
-			document.getElementById("month5").textContent = "NaN";
-			document.getElementById("month6").textContent = "NaN";
-
-			document.getElementById("month1_value").textContent = "NaN";
-			document.getElementById("month2_value").textContent = "NaN";
-			document.getElementById("month3_value").textContent = "NaN";
-			document.getElementById("month4_value").textContent = "NaN";
-			document.getElementById("month5_value").textContent = "NaN";
-			document.getElementById("month6_value").textContent = "NaN";
-
-			document.getElementById("event_datetime1").textContent = "NaN";
-			document.getElementById("event_datetime2").textContent = "NaN";
-			document.getElementById("event_datetime3").textContent = "NaN";
-
-			document.getElementById("event_type1").textContent = "NaN";
-			document.getElementById("event_type2").textContent = "NaN";
-			document.getElementById("event_type3").textContent = "NaN";
-
-			document.getElementById("event_details1").textContent = "NaN";
-			document.getElementById("event_details2").textContent = "NaN";
-			document.getElementById("event_details3").textContent = "NaN";
-
-        //	return;
+        //  return;
 
         }else{
 
-			var year = 2000 + parseInt(r.data.slice(0, 2), 16);
-			var month = parseInt(r.data.slice(2, 4), 16);
-			var day = parseInt(r.data.slice(4, 6), 16);
-			var dayCount = parseInt(r.data.slice(6, 8), 16);
-			var startDate = new Date(year, month - 1, day);
-			for (var i = 0; i < 7; i++) {
-			    var d = new Date(startDate);
-			    d.setDate(d.getDate() - i);
-			    var label = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
-			    document.getElementById("day" + (i + 1)).textContent = i < dayCount ? label : "";
-			    var offset = 8 + i * 8;
-			    document.getElementById("day" + (i + 1) + "_value").textContent = parseInt(r.data.slice(offset, offset + 8), 16);
-			}
+            var f0009 = parseDailyFreezeFile(r.data);
+            dailyFreeze.startYear = f0009.header.startYear;
+            dailyFreeze.startMonth = f0009.header.startMonth;
+            dailyFreeze.startDay = f0009.header.startDay;
+            dailyFreeze.values = f0009.values;
+        }
 
-			var monYear = 2000 + parseInt(r.data.slice(64, 66), 16);
-			var monMonth = parseInt(r.data.slice(66, 68), 16);
-			var monCount = parseInt(r.data.slice(68, 70), 16);
-			var monStartDate = new Date(monYear, monMonth - 1, 1);
-			for (var i = 0; i < 6; i++) {
-			    var md = new Date(monStartDate);
-			    md.setMonth(md.getMonth() - i);
-			    var monLabel = md.getFullYear() + "年" + (md.getMonth() + 1) + "月";
-			    document.getElementById("month" + (i + 1)).textContent = i < monCount ? monLabel : "";
-			    var monOffset = 70 + i * 8;
-			    document.getElementById("month" + (i + 1) + "_value").textContent = parseInt(r.data.slice(monOffset, monOffset + 8), 16);
-			}
-			
-			
 
-			// 关阀事件记录解析
-			var eventCount = parseInt(r.data.slice(118, 120), 16);
-			for (var ei = 0; ei < 3; ei++) {
-			    var base = 120 + ei * 18;
-			    var typeHex = r.data.slice(base, base + 4);
-			    var timeHex = r.data.slice(base + 4, base + 16);
-			    var detailHex = r.data.slice(base + 16, base + 18);
-			    var ey = 2000 + parseInt(timeHex.slice(0, 2), 16);
-			    var eM = parseInt(timeHex.slice(2, 4), 16);
-			    var ed = parseInt(timeHex.slice(4, 6), 16);
-			    var eh = parseInt(timeHex.slice(6, 8), 16);
-			    var em = parseInt(timeHex.slice(8, 10), 16);
-			    var es = parseInt(timeHex.slice(10, 12), 16);
-			    var timeStr = ey + "年" + eM + "月" + ed + "日 " + eh + ":" + em + ":" + es;
-			    var idx = ei + 1;
-			    if (ei < eventCount) {
-			        document.getElementById("event_type" + idx).textContent = typeHex;
-			        document.getElementById("event_datetime" + idx).textContent = timeStr;
-			        document.getElementById("event_details" + idx).textContent = detailHex;
-			    } else {
-			        document.getElementById("event_type" + idx).textContent = "";
-			        document.getElementById("event_datetime" + idx).textContent = "";
-			        document.getElementById("event_details" + idx).textContent = "";
-			    }
-			}
+        // 读取最近32-62日冻结文件000A
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择000A" + "\r\n";
+
+        sdata = cmd_SelectFileByID("000A");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择000A:"+r.code);
+
+        //  return;
+
+        }
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取最近32-62日冻结数据" + "\r\n";
+
+        r = await CommandTypeACPU(ReadBinary("00", "80"));;
+
+        if(r.code!="9000"){
+
+            alert("读取最近32-62日冻结数据失败:"+r.code);
+
+        //  return;
+
+        }else{
+
+            var f000A = parseDailyFreezeFile(r.data);
+            dailyFreeze.values = dailyFreeze.values.concat(f000A.values);
+        }
+
+
+        // 读取最近63-93日冻结文件000B
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择000B" + "\r\n";
+
+        sdata = cmd_SelectFileByID("000B");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择000B:"+r.code);
+
+        //  return;
+
+        }
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取最近63-93日冻结数据" + "\r\n";
+
+        r = await CommandTypeACPU(ReadBinary("00", "80"));;
+
+        if(r.code!="9000"){
+
+            alert("读取最近63-93日冻结数据失败:"+r.code);
+
+        //  return;
+
+        }else{
+
+            var f000B = parseDailyFreezeFile(r.data);
+            dailyFreeze.values = dailyFreeze.values.concat(f000B.values);
+            dailyFreeze.dayCount = dailyFreeze.values.length;
+            if (dailyFreeze.dayCount > 0) {
+                var sy = 2000 + dailyFreeze.startYear;
+                document.getElementById("dayFreezeSummary").textContent =
+                    sy + "年" + dailyFreeze.startMonth + "月" + dailyFreeze.startDay + "日起，共" + dailyFreeze.dayCount + "天";
+            } else {
+                document.getElementById("dayFreezeSummary").textContent = "暂无数据";
+            }
+        }
+
+
+        // 读取月冻结文件000C
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择000C" + "\r\n";
+
+        sdata = cmd_SelectFileByID("000C");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择000C:"+r.code);
+
+        //  return;
+
+        }
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取月冻结数据" + "\r\n";
+
+        cmd_SelectFileByID("000C");
+
+        r = await CommandTypeACPU(ReadBinary("00", "33"));;
+
+        if(r.code!="9000"){
+
+            alert("读取月冻结数据失败:"+r.code);
+
+            monthFreeze = { startYear: 0, startMonth: 0, monCount: 0, values: [] };
+            document.getElementById("monFreezeSummary").textContent = "读取失败";
+
+        //  return;
+
+        }else{
+
+            monthFreeze.startYear = parseInt(r.data.slice(0, 2), 16);
+            monthFreeze.startMonth = parseInt(r.data.slice(2, 4), 16);
+            monthFreeze.monCount = parseInt(r.data.slice(4, 6), 16);
+            monthFreeze.values = [];
+            for (var i = 0; i < 12; i++) {
+                var offset = 6 + i * 8;
+                if (offset + 8 <= r.data.length) {
+                    monthFreeze.values.push(parseInt(r.data.slice(offset, offset + 8), 16));
+                } else {
+                    monthFreeze.values.push(0);
+                }
+            }
+
+            if (monthFreeze.monCount > 0) {
+                var sy = 2000 + monthFreeze.startYear;
+                document.getElementById("monFreezeSummary").textContent =
+                    sy + "年" + monthFreeze.startMonth + "月起，共" + monthFreeze.monCount + "个月";
+            } else {
+                document.getElementById("monFreezeSummary").textContent = "暂无数据";
+            }
+        }
+
+
+        // 读取事件记录文件000D
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择000D" + "\r\n";
+
+        sdata = cmd_SelectFileByID("000D");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择000D:"+r.code);
+
+        //  return;
+
+        }
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取事件记录数据" + "\r\n";
+
+        cmd_SelectFileByID("000D");
+
+        r = await CommandTypeACPU(ReadBinary("00", "B5"));;
+
+        if(r.code!="9000"){
+
+            alert("读取事件记录数据失败:"+r.code);
+
+            eventLog = { eventCount: 0, events: [] };
+            document.getElementById("eventLogSummary").textContent = "读取失败";
+
+        //  return;
+
+        }else{
+
+            eventLog.eventCount = parseInt(r.data.slice(0, 2), 16);
+            eventLog.events = [];
+            for (var ei = 0; ei < 20; ei++) {
+                var base = 2 + ei * 18;
+                if (base + 18 <= r.data.length) {
+                    var typeHex = r.data.slice(base, base + 4);
+                    var timeHex = r.data.slice(base + 4, base + 16);
+                    var detailHex = r.data.slice(base + 16, base + 18);
+                    var ey = 2000 + parseInt(timeHex.slice(0, 2), 16);
+                    var eM = parseInt(timeHex.slice(2, 4), 16);
+                    var ed = parseInt(timeHex.slice(4, 6), 16);
+                    var eh = parseInt(timeHex.slice(6, 8), 16);
+                    var emin = parseInt(timeHex.slice(8, 10), 16);
+                    var es = parseInt(timeHex.slice(10, 12), 16);
+                    var timeStr = ey + "年" + eM + "月" + ed + "日 " +
+                        String(eh).padStart(2, "0") + ":" +
+                        String(emin).padStart(2, "0") + ":" +
+                        String(es).padStart(2, "0");
+                    eventLog.events.push({ type: typeHex, time: timeStr, detail: detailHex });
+                } else {
+                    eventLog.events.push({ type: "", time: "", detail: "" });
+                }
+            }
+
+            if (eventLog.eventCount > 0) {
+                document.getElementById("eventLogSummary").textContent =
+                    "共" + eventLog.eventCount + "条记录";
+            } else {
+                document.getElementById("eventLogSummary").textContent = "暂无记录";
+            }
         }
 
         i2 = i2 + 1;
@@ -1427,15 +1788,15 @@ ReadTypeACPUCard = async function () {
 
         i2 = i2 + 1;
 
-        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN文件" + "\r\n";
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN码文件" + "\r\n";
 
         cmd_SelectFileByID("001C");
 
-        r = await CommandTypeACPU(ReadBinary("00", "38"));;
+        r = await CommandTypeACPU(ReadBinary("00", "33"));;
 
         if(r.code!="9000"){
 
-            alert("读取上次充值TOKEN失败:"+r.code);
+            alert("读取TOKEN码文件失败:"+r.code);
 
             document.getElementById("lastToken").value = "NaN";
 
@@ -1447,7 +1808,7 @@ ReadTypeACPUCard = async function () {
 
             document.getElementById("tokenID1").value = bcdToDecimal(hexToBcd(r.data.slice(2, 22)));
 
-        
+
 
             document.getElementById("tokenID2").value = bcdToDecimal(hexToBcd(r.data.slice(22, 42)));
 
@@ -1456,16 +1817,6 @@ ReadTypeACPUCard = async function () {
             document.getElementById("tokenID4").value = bcdToDecimal(hexToBcd(r.data.slice(62, 82)));
 
             document.getElementById("tokenID5").value = bcdToDecimal(hexToBcd(r.data.slice(82, 102)));
-
-            document.getElementById("result1").value = Toint8(parseInt(r.data.slice(102, 104), 16));
-
-            document.getElementById("result2").value = Toint8(parseInt(r.data.slice(104, 106), 16));
-
-            document.getElementById("result3").value = Toint8(parseInt(r.data.slice(106, 108), 16));
-
-            document.getElementById("result4").value = Toint8(parseInt(r.data.slice(108, 110), 16));
-
-            document.getElementById("result5").value = Toint8(parseInt(r.data.slice(110, 112), 16));
 
             document.getElementById("lastToken").value = r.data;
 
@@ -1476,6 +1827,48 @@ ReadTypeACPUCard = async function () {
 
 
         // i2 = i2 + 1;
+
+        // 读取TOKEN记录文件001D
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".选择001D" + "\r\n";
+
+        sdata = cmd_SelectFileByID("001D");
+
+        r = await CommandTypeACPU(sdata);
+
+        if(r.code!="9000"){
+
+            alert("选择001D:"+r.code);
+
+        //	return;
+
+        }
+
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 +"-"+ i2 + ".读取TOKEN记录文件" + "\r\n";
+
+        cmd_SelectFileByID("001D");
+
+        r = await CommandTypeACPU(ReadBinary("00", "14"));;
+
+        if(r.code!="9000"){
+
+            alert("读取TOKEN记录文件失败:"+r.code);
+
+        //	return;
+
+        }else{
+
+            messageText.value = messageText.value + "TOKEN记录数据:" + r.data + "\r\n";
+
+        }
+
+
+
 
         // messageText.value = messageText.value + i1 +"-"+ i2 + ".读取交易记录" + "\r\n";
 
@@ -1748,6 +2141,169 @@ ReadTypeACPUCard = async function () {
         messageText.value = "";
 
     }
+
+    // ===== 日冻结日历弹窗 =====
+
+    showDailyFreezeCalendar = function () {
+        if (dailyFreeze.dayCount <= 0) {
+            alert("暂无日冻结数据，请先读卡");
+            return;
+        }
+        calYear = 2000 + dailyFreeze.startYear;
+        calMonth = dailyFreeze.startMonth;
+        renderCalendar();
+        document.getElementById("calOverlay").classList.add("show");
+    };
+
+    closeCalendar = function () {
+        document.getElementById("calOverlay").classList.remove("show");
+    };
+
+    changeCalendarMonth = function (delta) {
+        calMonth += delta;
+        if (calMonth > 12) { calMonth = 1; calYear++; }
+        if (calMonth < 1) { calMonth = 12; calYear--; }
+        renderCalendar();
+    };
+
+    renderCalendar = function () {
+        document.getElementById("calTitle").textContent = calYear + "年 " + calMonth + "月";
+
+        var startMs = new Date(2000 + dailyFreeze.startYear, dailyFreeze.startMonth - 1, dailyFreeze.startDay).getTime();
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var todayMs = today.getTime();
+        var INVALID = 0xFFFFFFFF;
+
+        var firstDay = new Date(calYear, calMonth - 1, 1);
+        var startDow = firstDay.getDay();
+        var daysInMonth = new Date(calYear, calMonth, 0).getDate();
+
+        var html = "";
+        var cell = 0;
+
+        for (var j = 0; j < startDow; j++) {
+            html += "<td class='empty'></td>";
+            cell++;
+        }
+
+        for (var day = 1; day <= daysInMonth; day++) {
+            if (cell % 7 === 0) html += "<tr>";
+            var cellMs = new Date(calYear, calMonth - 1, day).getTime();
+            var dayIndex = Math.round((startMs - cellMs) / 86400000);
+            var isToday = (cellMs === todayMs);
+
+            var cls = "";
+            var content = "<span class='cal-day-num'>" + day + "</span>";
+
+            if (dayIndex < 0 || dayIndex >= dailyFreeze.dayCount || dayIndex >= 93) {
+                cls = "outrange";
+            } else if (dailyFreeze.values[dayIndex] === INVALID) {
+                cls = "invalid";
+                content += "<span class='cal-day-val invalid-text'>无效数据</span>";
+            } else {
+                cls = "normal";
+                content += "<span class='cal-day-val'>" + dailyFreeze.values[dayIndex] + "</span>";
+            }
+
+            if (isToday) cls += " today";
+
+            html += "<td class='" + cls + "'>" + content + "</td>";
+            cell++;
+            if (cell % 7 === 0) html += "</tr>";
+        }
+
+        var rem = 7 - (cell % 7);
+        if (rem < 7) {
+            for (var k = 0; k < rem; k++) html += "<td class='empty'></td>";
+        }
+
+        document.getElementById("calBody").innerHTML = html;
+    };
+
+    // ===== 月冻结列表弹窗 =====
+
+    showMonthlyFreezePopup = function () {
+        if (monthFreeze.monCount <= 0) {
+            alert("暂无月冻结数据，请先读卡");
+            return;
+        }
+        renderMonthList();
+        document.getElementById("monOverlay").classList.add("show");
+    };
+
+    closeMonthlyPopup = function () {
+        document.getElementById("monOverlay").classList.remove("show");
+    };
+
+    renderMonthList = function () {
+        var INVALID = 0xFFFFFFFF;
+        var startDate = new Date(2000 + monthFreeze.startYear, monthFreeze.startMonth - 1, 1);
+        var html = "";
+
+        for (var i = 0; i < 12; i++) {
+            var md = new Date(startDate);
+            md.setMonth(md.getMonth() - i);
+            var label = md.getFullYear() + "年" + (md.getMonth() + 1) + "月";
+
+            var cls = "";
+            var valHtml = "";
+
+            if (i >= monthFreeze.monCount) {
+                cls = "outrange";
+                valHtml = "<span class='mon-value'>无数据</span>";
+            } else if (monthFreeze.values[i] === INVALID) {
+                cls = "invalid";
+                valHtml = "<span class='mon-value invalid-text'>无效数据</span>";
+            } else {
+                cls = "normal";
+                valHtml = "<span class='mon-value'>" + monthFreeze.values[i] + "</span>";
+            }
+
+            html += "<tr class='" + cls + "'>";
+            html += "<td class='mon-month'>" + label + "</td>";
+            html += "<td class='mon-divider'></td>";
+            html += "<td>" + valHtml + "</td>";
+            html += "</tr>";
+        }
+
+        document.getElementById("monBody").innerHTML = html;
+    };
+
+    // ===== 事件记录列表弹窗 =====
+
+    showEventLogPopup = function () {
+        if (eventLog.eventCount <= 0) {
+            alert("暂无事件记录，请先读卡");
+            return;
+        }
+        renderEventList();
+        document.getElementById("evtOverlay").classList.add("show");
+    };
+
+    closeEventPopup = function () {
+        document.getElementById("evtOverlay").classList.remove("show");
+    };
+
+    renderEventList = function () {
+        var html = "";
+        for (var i = 0; i < 20; i++) {
+            var cls = (i >= eventLog.eventCount) ? "outrange" : "normal";
+            html += "<tr class='" + cls + "'>";
+            html += "<td class='evt-col-idx'>" + (i + 1) + "</td>";
+            if (i < eventLog.eventCount) {
+                html += "<td class='evt-col-type'>" + eventLog.events[i].type + "</td>";
+                html += "<td class='evt-col-time'>" + eventLog.events[i].time + "</td>";
+                html += "<td class='evt-col-dtl'>" + eventLog.events[i].detail + "</td>";
+            } else {
+                html += "<td class='evt-col-type'>-</td>";
+                html += "<td class='evt-col-time'>无数据</td>";
+                html += "<td class='evt-col-dtl'>-</td>";
+            }
+            html += "</tr>";
+        }
+        document.getElementById("evtBody").innerHTML = html;
+    };
 
 window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'setBackground') {

@@ -610,21 +610,50 @@
 
         }
 
-        //创建燃气表日冻结文件0009
+       // 创建燃气最近(1-31)日冻结文件0009
 
         i2 = i2 + 1;
 
-        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表日冻结文件" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表最近(1-31)日冻结文件" + "\r\n";
 
-        r = await CreateCardDailyFreezeLogFile();
+        r = await CreateCardLast_1_31_DailyFreezeLogFile();
 
         if(r.code!="9000"){
 
-            alert("建立燃气表日冻结文件失败:"+r.code);
+            alert("建立燃气表燃气表最近(1-31)日冻结文件失败:"+r.code);
 
         }
 
-        //创建燃气月冻结文件000A
+        //创建燃气最近（32-62）日冻结文件000A
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表最近(32-62)日冻结文件" + "\r\n";
+
+        r = await CreateCardLast_32_62_DailyFreezeLogFile();
+
+        if(r.code!="9000"){
+
+            alert("建立燃气表最近(32-62)日冻结文件失败:"+r.code);
+
+        }
+
+        //创建燃气最近（63-93）日冻结文件000B
+
+        i2 = i2 + 1;
+
+        messageText.value = messageText.value + i1 + "-" + i2 + ".燃气表最近(63-93)日冻结文件" + "\r\n";
+
+        r = await CreateCardLast_63_93_DailyFreezeLogFile();
+
+        if(r.code!="9000"){
+
+            alert("建立燃气表最近(63-93)日冻结文件失败:"+r.code);
+
+        }
+
+
+        //创建燃气月冻结文件000C
 
         i2 = i2 + 1;
 
@@ -638,7 +667,7 @@
 
         }
 
-        //创建燃气表事件记录文件000B
+        // //创建燃气表事件记录文件000D
 
         i2 = i2 + 1;
 
@@ -1190,17 +1219,17 @@
 
 
 
-    CreateCardDailyFreezeLogFile = async function () {
+    CreateCardLast_1_31_DailyFreezeLogFile = async function () {
 
         i3 = 1;
 
-        //1.创建燃气表日冻结文件(二进制文件)
+        //1.创建燃气表最近1-31日冻结文件(二进制文件)
 
         fileId = "0009";
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表日冻结文件(二进制文件)" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表最近1-31日冻结文件(二进制文件)" + "\r\n";
 
-        sdata = cmd_CreateBinaryFile(fileId, "007C");
+        sdata = cmd_CreateBinaryFile(fileId, "0080");
 
         result = await CommandTypeACPU(sdata);
 
@@ -1212,13 +1241,15 @@
 
         i3 = i3 + 1;
 
-        //2.写入燃气表日冻结数据
+        //2.写入燃气表最近1-31日冻结数据
 
-        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表日冻结数据" + "\r\n";
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表最近1-31日冻结数据" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","000000" + "00" + "00000000000000000000000000000000000000000000000000000000000000000000000000000000" + "00000000000000000000000000000000000000000000000000000000000000000000000000000000"+ "00000000000000000000000000000000000000000000000000000000000000000000000000000000");
-
-        var result = await WriteFile(fileId, sdata);
+        var result = await WriteFileDataChunked(fileId, repeatHex("00", 128), key.value);
+        var sw = result.data.substr(result.data.length - 4, 4);
+        if (sw == "") sw = result.code;
+        result.code = sw;
+        messageText.value = messageText.value + result.msg;
 
         return result;
 
@@ -1226,13 +1257,90 @@
 
     }
 
+    CreateCardLast_32_62_DailyFreezeLogFile = async function () {
+
+        i3 = 1;
+
+        //1.创建燃气表最近32-62日冻结文件(二进制文件)
+
+        fileId = "000A";
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表最近32-62日冻结文件(二进制文件)" + "\r\n";
+
+        sdata = cmd_CreateBinaryFile(fileId, "0080");
+
+        result = await CommandTypeACPU(sdata);
+
+        if (result.code != "9000") {
+
+            return result;
+
+        }
+
+        i3 = i3 + 1;
+
+        //2.写入燃气表最近32-62日冻结数据
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表最近32-62日冻结数据" + "\r\n";
+
+        var result = await WriteFileDataChunked(fileId, repeatHex("00", 128), key.value);
+        var sw = result.data.substr(result.data.length - 4, 4);
+        if (sw == "") sw = result.code;
+        result.code = sw;
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+
+
+    }
+
+    CreateCardLast_63_93_DailyFreezeLogFile = async function () {
+
+        i3 = 1;
+
+        //1.创建燃气表最近63-93日冻结文件(二进制文件)
+
+        fileId = "000B";
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表最近63-93日冻结文件(二进制文件)" + "\r\n";
+
+        sdata = cmd_CreateBinaryFile(fileId, "0080");
+
+        result = await CommandTypeACPU(sdata);
+
+        if (result.code != "9000") {
+
+            return result;
+
+        }
+
+        i3 = i3 + 1;
+
+        //2.写入燃气表最近63-93日冻结数据
+
+        messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表最近63-93日冻结数据" + "\r\n";
+
+        var result = await WriteFileDataChunked(fileId, repeatHex("00", 128), key.value);
+        var sw = result.data.substr(result.data.length - 4, 4);
+        if (sw == "") sw = result.code;
+        result.code = sw;
+        messageText.value = messageText.value + result.msg;
+
+        return result;
+
+
+
+    }
+
+
     CreateCardMonthlyFreezeLogFile = async function () {
 
         i3 = 1;
 
         //1.创建燃气表月冻结文件(二进制文件)
 
-        fileId = "000A";
+        fileId = "000C";
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表月冻结文件(二进制文件)" + "\r\n";
 
@@ -1252,7 +1360,7 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表月冻结数据" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","0000" + "00" + "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        sdata=cmd_UpdateBinary("00", repeatHex("00", 51));
 
         var result = await WriteFile(fileId, sdata);
 
@@ -1268,7 +1376,7 @@
 
         //1.创建燃气表事件记录文件(二进制文件)
 
-        fileId = "000B";
+        fileId = "000D";
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气表事件记录文件(二进制文件)" + "\r\n";
         
@@ -1288,13 +1396,11 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入燃气表事件记录数据" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","00" + "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+
-                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ 
-                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+
-                                             "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ "000000000000000000"+ 
-                                             "000000000000000000"+"000000000000000000"+ "000000000000000000"+ "000000000000000000" );
-
-        var result = await WriteFile(fileId, sdata);
+        var result = await WriteFileDataChunked(fileId, repeatHex("00", 181), key.value);
+        var sw = result.data.substr(result.data.length - 4, 4);
+        if (sw == "") sw = result.code;
+        result.code = sw;
+        messageText.value = messageText.value + result.msg;
 
         return result;
 
@@ -1329,7 +1435,7 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入TOKEN初始值" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00",'05' + bytesToHex(decimal20ToBCD10("00000000000000000000"))  + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")) + bytesToHex(decimal20ToBCD10("00000000000000000000")));
+        sdata=cmd_UpdateBinary("00", "05" + repeatHex("00", 50));
 
         var result = await WriteFile(fileId, sdata);
 
@@ -1363,7 +1469,7 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".写入TOKEN记录初始值" + "\r\n";
 
-        sdata=cmd_UpdateBinary("00","0000000000" + "000000000000000000000000000000");
+        sdata=cmd_UpdateBinary("00", repeatHex("00", 20));
 
         var result = await WriteFile(fileId, sdata);
 

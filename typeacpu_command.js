@@ -294,3 +294,15 @@ function cmd_UpdateBinary(fileID, fileData) {
     var le = "";
     return cla + ins + p1 + p2 + lc + data + le;
 }
+
+function cmd_UpdateBinaryAtOffset(offset, fileData) {
+    var cla = "04";
+    var ins = "D6";
+    var p1 = offset.slice(0, 2);
+    var p2 = offset.slice(2, 4);
+    var lc = (fileData.length/2+4).toString(16);
+    if(lc.length==1){
+        lc="0"+lc;
+    }
+    return cla + ins + p1 + p2 + lc + fileData;
+}

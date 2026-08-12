@@ -134,10 +134,10 @@ sendCommand = async function (command,handle) {
     result[2] 返回的数据
     */
     respMsg = respMsg + ">>request:" + sdata + "\r\n";
-    result = await dc_pro_commandlinkInt(handle, sdata.length / 2, sdata, 7);
+    result = await dc_pro_commandlinkInt(handle, sdata.length / 2, sdata, 20);
     if (result[0] !== 0) {
         respMsg = respMsg + "<<error:" + result[0] + "\r\n";
-        await dc_exit(handle);
+      //  await dc_exit(handle);
         resp.msg = respMsg;
         resp.code = result[0];
         return resp;
@@ -286,7 +286,37 @@ WriteFileData = async function (fileId, fileData,key) {
     result.msg=respMsg;
     return result;
 }
-//    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF 
+
+WriteFileDataChunked = async function (fileId, fileData, key, chunkSize) {
+    chunkSize = chunkSize || 64;
+    var totalBytes = fileData.length / 2;
+    var totalChunks = Math.ceil(totalBytes / chunkSize);
+    var offset = 0;
+    var lastResult = null;
+    var respMsg = "";
+
+    while (offset < totalBytes) {
+        var chunkIndex = offset / chunkSize + 1;
+        var remain = totalBytes - offset;
+        var chunkBytes = Math.min(chunkSize, remain);
+        var chunkHex = fileData.substr(offset * 2, chunkBytes * 2);
+        var offsetHex = offset.toString(16).toUpperCase().padStart(4, "0");
+        var updateCmd = cmd_UpdateBinaryAtOffset(offsetHex, chunkHex);
+        var result = await WriteFileData(fileId, updateCmd, key);
+        respMsg += result.msg.replace(">>4.写入数据", ">>4.写入数据(块" + chunkIndex + "/" + totalChunks + ")");
+        var sw = result.data.substr(-4);
+        if (result.code !== 0 || sw !== "9000") {
+            result.msg = respMsg;
+            return result;
+        }
+        lastResult = result;
+        offset += chunkBytes;
+    }
+    lastResult.msg = respMsg;
+    return lastResult;
+};
+
+//    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 MacCalculate16 = function (data, processKey, icv) {
     // 1. 拆分16字节密钥为K1(左8字节)和K2(右8字节)
     var keyHex = CryptoJS.enc.Hex.parse(processKey);
@@ -560,3 +590,16 @@ function Toint8(uint) {
   const int8 = new Int8Array(uint8.buffer);
 return int8[0];
 }
+/**
+ * 生成指定字节数的重复 hex 字符串
+ * @param {string} byteHex - 单字节 hex（如 "00", "FF"），2个hex字符
+ * @param {number} byteCount - 需要重复的字节数
+ * @returns {string} 重复拼接的 hex 字符串（长度 = byteCount × 2）
+ */
+repeatHex = function(byteHex, byteCount) {
+    var result = "";
+    for (var i = 0; i < byteCount; i++) {
+        result += byteHex;
+    }
+    return result;
+};

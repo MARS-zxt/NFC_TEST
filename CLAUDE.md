@@ -53,13 +53,25 @@
 **写入**：`CreateCardStatusFile()` 在 `OpenCpuTypeACardDemo.html` 中定义。
 **读取**：`readADF01File()` 在 `LoadCpuTypeACardDemo.html` 中定义。
 
-### 文件 0009 — 燃气表冻结日志（88 字节 = 0x58）
+### 文件 0009 — 燃气表日冻结文件（124 字节 = 0x7C）
 
-二进制文件，创建和写入见 `CreateCardFreezeLogFile()`。
+二进制文件，创建和写入见 `CreateCardDailyFreezeLogFile()`，读取见 `readADF01File()`。
 
-### 文件 001C — 上次充值 TOKEN（56 字节 = 0x38）
+### 文件 000A — 燃气表月冻结文件（51 字节 = 0x33）
 
-**写入**：`CreateLastTokenFile()`，**读取**：`readADF01File()`。
+二进制文件，创建和写入见 `CreateCardMonthlyFreezeLogFile()`，读取见 `readADF01File()`。
+
+### 文件 000B — 燃气表事件记录文件（181 字节 = 0xB5）
+
+二进制文件，创建和写入见 `CreateCardEventLogFile()`，读取见 `readADF01File()`。
+
+### 文件 001C — TOKEN 码文件（51 字节 = 0x33）
+
+**写入**：`CreateTokenCodeFile()`，**读取**：`readADF01File()`。
+
+### 文件 001D — TOKEN 记录文件（20 字节 = 0x14）
+
+**写入**：`CreateTokenRecordFile()`，**读取**：`readADF01File()`。
 
 ## 关键工具函数
 
