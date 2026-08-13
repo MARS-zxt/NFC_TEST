@@ -24,7 +24,7 @@
         h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 2px; }
         .gas-table { width: 100%; table-layout: fixed; border-collapse: collapse; background: transparent; }
         .gas-table + .gas-table { margin-top: 18px; }
-        .gas-table td { padding: 12px 10px; vertical-align: middle; }
+        .gas-table td { padding: 8px 6px; vertical-align: middle; }
         .label-text { font-weight: 600; color: #334155; font-size: 14px; white-space: nowrap; }
         .required { color: #ef4444; margin-right: 4px; }
 		.btn-blue { background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; width: 50%; box-shadow: 0 2px 5px rgba(70,233,242,0.746); }
@@ -79,10 +79,10 @@
         .data-input-num {
             width: 100%;
             box-sizing: border-box;
-            padding: 6px 4px;
+            padding: 5px 2px;
             border: 1px solid rgba(203, 213, 225, 0.5);
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
             font-family: 'Consolas', 'Courier New', monospace;
             background: rgba(255, 255, 255, 0.55);
@@ -188,98 +188,455 @@
 
     </table>
 
+    <!-- ===== 文件0009 日冻结1-31天 ===== -->
     <table class="gas-table" border="0">
         <colgroup>
-            <col style="width:10%"><col style="width:16%">
             <col style="width:8%"><col style="width:14%">
-            <col style="width:6%"><col style="width:12%">
-            <col style="width:17%"><col style="width:17%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
         </colgroup>
-        <!-- ===== 文件0009 冻结日志数据写入 ===== -->
         <tbody class="data-group">
         <tr class="data-section-header">
-            <td style="width:10%;text-align:right"><span>文件0009</span></td>
-            <td style="width:15%"><span class="data-label-sm">冻结日志 (87字节)</span></td>
+            <td style="width:8%;text-align:right"><span>文件0009</span></td>
+            <td style="width:14%"><span class="data-label-sm">日冻结1-31天 (128B)</span></td>
+            <td colspan="8" style="text-align:right">
+                <button class="btn-write" onclick="writeDailyFreeze('0009','fd09')">写入0009</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">起始日:</span></td>
+            <td style="width:14%">
+                <input id="fd09_Y" class="data-input-num" style="width:28%" value="26" placeholder="年" maxlength="2">-
+                <input id="fd09_M" class="data-input-num" style="width:20%" value="7" placeholder="月" maxlength="2">-
+                <input id="fd09_D" class="data-input-num" style="width:20%" value="21" placeholder="日" maxlength="2">
+                <span class="data-label-sm">天:</span><input id="fd09_count" class="data-input-num" style="width:14%" value="31" maxlength="2">
+            </td>
+            <td colspan="8"><span class="data-label-sm">日冻结量(十进制):</span></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd09_1" class="data-input-num" value="0" placeholder="d1"></td>
+            <td><input id="fd09_2" class="data-input-num" value="0" placeholder="d2"></td>
+            <td><input id="fd09_3" class="data-input-num" value="0" placeholder="d3"></td>
+            <td><input id="fd09_4" class="data-input-num" value="0" placeholder="d4"></td>
+            <td><input id="fd09_5" class="data-input-num" value="0" placeholder="d5"></td>
+            <td><input id="fd09_6" class="data-input-num" value="0" placeholder="d6"></td>
+            <td><input id="fd09_7" class="data-input-num" value="0" placeholder="d7"></td>
+            <td><input id="fd09_8" class="data-input-num" value="0" placeholder="d8"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd09_9" class="data-input-num" value="0" placeholder="d9"></td>
+            <td><input id="fd09_10" class="data-input-num" value="0" placeholder="d10"></td>
+            <td><input id="fd09_11" class="data-input-num" value="0" placeholder="d11"></td>
+            <td><input id="fd09_12" class="data-input-num" value="0" placeholder="d12"></td>
+            <td><input id="fd09_13" class="data-input-num" value="0" placeholder="d13"></td>
+            <td><input id="fd09_14" class="data-input-num" value="0" placeholder="d14"></td>
+            <td><input id="fd09_15" class="data-input-num" value="0" placeholder="d15"></td>
+            <td><input id="fd09_16" class="data-input-num" value="0" placeholder="d16"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd09_17" class="data-input-num" value="0" placeholder="d17"></td>
+            <td><input id="fd09_18" class="data-input-num" value="0" placeholder="d18"></td>
+            <td><input id="fd09_19" class="data-input-num" value="0" placeholder="d19"></td>
+            <td><input id="fd09_20" class="data-input-num" value="0" placeholder="d20"></td>
+            <td><input id="fd09_21" class="data-input-num" value="0" placeholder="d21"></td>
+            <td><input id="fd09_22" class="data-input-num" value="0" placeholder="d22"></td>
+            <td><input id="fd09_23" class="data-input-num" value="0" placeholder="d23"></td>
+            <td><input id="fd09_24" class="data-input-num" value="0" placeholder="d24"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd09_25" class="data-input-num" value="0" placeholder="d25"></td>
+            <td><input id="fd09_26" class="data-input-num" value="0" placeholder="d26"></td>
+            <td><input id="fd09_27" class="data-input-num" value="0" placeholder="d27"></td>
+            <td><input id="fd09_28" class="data-input-num" value="0" placeholder="d28"></td>
+            <td><input id="fd09_29" class="data-input-num" value="0" placeholder="d29"></td>
+            <td><input id="fd09_30" class="data-input-num" value="0" placeholder="d30"></td>
+            <td><input id="fd09_31" class="data-input-num" value="0" placeholder="d31"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ===== 文件000A 日冻结32-62天 ===== -->
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:8%"><col style="width:14%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
+        </colgroup>
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:8%;text-align:right"><span>文件000A</span></td>
+            <td style="width:14%"><span class="data-label-sm">日冻结32-62天 (128B)</span></td>
+            <td colspan="8" style="text-align:right">
+                <button class="btn-write" onclick="writeDailyFreeze('000A','fd0A')">写入000A</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">起始日:</span></td>
+            <td style="width:14%">
+                <input id="fd0A_Y" class="data-input-num" style="width:28%" value="26" placeholder="年" maxlength="2">-
+                <input id="fd0A_M" class="data-input-num" style="width:20%" value="8" placeholder="月" maxlength="2">-
+                <input id="fd0A_D" class="data-input-num" style="width:20%" value="22" placeholder="日" maxlength="2">
+                <span class="data-label-sm">天:</span><input id="fd0A_count" class="data-input-num" style="width:14%" value="31" maxlength="2">
+            </td>
+            <td colspan="8"><span class="data-label-sm">日冻结量(十进制):</span></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0A_1" class="data-input-num" value="0" placeholder="d32"></td>
+            <td><input id="fd0A_2" class="data-input-num" value="0" placeholder="d33"></td>
+            <td><input id="fd0A_3" class="data-input-num" value="0" placeholder="d34"></td>
+            <td><input id="fd0A_4" class="data-input-num" value="0" placeholder="d35"></td>
+            <td><input id="fd0A_5" class="data-input-num" value="0" placeholder="d36"></td>
+            <td><input id="fd0A_6" class="data-input-num" value="0" placeholder="d37"></td>
+            <td><input id="fd0A_7" class="data-input-num" value="0" placeholder="d38"></td>
+            <td><input id="fd0A_8" class="data-input-num" value="0" placeholder="d39"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0A_9" class="data-input-num" value="0" placeholder="d40"></td>
+            <td><input id="fd0A_10" class="data-input-num" value="0" placeholder="d41"></td>
+            <td><input id="fd0A_11" class="data-input-num" value="0" placeholder="d42"></td>
+            <td><input id="fd0A_12" class="data-input-num" value="0" placeholder="d43"></td>
+            <td><input id="fd0A_13" class="data-input-num" value="0" placeholder="d44"></td>
+            <td><input id="fd0A_14" class="data-input-num" value="0" placeholder="d45"></td>
+            <td><input id="fd0A_15" class="data-input-num" value="0" placeholder="d46"></td>
+            <td><input id="fd0A_16" class="data-input-num" value="0" placeholder="d47"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0A_17" class="data-input-num" value="0" placeholder="d48"></td>
+            <td><input id="fd0A_18" class="data-input-num" value="0" placeholder="d49"></td>
+            <td><input id="fd0A_19" class="data-input-num" value="0" placeholder="d50"></td>
+            <td><input id="fd0A_20" class="data-input-num" value="0" placeholder="d51"></td>
+            <td><input id="fd0A_21" class="data-input-num" value="0" placeholder="d52"></td>
+            <td><input id="fd0A_22" class="data-input-num" value="0" placeholder="d53"></td>
+            <td><input id="fd0A_23" class="data-input-num" value="0" placeholder="d54"></td>
+            <td><input id="fd0A_24" class="data-input-num" value="0" placeholder="d55"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0A_25" class="data-input-num" value="0" placeholder="d56"></td>
+            <td><input id="fd0A_26" class="data-input-num" value="0" placeholder="d57"></td>
+            <td><input id="fd0A_27" class="data-input-num" value="0" placeholder="d58"></td>
+            <td><input id="fd0A_28" class="data-input-num" value="0" placeholder="d59"></td>
+            <td><input id="fd0A_29" class="data-input-num" value="0" placeholder="d60"></td>
+            <td><input id="fd0A_30" class="data-input-num" value="0" placeholder="d61"></td>
+            <td><input id="fd0A_31" class="data-input-num" value="0" placeholder="d62"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ===== 文件000B 日冻结63-93天 ===== -->
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:8%"><col style="width:14%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
+            <col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%"><col style="width:9.75%">
+        </colgroup>
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:8%;text-align:right"><span>文件000B</span></td>
+            <td style="width:14%"><span class="data-label-sm">日冻结63-93天 (128B)</span></td>
+            <td colspan="8" style="text-align:right">
+                <button class="btn-write" onclick="writeDailyFreeze('000B','fd0B')">写入000B</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">起始日:</span></td>
+            <td style="width:14%">
+                <input id="fd0B_Y" class="data-input-num" style="width:28%" value="26" placeholder="年" maxlength="2">-
+                <input id="fd0B_M" class="data-input-num" style="width:20%" value="9" placeholder="月" maxlength="2">-
+                <input id="fd0B_D" class="data-input-num" style="width:20%" value="23" placeholder="日" maxlength="2">
+                <span class="data-label-sm">天:</span><input id="fd0B_count" class="data-input-num" style="width:14%" value="31" maxlength="2">
+            </td>
+            <td colspan="8"><span class="data-label-sm">日冻结量(十进制):</span></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0B_1" class="data-input-num" value="0" placeholder="d63"></td>
+            <td><input id="fd0B_2" class="data-input-num" value="0" placeholder="d64"></td>
+            <td><input id="fd0B_3" class="data-input-num" value="0" placeholder="d65"></td>
+            <td><input id="fd0B_4" class="data-input-num" value="0" placeholder="d66"></td>
+            <td><input id="fd0B_5" class="data-input-num" value="0" placeholder="d67"></td>
+            <td><input id="fd0B_6" class="data-input-num" value="0" placeholder="d68"></td>
+            <td><input id="fd0B_7" class="data-input-num" value="0" placeholder="d69"></td>
+            <td><input id="fd0B_8" class="data-input-num" value="0" placeholder="d70"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0B_9" class="data-input-num" value="0" placeholder="d71"></td>
+            <td><input id="fd0B_10" class="data-input-num" value="0" placeholder="d72"></td>
+            <td><input id="fd0B_11" class="data-input-num" value="0" placeholder="d73"></td>
+            <td><input id="fd0B_12" class="data-input-num" value="0" placeholder="d74"></td>
+            <td><input id="fd0B_13" class="data-input-num" value="0" placeholder="d75"></td>
+            <td><input id="fd0B_14" class="data-input-num" value="0" placeholder="d76"></td>
+            <td><input id="fd0B_15" class="data-input-num" value="0" placeholder="d77"></td>
+            <td><input id="fd0B_16" class="data-input-num" value="0" placeholder="d78"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0B_17" class="data-input-num" value="0" placeholder="d79"></td>
+            <td><input id="fd0B_18" class="data-input-num" value="0" placeholder="d80"></td>
+            <td><input id="fd0B_19" class="data-input-num" value="0" placeholder="d81"></td>
+            <td><input id="fd0B_20" class="data-input-num" value="0" placeholder="d82"></td>
+            <td><input id="fd0B_21" class="data-input-num" value="0" placeholder="d83"></td>
+            <td><input id="fd0B_22" class="data-input-num" value="0" placeholder="d84"></td>
+            <td><input id="fd0B_23" class="data-input-num" value="0" placeholder="d85"></td>
+            <td><input id="fd0B_24" class="data-input-num" value="0" placeholder="d86"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fd0B_25" class="data-input-num" value="0" placeholder="d87"></td>
+            <td><input id="fd0B_26" class="data-input-num" value="0" placeholder="d88"></td>
+            <td><input id="fd0B_27" class="data-input-num" value="0" placeholder="d89"></td>
+            <td><input id="fd0B_28" class="data-input-num" value="0" placeholder="d90"></td>
+            <td><input id="fd0B_29" class="data-input-num" value="0" placeholder="d91"></td>
+            <td><input id="fd0B_30" class="data-input-num" value="0" placeholder="d92"></td>
+            <td><input id="fd0B_31" class="data-input-num" value="0" placeholder="d93"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ===== 文件000C 月冻结 ===== -->
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:8%"><col style="width:14%">
+            <col style="width:13%"><col style="width:13%"><col style="width:13%"><col style="width:13%">
+            <col style="width:13%"><col style="width:13%">
+        </colgroup>
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:8%;text-align:right"><span>文件000C</span></td>
+            <td style="width:14%"><span class="data-label-sm">月冻结 (51字节)</span></td>
             <td colspan="6" style="text-align:right">
-                <button class="btn-write" onclick="writeTestData0009()">写入0009</button>
+                <button class="btn-write" onclick="writeMonthlyFreeze()">写入000C</button>
             </td>
         </tr>
-        <!-- 日冻结 -->
-        <tr class="data-sub-header"><td colspan="8">日冻结数据 (bytes 0-31)</td></tr>
         <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">起始日:</span></td>
-            <td style="width:16%">
-                <input id="f09_dayY" class="data-input-num" style="width:30%" value="26" placeholder="年" maxlength="2">-
-                <input id="f09_dayM" class="data-input-num" style="width:20%" value="7" placeholder="月" maxlength="2">-
-                <input id="f09_dayD" class="data-input-num" style="width:20%" value="21" placeholder="日" maxlength="2">
-                <span class="data-label-sm">条数:</span><input id="f09_dayCount" class="data-input-num" style="width:15%" value="7" placeholder="条" maxlength="1">
+            <td style="width:8%;text-align:right"><span class="data-label-sm">起始月:</span></td>
+            <td style="width:14%">
+                <input id="fm_Y" class="data-input-num" style="width:32%" value="26" placeholder="年" maxlength="2">-
+                <input id="fm_M" class="data-input-num" style="width:22%" value="7" placeholder="月" maxlength="2">
+                <span class="data-label-sm">月数:</span><input id="fm_count" class="data-input-num" style="width:18%" value="12" maxlength="2">
             </td>
-            <td colspan="6">
-                <span class="data-label-sm">日量:</span>
-                <input id="f09_day1" class="data-input-num" style="width:10%" value="0" placeholder="d1">
-                <input id="f09_day2" class="data-input-num" style="width:10%" value="0" placeholder="d2">
-                <input id="f09_day3" class="data-input-num" style="width:10%" value="0" placeholder="d3">
-                <input id="f09_day4" class="data-input-num" style="width:10%" value="0" placeholder="d4">
-                <input id="f09_day5" class="data-input-num" style="width:10%" value="0" placeholder="d5">
-                <input id="f09_day6" class="data-input-num" style="width:10%" value="0" placeholder="d6">
-                <input id="f09_day7" class="data-input-num" style="width:10%" value="0" placeholder="d7">
+            <td colspan="6"><span class="data-label-sm">月冻结量(十进制):</span></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fm_1" class="data-input-num" value="0" placeholder="m1"></td>
+            <td><input id="fm_2" class="data-input-num" value="0" placeholder="m2"></td>
+            <td><input id="fm_3" class="data-input-num" value="0" placeholder="m3"></td>
+            <td><input id="fm_4" class="data-input-num" value="0" placeholder="m4"></td>
+            <td><input id="fm_5" class="data-input-num" value="0" placeholder="m5"></td>
+            <td><input id="fm_6" class="data-input-num" value="0" placeholder="m6"></td>
+        </tr>
+        <tr><td></td><td></td>
+            <td><input id="fm_7" class="data-input-num" value="0" placeholder="m7"></td>
+            <td><input id="fm_8" class="data-input-num" value="0" placeholder="m8"></td>
+            <td><input id="fm_9" class="data-input-num" value="0" placeholder="m9"></td>
+            <td><input id="fm_10" class="data-input-num" value="0" placeholder="m10"></td>
+            <td><input id="fm_11" class="data-input-num" value="0" placeholder="m11"></td>
+            <td><input id="fm_12" class="data-input-num" value="0" placeholder="m12"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- ===== 文件000D 事件记录 ===== -->
+    <table class="gas-table" border="0">
+        <colgroup>
+            <col style="width:8%"><col style="width:8%">
+            <col style="width:6%"><col style="width:16%">
+            <col style="width:6%"><col style="width:12%">
+            <col style="width:22%"><col style="width:22%">
+        </colgroup>
+        <tbody class="data-group">
+        <tr class="data-section-header">
+            <td style="width:8%;text-align:right"><span>文件000D</span></td>
+            <td style="width:14%"><span class="data-label-sm">事件记录 (181字节)</span></td>
+            <td colspan="6" style="text-align:right">
+                <button class="btn-write" onclick="writeEventLog()">写入000D</button>
             </td>
         </tr>
-        <!-- 月冻结 -->
-        <tr class="data-sub-header"><td colspan="8">月冻结数据 (bytes 32-58)</td></tr>
         <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">起始月:</span></td>
-            <td style="width:16%">
-                <input id="f09_monY" class="data-input-num" style="width:35%" value="26" placeholder="年" maxlength="2">-
-                <input id="f09_monM" class="data-input-num" style="width:25%" value="7" placeholder="月" maxlength="2">
-                <span class="data-label-sm">条数:</span><input id="f09_monCount" class="data-input-num" style="width:20%" value="6" placeholder="条" maxlength="1">
-            </td>
-            <td colspan="6">
-                <span class="data-label-sm">月量:</span>
-                <input id="f09_mon1" class="data-input-num" style="width:11%" value="0" placeholder="m1">
-                <input id="f09_mon2" class="data-input-num" style="width:11%" value="0" placeholder="m2">
-                <input id="f09_mon3" class="data-input-num" style="width:11%" value="0" placeholder="m3">
-                <input id="f09_mon4" class="data-input-num" style="width:11%" value="0" placeholder="m4">
-                <input id="f09_mon5" class="data-input-num" style="width:11%" value="0" placeholder="m5">
-                <input id="f09_mon6" class="data-input-num" style="width:11%" value="0" placeholder="m6">
-            </td>
-        </tr>
-        <!-- 关阀事件 -->
-        <tr class="data-sub-header"><td colspan="8">关阀事件记录 (bytes 59-86)</td></tr>
-        <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">事件数:</span></td>
-            <td style="width:16%"><input id="f09_evtCount" class="data-input-num" style="width:40px" value="0" maxlength="1"></td>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件数:</span></td>
+            <td style="width:8%"><input id="fe_count" class="data-input-num" style="width:60px" value="0" maxlength="2"></td>
             <td colspan="6"></td>
         </tr>
         <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">事件1:</span></td>
-            <td style="width:16%">类型:<input id="f09_evt1Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:8%;text-align:right">时间:</td>
-            <td style="width:14%"><input id="f09_evt1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件1:</span></td>
+            <td style="width:8%">类型:<input id="fe_1Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
             <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="f09_evt1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:12%"><input id="fe_1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">事件2:</span></td>
-            <td style="width:16%">类型:<input id="f09_evt2Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:8%;text-align:right">时间:</td>
-            <td style="width:14%"><input id="f09_evt2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件2:</span></td>
+            <td style="width:8%">类型:<input id="fe_2Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
             <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="f09_evt2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:12%"><input id="fe_2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:10%;text-align:right"><span class="data-label-sm">事件3:</span></td>
-            <td style="width:16%">类型:<input id="f09_evt3Type" class="data-input-num" style="width:40%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:8%;text-align:right">时间:</td>
-            <td style="width:14%"><input id="f09_evt3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件3:</span></td>
+            <td style="width:8%">类型:<input id="fe_3Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
             <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="f09_evt3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:12%"><input id="fe_3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件4:</span></td>
+            <td style="width:8%">类型:<input id="fe_4Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_4Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_4Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件5:</span></td>
+            <td style="width:8%">类型:<input id="fe_5Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_5Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_5Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件6:</span></td>
+            <td style="width:8%">类型:<input id="fe_6Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_6Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_6Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件7:</span></td>
+            <td style="width:8%">类型:<input id="fe_7Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_7Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_7Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件8:</span></td>
+            <td style="width:8%">类型:<input id="fe_8Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_8Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_8Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件9:</span></td>
+            <td style="width:8%">类型:<input id="fe_9Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_9Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_9Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件10:</span></td>
+            <td style="width:8%">类型:<input id="fe_10Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_10Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_10Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件11:</span></td>
+            <td style="width:8%">类型:<input id="fe_11Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_11Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_11Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件12:</span></td>
+            <td style="width:8%">类型:<input id="fe_12Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_12Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_12Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件13:</span></td>
+            <td style="width:8%">类型:<input id="fe_13Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_13Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_13Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件14:</span></td>
+            <td style="width:8%">类型:<input id="fe_14Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_14Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_14Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件15:</span></td>
+            <td style="width:8%">类型:<input id="fe_15Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_15Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_15Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件16:</span></td>
+            <td style="width:8%">类型:<input id="fe_16Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_16Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_16Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件17:</span></td>
+            <td style="width:8%">类型:<input id="fe_17Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_17Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_17Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件18:</span></td>
+            <td style="width:8%">类型:<input id="fe_18Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_18Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_18Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件19:</span></td>
+            <td style="width:8%">类型:<input id="fe_19Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_19Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_19Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td style="width:8%;text-align:right"><span class="data-label-sm">事件20:</span></td>
+            <td style="width:8%">类型:<input id="fe_20Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
+            <td style="width:6%;text-align:right">时间:</td>
+            <td style="width:16%"><input id="fe_20Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
+            <td style="width:6%;text-align:right">详情:</td>
+            <td style="width:12%"><input id="fe_20Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
             <td colspan="2"></td>
         </tr>
         </tbody>
-
     </table>
 
     <table class="gas-table" border="0">
@@ -317,7 +674,7 @@
 		messageText.value = messageText.value + result.msg;
 		return result;
 	}
-	
+
     TripleDesExternalAuthenticate = async function () {
 		var result = await tripleDesExternalAuthenticate("00",document.getElementById("key").value);
 		messageText.value = messageText.value + result.msg;
@@ -339,7 +696,7 @@
                 if(hint) hint.classList.remove("show");
             }
         }
-ClearLog = async function (command) {
+	ClearLog = async function (command) {
         messageText.value = "";
     }
 
@@ -357,33 +714,35 @@ ClearLog = async function (command) {
         return ("0" + n.toString(16)).slice(-2);
     }
 
-    // ===== 写入文件0008 燃气表状态 =====
-    writeTestData0008 = async function() {
-        if (!handle) { alert("请先初始化连接"); return; }
-        var keyVal = document.getElementById("key").value;
+    // ===== 公共写入前置流程: 选MF → 外部认证 → 选ADF01 =====
+    prepWrite = async function(keyVal) {
+        if (!handle) { alert("请先初始化连接"); return false; }
 
-        // 1. 选择MF主目录
         messageText.value += ">>1.选择MF主目录(3F00)\r\n";
         var r = await sendCommand(cmd_SelectFileByID("3F00"), handle);
         r.code = r.data.substr(r.data.length - 4, 4);
         messageText.value += r.msg;
-        if (r.code != "9000") { alert("选择MF失败:" + r.code); return; }
+        if (r.code != "9000") { alert("选择MF失败:" + r.code); return false; }
 
-        // 2. 外部认证
         messageText.value += ">>2.外部认证\r\n";
         r = await tripleDesExternalAuthenticate("00", keyVal);
         messageText.value += r.msg;
         r.code = r.data ? r.data.substr(r.data.length - 4, 4) : r.code;
-        if (r.code != "9000") { alert("外部认证失败:" + r.code); return; }
+        if (r.code != "9000") { alert("外部认证失败:" + r.code); return false; }
 
-        // 3. 选择ADF01
         messageText.value += ">>3.选择ADF01(1001)\r\n";
         r = await sendCommand(cmd_SelectFileByID("1001"), handle);
         r.code = r.data.substr(r.data.length - 4, 4);
         messageText.value += r.msg;
-        if (r.code != "9000") { alert("选择ADF01失败:" + r.code); return; }
+        if (r.code != "9000") { alert("选择ADF01失败:" + r.code); return false; }
+        return true;
+    };
 
-        // 4. 打包数据并写入
+    // ===== 写入文件0008 燃气表状态 =====
+    writeTestData0008 = async function() {
+        var keyVal = document.getElementById("key").value;
+        if (!await prepWrite(keyVal)) return;
+
         messageText.value += ">>4.写入0008燃气表状态\r\n";
         var readDate = dateFormatHex("YYYYMMDDWWHHmmss", new Date()) + "00000000";
         var data = readDate
@@ -398,79 +757,69 @@ ClearLog = async function (command) {
         messageText.value += result.msg;
     };
 
-    // ===== 写入文件0009 冻结日志 =====
-    writeTestData0009 = async function() {
-        if (!handle) { alert("请先初始化连接"); return; }
+    // ===== 写入日冻结文件 (0009/000A/000B 通用) =====
+    writeDailyFreeze = async function(fileId, prefix) {
         var keyVal = document.getElementById("key").value;
+        if (!await prepWrite(keyVal)) return;
 
-        // 1. 选择MF主目录
-        messageText.value += ">>1.选择MF主目录(3F00)\r\n";
-        var r = await sendCommand(cmd_SelectFileByID("3F00"), handle);
-        r.code = r.data.substr(r.data.length - 4, 4);
-        messageText.value += r.msg;
-        if (r.code != "9000") { alert("选择MF失败:" + r.code); return; }
-
-        // 2. 外部认证
-        messageText.value += ">>2.外部认证\r\n";
-        r = await tripleDesExternalAuthenticate("00", keyVal);
-        messageText.value += r.msg;
-        r.code = r.data ? r.data.substr(r.data.length - 4, 4) : r.code;
-        if (r.code != "9000") { alert("外部认证失败:" + r.code); return; }
-
-        // 3. 选择ADF01
-        messageText.value += ">>3.选择ADF01(1001)\r\n";
-        r = await sendCommand(cmd_SelectFileByID("1001"), handle);
-        r.code = r.data.substr(r.data.length - 4, 4);
-        messageText.value += r.msg;
-        if (r.code != "9000") { alert("选择ADF01失败:" + r.code); return; }
-
-        // 4. 打包数据并写入
-        messageText.value += ">>4.写入0009冻结日志\r\n";
-        // 日冻结头 4B: year+month+day+count
-        var dayHeader = decToHex1(document.getElementById("f09_dayY").value)
-            + decToHex1(document.getElementById("f09_dayM").value)
-            + decToHex1(document.getElementById("f09_dayD").value)
-            + decToHex1(document.getElementById("f09_dayCount").value);
-        // 7条日冻结量 各4B
-        var dayData = "";
-        for (var i = 1; i <= 7; i++) {
-            dayData += decToHex4(document.getElementById("f09_day" + i).value);
+        messageText.value += ">>4.写入" + fileId + "日冻结数据\r\n";
+        var data = decToHex1(document.getElementById(prefix + "_Y").value)
+            + decToHex1(document.getElementById(prefix + "_M").value)
+            + decToHex1(document.getElementById(prefix + "_D").value)
+            + decToHex1(document.getElementById(prefix + "_count").value);
+        for (var i = 1; i <= 31; i++) {
+            data += decToHex4(document.getElementById(prefix + "_" + i).value);
         }
-        // 月冻结头 3B + 1B padding
-        var monHeader = decToHex1(document.getElementById("f09_monY").value)
-            + decToHex1(document.getElementById("f09_monM").value)
-            + decToHex1(document.getElementById("f09_monCount").value);
-        // 6条月冻结量 各4B
-        var monData = "";
-        for (var i = 1; i <= 6; i++) {
-            monData += decToHex4(document.getElementById("f09_mon" + i).value);
+        var result = await WriteFileDataChunked(fileId, data, keyVal);
+        messageText.value += result.msg;
+    };
+
+    // ===== 写入文件000C 月冻结 =====
+    writeMonthlyFreeze = async function() {
+        var keyVal = document.getElementById("key").value;
+        if (!await prepWrite(keyVal)) return;
+
+        messageText.value += ">>4.写入000C月冻结数据\r\n";
+        var data = decToHex1(document.getElementById("fm_Y").value)
+            + decToHex1(document.getElementById("fm_M").value)
+            + decToHex1(document.getElementById("fm_count").value);
+        for (var i = 1; i <= 12; i++) {
+            data += decToHex4(document.getElementById("fm_" + i).value);
         }
-        // 关阀事件
-        var evtCount = parseInt(document.getElementById("f09_evtCount").value) || 0;
-        var evtData = decToHex1(String(evtCount));
-        for (var i = 1; i <= 3; i++) {
+        var updateCmd = cmd_UpdateBinary("00", data);
+        var result = await WriteFileData("000C", updateCmd, keyVal);
+        messageText.value += result.msg;
+    };
+
+    // ===== 写入文件000D 事件记录 =====
+    writeEventLog = async function() {
+        var keyVal = document.getElementById("key").value;
+        if (!await prepWrite(keyVal)) return;
+
+        messageText.value += ">>4.写入000D事件记录\r\n";
+        var evtCount = parseInt(document.getElementById("fe_count").value) || 0;
+        var data = decToHex1(String(evtCount));
+        for (var i = 1; i <= 20; i++) {
             if (i <= evtCount) {
-                evtData += (document.getElementById("f09_evt" + i + "Type").value + "0000").slice(0, 4);
-                evtData += (document.getElementById("f09_evt" + i + "Time").value + "000000000000").slice(0, 12);
-                evtData += (document.getElementById("f09_evt" + i + "Detail").value + "00").slice(0, 2);
+                data += (document.getElementById("fe_" + i + "Type").value + "0000").slice(0, 4);
+                data += (document.getElementById("fe_" + i + "Time").value + "000000000000").slice(0, 12);
+                data += (document.getElementById("fe_" + i + "Detail").value + "00").slice(0, 2);
             } else {
-                evtData += repeatHex("00", 9); // 9 zero bytes
+                data += repeatHex("00", 9);
             }
         }
-        var data = dayHeader + dayData + monHeader + monData + evtData;
-        var updateCmd = cmd_UpdateBinary("00", data);
-        var result = await WriteFileData("0009", updateCmd, keyVal);
+        var result = await WriteFileDataChunked("000D", data, keyVal);
         messageText.value += result.msg;
     };
 
 
-window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'setBackground') {
-        document.body.style.backgroundImage = e.data.backgroundImage;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundAttachment = 'fixed';
-    }
-});
+	window.addEventListener('message', function(e) {
+	    if (e.data && e.data.type === 'setBackground') {
+	        document.body.style.backgroundImage = e.data.backgroundImage;
+	        document.body.style.backgroundSize = 'cover';
+	        document.body.style.backgroundAttachment = 'fixed';
+	    }
+	});
 
 </script>
 

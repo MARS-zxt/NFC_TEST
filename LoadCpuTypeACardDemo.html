@@ -629,6 +629,38 @@
     }
     .evt-table tbody tr.outrange td { color: #cbd5e1; }
 
+    /* ===== 起始/结束数据发光边框 ===== */
+    .cal-grid td.start-glow {
+        box-shadow: 0 0 10px 3px rgba(16, 185, 129, 0.75),
+                    0 0 20px 1px rgba(16, 185, 129, 0.35),
+                    inset 0 0 0 1px rgba(16, 185, 129, 0.55) !important;
+    }
+    .cal-grid td.end-glow {
+        box-shadow: 0 0 10px 3px rgba(239, 68, 68, 0.75),
+                    0 0 20px 1px rgba(239, 68, 68, 0.35),
+                    inset 0 0 0 1px rgba(239, 68, 68, 0.55) !important;
+    }
+    .mon-list tr.start-glow {
+        box-shadow: 0 0 10px 3px rgba(16, 185, 129, 0.65),
+                    0 0 18px 1px rgba(16, 185, 129, 0.25),
+                    inset 0 0 0 1px rgba(16, 185, 129, 0.45) !important;
+    }
+    .mon-list tr.end-glow {
+        box-shadow: 0 0 10px 3px rgba(239, 68, 68, 0.65),
+                    0 0 18px 1px rgba(239, 68, 68, 0.25),
+                    inset 0 0 0 1px rgba(239, 68, 68, 0.45) !important;
+    }
+    .evt-table tr.start-glow {
+        box-shadow: 0 0 10px 3px rgba(16, 185, 129, 0.65),
+                    0 0 18px 1px rgba(16, 185, 129, 0.25),
+                    inset 0 0 0 1px rgba(16, 185, 129, 0.45) !important;
+    }
+    .evt-table tr.end-glow {
+        box-shadow: 0 0 10px 3px rgba(239, 68, 68, 0.65),
+                    0 0 18px 1px rgba(239, 68, 68, 0.25),
+                    inset 0 0 0 1px rgba(239, 68, 68, 0.45) !important;
+    }
+
     </style>
 
 </head>
@@ -1780,7 +1812,7 @@ ReadTypeACPUCard = async function () {
 
             alert("选择001C:"+r.code);
 
-            return;
+            // return;
 
         }
 
@@ -1798,7 +1830,7 @@ ReadTypeACPUCard = async function () {
 
             alert("读取TOKEN码文件失败:"+r.code);
 
-            document.getElementById("lastToken").value = "NaN";
+            // document.getElementById("lastToken").value = "NaN";
 
         //	return;
 
@@ -1818,7 +1850,7 @@ ReadTypeACPUCard = async function () {
 
             document.getElementById("tokenID5").value = bcdToDecimal(hexToBcd(r.data.slice(82, 102)));
 
-            document.getElementById("lastToken").value = r.data;
+            // document.getElementById("lastToken").value = r.data;
 
         }
 
@@ -1863,7 +1895,20 @@ ReadTypeACPUCard = async function () {
 
         }else{
 
-            messageText.value = messageText.value + "TOKEN记录数据:" + r.data + "\r\n";
+            var recData = r.data;
+            // 5 个 result，各占 1 字节（字节 0-4），转十进制
+            document.getElementById("result1").value = parseInt(recData.slice(0, 2), 16);
+            document.getElementById("result2").value = parseInt(recData.slice(2, 4), 16);
+            document.getElementById("result3").value = parseInt(recData.slice(4, 6), 16);
+            document.getElementById("result4").value = parseInt(recData.slice(6, 8), 16);
+            document.getElementById("result5").value = parseInt(recData.slice(8, 10), 16);
+            // 5 个 TID，各占 3 字节（字节 5-19），转十进制
+            document.getElementById("TID1").value = parseInt(recData.slice(10, 16), 16);
+            document.getElementById("TID2").value = parseInt(recData.slice(16, 22), 16);
+            document.getElementById("TID3").value = parseInt(recData.slice(22, 28), 16);
+            document.getElementById("TID4").value = parseInt(recData.slice(28, 34), 16);
+            document.getElementById("TID5").value = parseInt(recData.slice(34, 40), 16);
+            messageText.value = messageText.value + "TOKEN记录数据:" + recData + "\r\n";
 
         }
 
@@ -2175,6 +2220,15 @@ ReadTypeACPUCard = async function () {
         var todayMs = today.getTime();
         var INVALID = 0xFFFFFFFF;
 
+        // 计算全局首尾有效日期的 dayIndex
+        var firstValidIdx = -1, lastValidIdx = -1;
+        for (var idx = 0; idx < dailyFreeze.dayCount && idx < 93; idx++) {
+            if (dailyFreeze.values[idx] !== INVALID) {
+                if (firstValidIdx < 0) firstValidIdx = idx;
+                lastValidIdx = idx;
+            }
+        }
+
         var firstDay = new Date(calYear, calMonth - 1, 1);
         var startDow = firstDay.getDay();
         var daysInMonth = new Date(calYear, calMonth, 0).getDate();
@@ -2207,6 +2261,8 @@ ReadTypeACPUCard = async function () {
             }
 
             if (isToday) cls += " today";
+            if (dayIndex === firstValidIdx) cls += " start-glow";
+            if (dayIndex === lastValidIdx) cls += " end-glow";
 
             html += "<td class='" + cls + "'>" + content + "</td>";
             cell++;
@@ -2260,6 +2316,11 @@ ReadTypeACPUCard = async function () {
                 valHtml = "<span class='mon-value'>" + monthFreeze.values[i] + "</span>";
             }
 
+            if (cls === "normal") {
+                if (i === 0) cls += " start-glow";
+                if (i === monthFreeze.monCount - 1) cls += " end-glow";
+            }
+
             html += "<tr class='" + cls + "'>";
             html += "<td class='mon-month'>" + label + "</td>";
             html += "<td class='mon-divider'></td>";
@@ -2289,6 +2350,10 @@ ReadTypeACPUCard = async function () {
         var html = "";
         for (var i = 0; i < 20; i++) {
             var cls = (i >= eventLog.eventCount) ? "outrange" : "normal";
+            if (cls === "normal") {
+                if (i === 0) cls += " start-glow";
+                if (i === eventLog.eventCount - 1) cls += " end-glow";
+            }
             html += "<tr class='" + cls + "'>";
             html += "<td class='evt-col-idx'>" + (i + 1) + "</td>";
             if (i < eventLog.eventCount) {
