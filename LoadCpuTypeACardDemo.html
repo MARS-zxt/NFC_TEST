@@ -1584,6 +1584,8 @@ ReadTypeACPUCard = async function () {
             dailyFreeze.values = f0009.values;
         }
 
+        await clearFileAfterRead("0009", 128);
+
 
         // 读取最近32-62日冻结文件000A
 
@@ -1621,6 +1623,8 @@ ReadTypeACPUCard = async function () {
             var f000A = parseDailyFreezeFile(r.data);
             dailyFreeze.values = dailyFreeze.values.concat(f000A.values);
         }
+
+        await clearFileAfterRead("000A", 128);
 
 
         // 读取最近63-93日冻结文件000B
@@ -1667,6 +1671,8 @@ ReadTypeACPUCard = async function () {
                 document.getElementById("dayFreezeSummary").textContent = "暂无数据";
             }
         }
+
+        await clearFileAfterRead("000B", 128);
 
 
         // 读取月冻结文件000C
@@ -1728,6 +1734,8 @@ ReadTypeACPUCard = async function () {
                 document.getElementById("monFreezeSummary").textContent = "暂无数据";
             }
         }
+
+        await clearFileAfterRead("000C", 51);
 
 
         // 读取事件记录文件000D
@@ -1799,6 +1807,8 @@ ReadTypeACPUCard = async function () {
                 document.getElementById("eventLogSummary").textContent = "暂无记录";
             }
         }
+
+        await clearFileAfterRead("000D", 181);
 
         i2 = i2 + 1;
 
@@ -1928,6 +1938,37 @@ ReadTypeACPUCard = async function () {
         // }
 
     }
+
+
+
+    clearFileAfterRead = async function (fileId, size) {
+        // 1. 写认证：选择MF → 认证"00" → 选择ADF01
+        sdata = cmd_SelectFileByID("3F00");
+        r = await CommandTypeACPU(sdata);
+        if (r.code != "9000") { alert("清除" + fileId + "选择MF失败:" + r.code); return; }
+
+        r = await TripleDesExternalAuthenticate("00");
+        if (r.code != "9000" && r.data != "9000") { alert("清除" + fileId + "认证失败:" + r.code); return; }
+
+        sdata = cmd_SelectFileByID("1001");
+        r = await CommandTypeACPU(sdata);
+        if (r.code != "9000") { alert("清除" + fileId + "选择ADF01失败:" + r.code); return; }
+
+        // 2. 写零
+        messageText.value = messageText.value + "清除文件" + fileId + "\r\n";
+        if (size > 100) {
+            var res = await WriteFileDataChunked(fileId, repeatHex("00", size), key.value);
+            messageText.value = messageText.value + res.msg;
+        } else {
+            sdata = cmd_UpdateBinary("00", repeatHex("00", size));
+            r = await WriteFile(fileId, sdata);
+        }
+
+        // 3. 恢复读认证：选择ADF01 → 认证"01"
+        sdata = cmd_SelectFileByID("1001");
+        r = await CommandTypeACPU(sdata);
+        r = await TripleDesExternalAuthenticate("01");
+    };
 
 
 
