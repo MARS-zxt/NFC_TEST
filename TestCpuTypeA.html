@@ -438,206 +438,352 @@
     <!-- ===== 文件000D 事件记录 ===== -->
     <table class="gas-table" border="0">
         <colgroup>
-            <col style="width:8%"><col style="width:8%">
-            <col style="width:6%"><col style="width:16%">
-            <col style="width:6%"><col style="width:12%">
-            <col style="width:22%"><col style="width:22%">
+            <col style="width:7%"><col style="width:16%">
+            <col style="width:4%"><col style="width:30%">
+            <col style="width:4%"><col style="width:9%">
+            <col style="width:15%"><col style="width:15%">
         </colgroup>
         <tbody class="data-group">
         <tr class="data-section-header">
-            <td style="width:8%;text-align:right"><span>文件000D</span></td>
-            <td style="width:14%"><span class="data-label-sm">事件记录 (181字节)</span></td>
+            <td style="width:7%;text-align:right"><span>文件000D</span></td>
+            <td style="width:16%"><span class="data-label-sm">事件记录 (181字节)</span></td>
             <td colspan="6" style="text-align:right">
                 <button class="btn-write" onclick="writeEventLog()">写入000D</button>
             </td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件数:</span></td>
-            <td style="width:8%"><input id="fe_count" class="data-input-num" style="width:60px" value="0" maxlength="2"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件数:</span></td>
+            <td style="width:16%"><input id="fe_count" class="data-input-num" style="width:60px" value="0" maxlength="2" placeholder="0-20"></td>
             <td colspan="6"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件1:</span></td>
-            <td style="width:8%">类型:<input id="fe_1Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_1Time" class="data-input-num" style="width:95%" value="260721143000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_1Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件1:</span></td>
+            <td style="width:16%">类型:<input id="fe_1Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_1Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_1M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_1D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_1H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_1Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_1S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_1Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件2:</span></td>
-            <td style="width:8%">类型:<input id="fe_2Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_2Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_2Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件2:</span></td>
+            <td style="width:16%">类型:<input id="fe_2Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_2Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_2M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_2D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_2H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_2Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_2S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_2Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件3:</span></td>
-            <td style="width:8%">类型:<input id="fe_3Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_3Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_3Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件3:</span></td>
+            <td style="width:16%">类型:<input id="fe_3Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_3Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_3M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_3D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_3H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_3Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_3S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_3Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件4:</span></td>
-            <td style="width:8%">类型:<input id="fe_4Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_4Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_4Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件4:</span></td>
+            <td style="width:16%">类型:<input id="fe_4Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_4Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_4M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_4D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_4H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_4Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_4S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_4Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件5:</span></td>
-            <td style="width:8%">类型:<input id="fe_5Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_5Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_5Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件5:</span></td>
+            <td style="width:16%">类型:<input id="fe_5Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_5Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_5M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_5D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_5H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_5Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_5S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_5Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件6:</span></td>
-            <td style="width:8%">类型:<input id="fe_6Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_6Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_6Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件6:</span></td>
+            <td style="width:16%">类型:<input id="fe_6Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_6Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_6M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_6D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_6H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_6Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_6S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_6Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件7:</span></td>
-            <td style="width:8%">类型:<input id="fe_7Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_7Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_7Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件7:</span></td>
+            <td style="width:16%">类型:<input id="fe_7Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_7Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_7M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_7D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_7H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_7Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_7S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_7Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件8:</span></td>
-            <td style="width:8%">类型:<input id="fe_8Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_8Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_8Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件8:</span></td>
+            <td style="width:16%">类型:<input id="fe_8Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_8Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_8M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_8D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_8H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_8Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_8S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_8Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件9:</span></td>
-            <td style="width:8%">类型:<input id="fe_9Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_9Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_9Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件9:</span></td>
+            <td style="width:16%">类型:<input id="fe_9Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_9Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_9M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_9D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_9H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_9Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_9S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_9Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件10:</span></td>
-            <td style="width:8%">类型:<input id="fe_10Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_10Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_10Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件10:</span></td>
+            <td style="width:16%">类型:<input id="fe_10Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_10Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_10M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_10D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_10H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_10Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_10S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_10Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件11:</span></td>
-            <td style="width:8%">类型:<input id="fe_11Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_11Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_11Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件11:</span></td>
+            <td style="width:16%">类型:<input id="fe_11Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_11Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_11M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_11D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_11H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_11Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_11S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_11Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件12:</span></td>
-            <td style="width:8%">类型:<input id="fe_12Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_12Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_12Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件12:</span></td>
+            <td style="width:16%">类型:<input id="fe_12Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_12Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_12M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_12D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_12H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_12Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_12S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_12Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件13:</span></td>
-            <td style="width:8%">类型:<input id="fe_13Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_13Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_13Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件13:</span></td>
+            <td style="width:16%">类型:<input id="fe_13Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_13Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_13M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_13D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_13H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_13Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_13S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_13Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件14:</span></td>
-            <td style="width:8%">类型:<input id="fe_14Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_14Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_14Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件14:</span></td>
+            <td style="width:16%">类型:<input id="fe_14Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_14Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_14M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_14D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_14H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_14Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_14S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_14Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件15:</span></td>
-            <td style="width:8%">类型:<input id="fe_15Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_15Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_15Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件15:</span></td>
+            <td style="width:16%">类型:<input id="fe_15Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_15Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_15M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_15D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_15H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_15Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_15S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_15Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件16:</span></td>
-            <td style="width:8%">类型:<input id="fe_16Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_16Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_16Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件16:</span></td>
+            <td style="width:16%">类型:<input id="fe_16Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_16Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_16M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_16D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_16H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_16Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_16S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_16Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件17:</span></td>
-            <td style="width:8%">类型:<input id="fe_17Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_17Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_17Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件17:</span></td>
+            <td style="width:16%">类型:<input id="fe_17Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_17Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_17M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_17D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_17H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_17Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_17S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_17Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件18:</span></td>
-            <td style="width:8%">类型:<input id="fe_18Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_18Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_18Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件18:</span></td>
+            <td style="width:16%">类型:<input id="fe_18Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_18Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_18M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_18D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_18H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_18Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_18S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_18Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件19:</span></td>
-            <td style="width:8%">类型:<input id="fe_19Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_19Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_19Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件19:</span></td>
+            <td style="width:16%">类型:<input id="fe_19Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_19Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_19M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_19D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_19H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_19Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_19S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_19Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         <tr>
-            <td style="width:8%;text-align:right"><span class="data-label-sm">事件20:</span></td>
-            <td style="width:8%">类型:<input id="fe_20Type" class="data-input-num" style="width:95%" value="0000" maxlength="4" placeholder="4hex"></td>
-            <td style="width:6%;text-align:right">时间:</td>
-            <td style="width:16%"><input id="fe_20Time" class="data-input-num" style="width:95%" value="000000000000" maxlength="12" placeholder="YYMMDDHHmmSS"></td>
-            <td style="width:6%;text-align:right">详情:</td>
-            <td style="width:12%"><input id="fe_20Detail" class="data-input-num" style="width:95%" value="00" maxlength="2" placeholder="2hex"></td>
+            <td style="width:7%;text-align:right"><span class="data-label-sm">事件20:</span></td>
+            <td style="width:16%">类型:<input id="fe_20Type" class="data-input-num" style="width:70px" value="0" maxlength="5" placeholder="0-65535"></td>
+            <td style="width:4%;text-align:right">时间:</td>
+            <td style="width:30%">
+                <input id="fe_20Y" class="data-input-num" style="width:36px" value="0" maxlength="2">年
+                <input id="fe_20M" class="data-input-num" style="width:36px" value="1" maxlength="2">月
+                <input id="fe_20D" class="data-input-num" style="width:36px" value="1" maxlength="2">日
+                <input id="fe_20H" class="data-input-num" style="width:36px" value="0" maxlength="2">时
+                <input id="fe_20Min" class="data-input-num" style="width:36px" value="0" maxlength="2">分
+                <input id="fe_20S" class="data-input-num" style="width:36px" value="0" maxlength="2">秒
+            </td>
+            <td style="width:4%;text-align:right">详情:</td>
+            <td style="width:9%"><input id="fe_20Detail" class="data-input-num" style="width:50px" value="0" maxlength="3" placeholder="0-255"></td>
             <td colspan="2"></td>
         </tr>
         </tbody>
     </table>
+
+
+
+
+
+
 
     <table class="gas-table" border="0">
         <tr>
@@ -791,19 +937,91 @@
         messageText.value += result.msg;
     };
 
+    // ===== 文件000D 事件记录 输入实时校验 =====
+    var FE_RULES = {
+        "Type":   { min: 0,     max: 65535, label: "类型" },
+        "Y":      { min: 0,     max: 99,    label: "年份" },
+        "M":      { min: 1,     max: 12,    label: "月份" },
+        "D":      { min: 1,     max: 31,    label: "日期" },
+        "H":      { min: 0,     max: 23,    label: "小时" },
+        "Min":    { min: 0,     max: 59,    label: "分钟" },
+        "S":      { min: 0,     max: 59,    label: "秒" },
+        "Detail": { min: 0,     max: 255,   label: "详情" }
+    };
+
+    validateFeField = function (el) {
+        var rule = null, label = "";
+        if (el.id === "fe_count") {
+            rule = { min: 0, max: 20 }; label = "事件数";
+        } else {
+            var m = el.id.match(/^fe_\d+([A-Za-z]+)$/);
+            if (!m || !FE_RULES[m[1]]) return true;
+            rule = FE_RULES[m[1]]; label = rule.label;
+        }
+        var v = parseInt(el.value, 10);
+        var ok = el.value.trim() !== "" && !isNaN(v) && v >= rule.min && v <= rule.max;
+        if (ok) {
+            el.classList.remove("input-error");
+            el.title = "";
+        } else {
+            el.classList.add("input-error");
+            el.title = label + "必须在" + rule.min + "-" + rule.max + "之间";
+        }
+        return ok;
+    };
+
+    // 输入即实时标红
+    document.addEventListener("input", function (e) {
+        if (e.target && e.target.id && e.target.id.indexOf("fe_") === 0) {
+            validateFeField(e.target);
+        }
+    });
+
+    // 写入前整体校验（弹出明确错误）
+    validateEventInputs = function () {
+        if (!validateFeField(document.getElementById("fe_count"))) {
+            alert("事件数输入非法，必须在0-20之间");
+            return false;
+        }
+        var evtCount = parseInt(document.getElementById("fe_count").value);
+        var names = ["Type", "Y", "M", "D", "H", "Min", "S", "Detail"];
+        for (var i = 1; i <= evtCount; i++) {
+            for (var k = 0; k < names.length; k++) {
+                var el = document.getElementById("fe_" + i + names[k]);
+                if (!validateFeField(el)) {
+                    var r = FE_RULES[names[k]];
+                    alert("事件" + i + r.label + "输入非法，必须在" + r.min + "-" + r.max + "之间");
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
     // ===== 写入文件000D 事件记录 =====
     writeEventLog = async function() {
         var keyVal = document.getElementById("key").value;
+        if (!validateEventInputs()) return;
         if (!await prepWrite(keyVal)) return;
 
         messageText.value += ">>4.写入000D事件记录\r\n";
-        var evtCount = parseInt(document.getElementById("fe_count").value) || 0;
-        var data = decToHex1(String(evtCount));
+        var evtCount = parseInt(document.getElementById("fe_count").value);
+        var data = decToHex1(evtCount);
         for (var i = 1; i <= 20; i++) {
             if (i <= evtCount) {
-                data += (document.getElementById("fe_" + i + "Type").value + "0000").slice(0, 4);
-                data += (document.getElementById("fe_" + i + "Time").value + "000000000000").slice(0, 12);
-                data += (document.getElementById("fe_" + i + "Detail").value + "00").slice(0, 2);
+                var typeVal = parseInt(document.getElementById("fe_" + i + "Type").value);
+                var y = parseInt(document.getElementById("fe_" + i + "Y").value);
+                var mo = parseInt(document.getElementById("fe_" + i + "M").value);
+                var d = parseInt(document.getElementById("fe_" + i + "D").value);
+                var h = parseInt(document.getElementById("fe_" + i + "H").value);
+                var mi = parseInt(document.getElementById("fe_" + i + "Min").value);
+                var s = parseInt(document.getElementById("fe_" + i + "S").value);
+                var detailVal = parseInt(document.getElementById("fe_" + i + "Detail").value);
+                // 类型(2字节无符号大端) + 时间(BCD 6字节) + 详情(1字节无符号)
+                data += decToHex2(typeVal);
+                data += String(y).padStart(2, "0") + String(mo).padStart(2, "0") + String(d).padStart(2, "0")
+                    + String(h).padStart(2, "0") + String(mi).padStart(2, "0") + String(s).padStart(2, "0");
+                data += decToHex1(detailVal);
             } else {
                 data += repeatHex("00", 9);
             }

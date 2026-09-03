@@ -924,7 +924,7 @@
 
     <table class="gas-table" border="0"><tbody class="data-group valve-log">
         <tr>
-            <td style="width:16%;text-align:right"><span class="label-text">关阀事件:</span></td>
+            <td style="width:16%;text-align:right"><span class="label-text">燃气表事件:</span></td>
             <td colspan="7">
                 <span id="eventLogSummary" class="data-value" style="margin-right:16px;"></span>
                 <button class="btn-blue" style="width:auto;padding:6px 18px;"
@@ -1001,7 +1001,7 @@
 <div id="evtOverlay" class="evt-overlay" onclick="if(event.target===this)closeEventPopup()">
     <div class="evt-container">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <h3>关阀事件记录</h3>
+            <h3>燃气表事件记录</h3>
             <button style="background:none;border:none;font-size:26px;color:#94a3b8;cursor:pointer;"
                 onclick="closeEventPopup()">&times;</button>
         </div>
@@ -1789,17 +1789,22 @@ ReadTypeACPUCard = async function () {
                     var typeHex = r.data.slice(base, base + 4);
                     var timeHex = r.data.slice(base + 4, base + 16);
                     var detailHex = r.data.slice(base + 16, base + 18);
-                    var ey = 2000 + parseInt(timeHex.slice(0, 2), 16);
-                    var eM = parseInt(timeHex.slice(2, 4), 16);
-                    var ed = parseInt(timeHex.slice(4, 6), 16);
-                    var eh = parseInt(timeHex.slice(6, 8), 16);
-                    var emin = parseInt(timeHex.slice(8, 10), 16);
-                    var es = parseInt(timeHex.slice(10, 12), 16);
+                    // 类型: 2字节无符号 → 十进制
+                    var typeDec = parseInt(typeHex, 16);
+                    // 时间: BCD 编码 → 十进制 (每字节即两位十进制数字)
+                    var ey = 2000 + parseInt(timeHex.slice(0, 2), 10);
+                    var eM = parseInt(timeHex.slice(2, 4), 10);
+                    var ed = parseInt(timeHex.slice(4, 6), 10);
+                    var eh = parseInt(timeHex.slice(6, 8), 10);
+                    var emin = parseInt(timeHex.slice(8, 10), 10);
+                    var es = parseInt(timeHex.slice(10, 12), 10);
                     var timeStr = ey + "年" + eM + "月" + ed + "日 " +
                         String(eh).padStart(2, "0") + ":" +
                         String(emin).padStart(2, "0") + ":" +
                         String(es).padStart(2, "0");
-                    eventLog.events.push({ type: typeHex, time: timeStr, detail: detailHex });
+                    // 详情: 1字节无符号 → 十进制
+                    var detailDec = parseInt(detailHex, 16);
+                    eventLog.events.push({ type: typeDec, time: timeStr, detail: detailDec });
                 } else {
                     eventLog.events.push({ type: "", time: "", detail: "" });
                 }
