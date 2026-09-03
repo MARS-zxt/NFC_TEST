@@ -1239,6 +1239,11 @@ ReadTypeACPUCard = async function () {
 
         var result = await WriteFile(fileId, sdata);
 
+        // 写token时，将001D的token结果(0-4字节)初始化为255(0xFF)
+        fileId = "001D";
+        sdata = cmd_UpdateBinary("00", repeatHex("FF", 5));
+        await WriteFile(fileId, sdata);
+
     }
 
 
