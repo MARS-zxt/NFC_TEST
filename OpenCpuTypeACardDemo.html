@@ -272,9 +272,80 @@
 
             document.getElementById("cardID").value = r.data.cardID;
 
-            await InitTripleDesExternalAuthenticate()
+            var authR = await InitTripleDesExternalAuthenticate();
 
-            await ClearTypeACPUCard()
+            var authSW = (authR.data && authR.data.length >= 4) ? authR.data.substr(authR.data.length - 4, 4) : String(authR.code);
+
+            if (authR.code !== 0 || authSW !== "9000") {
+
+                if (authSW === "6A82" || authSW === "6A86") {
+
+                    // 卡片无密钥文件（空白卡或已被擦除），跳过认证，直接建立文件系统
+
+                    messageText.value = messageText.value + "卡片无密钥文件(" + authSW + ")，按空白卡直接建立文件系统" + "\r\n";
+
+                    await OpenTypeACPUCard()
+
+                    return;
+
+                }
+
+                alert("初始密钥外部认证失败:" + authSW);
+
+                return;
+
+            }
+
+            // 用传输密钥权限擦除 MF，把卡片重置为干净状态（原设计流程：认证 → 擦除 → 建文件系统）
+
+            i1 = 1;
+
+            messageText.value = messageText.value + i1 + ".选择MF主目录" + "\r\n";
+
+            r = await CommandTypeACPU(cmd_SelectFileByID("3F00"));
+
+            if (r.code !== "9000") {
+
+                alert("选择MF主目录失败:" + r.code);
+
+                return;
+
+            }
+
+            i1 = i1 + 1;
+
+            messageText.value = messageText.value + i1 + ".擦除MF" + "\r\n";
+
+            r = await CommandTypeACPU(cmd_EraseDF());
+
+            if (r.code !== "9000") {
+
+                alert("擦除MF失败:" + r.code);
+
+                return;
+
+            }
+
+            // 擦除会连同 MF 的密钥文件一起删除，卡片变为「空白卡」，无需（也无法）再认证。
+            // 重新初始化连接后再建立文件系统即可（与空白卡路径一致，已验证可行）。
+
+            i1 = i1 + 1;
+
+            messageText.value = messageText.value + i1 + ".重新初始化连接" + "\r\n";
+
+            r = await InitTypeACPU();
+
+            if (r.code != 0) {
+
+                alert("重新初始化连接失败");
+
+                return;
+
+            }
+
+            handle = r.data.handle;
+
+            document.getElementById("cardID").value = r.data.cardID;
 
             await OpenTypeACPUCard()
 
@@ -743,11 +814,13 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建MF的密钥文件" + "\r\n";
 
-        sdata = cmd_CreateKeyFile("0000", "0030", "01");
+        //密钥文件大小 = 每条 23 字节(1 字节 TAG + 1 字节长度 + 5 字节密钥头 + 16 字节密钥) × 密钥数 + 5 字节保留空间
+        //MF 需 2 个密钥(36/00、39/00)：23×2+5 = 51(0x33)，取 0x40 留余量
+        sdata = cmd_CreateKeyFile("0000", "0040", "01");
 
         result = await CommandTypeACPU(sdata);
 
-        if (result.code != "9000") {
+        if (result.code != "9000" && result.code != "6A86" && result.code != "6A89") {
 
             return result;
 
@@ -917,7 +990,8 @@
 
         messageText.value = messageText.value + i1 + "-" + i2 + "-" + i3 + ".创建燃气卡应用的密钥文件" + "\r\n";
 
-        sdata = cmd_CreateKeyFile("0000", "0044", "01");
+        //ADF 需 3 个密钥(39/00、39/01、36/00)：23×3+5 = 74(0x4A)，原 0x44(68) 不足导致第三个密钥报 6A84，取 0x50 留余量
+        sdata = cmd_CreateKeyFile("0000", "0050", "01");
 
         result = await CommandTypeACPU(sdata);
 
